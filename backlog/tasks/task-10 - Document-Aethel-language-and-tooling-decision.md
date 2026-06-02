@@ -4,7 +4,7 @@ title: Document Aethel language and tooling decision
 status: Done
 assignee: []
 created_date: '2026-06-02 22:09'
-updated_date: '2026-06-02 22:13'
+updated_date: '2026-06-02 23:06'
 labels: []
 dependencies: []
 documentation:
@@ -26,7 +26,7 @@ ordinal: 10000
 Plan: plans/aethel_mvp_plan.md § Implementation Notes and Implementation Plan.
 
 WHAT TO DO
-Add user-facing documentation for the project language decision. Document TypeScript as the primary MVP language, React/Vite for the web app, Three.js or React Three Fiber for the browser 3D viewport, Python/FastAPI as the future backend and NVIDIA integration language, and C++ as a reserved option for later performance-critical Omniverse/Kit extension work. Link the new doc from docs/README.md and reflect the decision in the MVP plan.
+Add user-facing documentation for the project language decision. Document TypeScript as the primary MVP language, React/Vite for the web app, React Three Fiber for the browser 3D viewport, Python/FastAPI as the future backend and NVIDIA integration language, and C++ as a reserved option for later performance-critical Omniverse/Kit extension work. Link the new doc from docs/README.md and reflect the decision in the MVP plan.
 
 WHY
 The project needs an explicit tooling direction before implementation tasks are executed. Developers should not infer whether the MVP starts in JavaScript, TypeScript, Python, C++, or an Omniverse-only stack.

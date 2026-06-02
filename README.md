@@ -33,10 +33,23 @@ The MVP is a browser-based web app with three persistent regions:
   Chat receives current agent and environment context but is not the
   primary editing surface for the MVP.
 
-The first implementation is expected to use a browser-native 3D renderer
-such as Three.js behind a renderer boundary. That keeps the MVP small
-while preserving a future path to an Omniverse Kit / RTX renderer or
-streaming integration.
+The first implementation will use React Three Fiber behind a renderer
+boundary. That keeps the MVP small while preserving a future path to an
+Omniverse Kit / RTX renderer or streaming integration.
+
+## Implementation Decisions
+
+The confirmed MVP implementation choices are:
+
+- Bun for package management and script running.
+- TypeScript, React, and Vite for the browser app.
+- React Three Fiber for the center 3D viewport.
+- Plain CSS with CSS variables for styling.
+- React `useReducer` plus context for MVP state management.
+- Mock-only in-browser adapters for the MVP backend.
+- Procedural primitive assets for the first agent and environment.
+- `dev` as the default branch, with feature branches off `dev`.
+- MIT License.
 
 ## Technology Direction
 
@@ -94,3 +107,7 @@ until the first implementation stack is added.
 Once the web app is scaffolded, update this README with the actual
 install, run, build, and test commands, and wire the Makefile targets to
 the real project commands.
+
+## License
+
+Aethel is licensed under the MIT License. See [LICENSE](LICENSE).

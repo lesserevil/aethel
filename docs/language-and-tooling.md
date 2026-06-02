@@ -22,15 +22,21 @@ requires it.
 
 The first implementation should use:
 
+- **Bun** as the package manager, script runner, and frontend dependency
+  installer.
 - **TypeScript** for application code, session state, adapters, and
   tests.
 - **React** for the web UI.
 - **Vite** for the frontend build and development server.
-- **Three.js or React Three Fiber** for the center browser-native 3D
-  viewport.
+- **React Three Fiber** for the center browser-native 3D viewport.
+- **Plain CSS with CSS variables** for styling. Do not introduce
+  Tailwind or a component library for the MVP.
+- **React `useReducer` plus context** for MVP state management.
 - **Vitest** for unit and component tests.
 - **Playwright** for browser integration tests and nonblank 3D viewport
   checks.
+- **Procedural primitive 3D assets** for the first agent and
+  environment. GLTF or external asset pipelines can come later.
 
 The renderer must sit behind a boundary that accepts normalized session
 state. That keeps the MVP renderer replaceable by a later Omniverse Kit
@@ -39,7 +45,8 @@ or RTX streaming renderer.
 ## Backend Path
 
 The MVP may start with in-browser mock adapters. When real services are
-needed, add a Python backend:
+needed, add a Python backend. Do not add the Python backend during the
+MVP unless a later task explicitly changes this decision.
 
 - **Python** for agent adapters, service orchestration, and NVIDIA SDK /
   NIM / NeMo integration.
@@ -59,11 +66,24 @@ work. C++ is reserved for cases where Python is not enough, such as
 performance-sensitive native plugins, custom renderer hooks, or physics
 components that require native APIs.
 
+## Branch Workflow
+
+Use `dev` as the default branch. Implementation work should happen on
+feature branches off `dev`, then merge back into `dev` after review and
+quality gates.
+
+## License
+
+Aethel is licensed under the MIT License. See
+[`../LICENSE`](../LICENSE).
+
 ## Non-Goals
 
 - Do not start the MVP as a C++ application.
 - Do not require Omniverse Kit or RTX streaming to run the first web
   prototype.
+- Do not add a Python/FastAPI backend to the MVP unless a later task
+  explicitly changes the backend decision.
 - Do not hard-code a single model provider in the TypeScript UI.
 - Do not store renderer-specific objects in shared session state.
 

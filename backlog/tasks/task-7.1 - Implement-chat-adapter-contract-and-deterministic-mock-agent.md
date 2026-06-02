@@ -4,6 +4,7 @@ title: Implement chat adapter contract and deterministic mock agent
 status: To Do
 assignee: []
 created_date: '2026-06-02 22:12'
+updated_date: '2026-06-02 23:05'
 labels: []
 dependencies:
   - TASK-4.2
@@ -20,16 +21,16 @@ ordinal: 22000
 Plan: plans/aethel_mvp_plan.md § Chat Adapter.
 
 WHAT TO DO
-Create chat adapter types and a deterministic mock implementation under web/src/services/. Define ChatRequest, ChatResponse, ChatAdapter, and any error types. ChatRequest must include sessionId, user message, current AgentState, current EnvironmentState, and recent chat messages. mockChatAdapter should return a believable agent response that references the current agent name/persona or environment preset so tests can prove context was passed. Support AbortSignal or an equivalent cancellation path.
+Create chat adapter types and a deterministic in-browser mock implementation under web/src/services/. Define ChatRequest, ChatResponse, ChatAdapter, and any error types. ChatRequest must include sessionId, user message, current AgentState, current EnvironmentState, and recent chat messages. mockChatAdapter should return a believable agent response that references the current agent name/persona or environment preset so tests can prove context was passed. Support AbortSignal or an equivalent cancellation path. Do not add a Python/FastAPI backend in the MVP.
 
 WHY
-The MVP chat UI should not hard-code a model provider. A stable adapter lets the UI work with a mock now and a future POST /api/chat or NVIDIA-backed service later.
+The MVP chat UI should not hard-code a model provider. A stable mock-only adapter lets the UI work now and leaves room for a future POST /api/chat or NVIDIA-backed service later, without forcing backend setup into the first release.
 
 HOW TO VERIFY
-Run unit tests for the adapter. Verify request context is required, mock responses are deterministic, cancellation/error paths are testable, and the adapter does not mutate session state.
+Run unit tests for the adapter. Verify request context is required, mock responses are deterministic, cancellation/error paths are testable, and the adapter does not mutate session state. Confirm the implementation runs fully in-browser and does not require a backend process.
 
 EDGE CASES AND PITFALLS
-Do not import NVIDIA, OpenAI, or other model SDKs in this task. Do not let the mock adapter perform scene mutations. Keep response timing deterministic in tests by controlling delays.
+Do not import NVIDIA, OpenAI, FastAPI, or other model/backend SDKs in this task. Do not let the mock adapter perform scene mutations. Keep response timing deterministic in tests by controlling delays.
 <!-- SECTION:DESCRIPTION:END -->
 
 ## Acceptance Criteria

@@ -4,6 +4,7 @@ title: Wire root Makefile gates to web app and document commands
 status: To Do
 assignee: []
 created_date: '2026-06-02 22:11'
+updated_date: '2026-06-02 23:05'
 labels: []
 dependencies:
   - TASK-3.1
@@ -22,16 +23,16 @@ ordinal: 13000
 Plan: plans/aethel_mvp_plan.md § Delivery Gates and Implementation Sequence.
 
 WHAT TO DO
-After web/ exists, replace the root Makefile placeholder quality gates with real commands that delegate to the web app scripts. Update README.md and any relevant docs with the actual install, dev, build, test, lint, and format-check commands. Keep target names compatible with AGENTS.md: fmt, fmt-check, build, test, lint, and clean.
+After web/ exists, replace the root Makefile placeholder quality gates with real commands that delegate to the Bun-managed web app scripts. Update README.md and any relevant docs with the actual Bun install, dev, build, test, lint, fmt, and fmt-check commands. Keep target names compatible with AGENTS.md: fmt, fmt-check, build, test, lint, and clean.
 
 WHY
-The repo workflow requires Makefile targets when they exist. The current targets intentionally fail because this repo started from a template. Once the web app exists, project contributors need real quality gates and accurate user-facing docs.
+The repo workflow requires Makefile targets when they exist. The current targets intentionally fail because this repo started from a template. Once the web app exists, project contributors need real quality gates and accurate user-facing docs. Bun is the confirmed package manager and script runner.
 
 HOW TO VERIFY
-Run make fmt-check, make build, make test, and make lint from the repo root. Confirm README.md no longer says those targets are placeholders and instead shows the real web app commands.
+Run make fmt-check, make build, make test, and make lint from the repo root after running the documented Bun install command. Confirm README.md no longer says those targets are placeholders and instead shows the real Bun-based web app commands.
 
 EDGE CASES AND PITFALLS
-Do not remove make init or the Backlog.md setup behavior. If dependency installation is required before the gates pass, document the exact command. Avoid adding commands that open browsers or prompt interactively.
+Do not remove make init or the Backlog.md setup behavior. If dependency installation is required before the gates pass, document the exact bun install command. Avoid adding commands that open browsers or prompt interactively.
 <!-- SECTION:DESCRIPTION:END -->
 
 ## Acceptance Criteria

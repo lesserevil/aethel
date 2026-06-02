@@ -160,9 +160,14 @@ fallback contract.
 - The primary MVP language is TypeScript. See
   [../docs/language-and-tooling.md](../docs/language-and-tooling.md) for
   the language and tooling decision.
+- Confirmed senior implementation decisions: Bun package manager, React
+  Three Fiber renderer, plain CSS with CSS variables, React
+  `useReducer` plus context for state management, mock-only in-browser
+  adapters for the MVP backend, procedural primitive assets first, `dev`
+  as the default branch, and MIT licensing.
 - The first implementation should favor a small, coherent web stack over
-  an early Omniverse integration. A browser 3D renderer such as Three.js
-  can prove the UX while keeping the renderer swappable.
+  an early Omniverse integration. React Three Fiber can prove the UX
+  while keeping the renderer swappable.
 - The app should use a single source of truth for session state so the
   left controls, center renderer, and right chat cannot drift.
 - The center view should be visually legible on first load. A blank
@@ -181,16 +186,21 @@ fallback contract.
 Use this stack for the MVP unless a task explicitly records a different
 decision:
 
+- **Package manager / script runner**: Bun.
 - **Language**: TypeScript.
 - **UI**: React.
 - **Build/dev server**: Vite.
-- **3D renderer**: Three.js directly or React Three Fiber. Prefer React
-  Three Fiber if the implementation benefits from React component
-  composition; prefer direct Three.js if renderer isolation is cleaner.
+- **3D renderer**: React Three Fiber.
+- **Styling**: plain CSS with CSS variables.
+- **State management**: React `useReducer` plus context.
 - **Unit/component tests**: Vitest plus React Testing Library.
 - **Browser/e2e tests**: Playwright.
-- **Future backend**: Python + FastAPI, added only when mock adapters are
-  no longer enough.
+- **MVP backend strategy**: mock-only in-browser adapters.
+- **Future backend**: Python + FastAPI, added only by a later task when
+  mock adapters are no longer enough.
+- **First asset strategy**: procedural primitive agent/environment
+  assets. GLTF/external asset pipelines are out of scope for the first
+  renderer task.
 
 ### Initial Web App Layout
 
@@ -209,6 +219,7 @@ web/
     state/
       sessionTypes.ts
       baselineSession.ts
+      SessionProvider.tsx
       sessionReducer.ts
       sessionSelectors.ts
       mutationLog.ts
@@ -255,6 +266,10 @@ move into tabbed panels or drawers. The implementation should avoid
 modal-only controls for the MVP because repeated adjustment is a core
 workflow.
 
+Styling should use plain CSS and CSS variables. Keep shared color,
+spacing, and sizing tokens near the app shell or global styles rather
+than introducing Tailwind, CSS-in-JS, or a component library.
+
 ### Session State Contract
 
 The session state should be serializable JSON. A representative shape:
@@ -269,6 +284,10 @@ type SessionState = {
   ui: UiState;
 };
 ```
+
+The MVP store should use React `useReducer` plus context. That keeps
+state transitions explicit and testable without adding a global state
+library before the app needs one.
 
 `ui` may contain selected panel, active control tab, pending request IDs,
 and selected object ID. It must not contain DOM nodes, Three.js objects,
@@ -355,6 +374,11 @@ The MVP renderer should render:
 - ambience/weather visual hints where practical;
 - default camera framing on the agent.
 
+The first agent and environment should be procedural primitive geometry:
+simple shapes, materials, labels, and lighting. Do not block MVP
+progress on GLTF character models, external art packs, or asset-pipeline
+decisions.
+
 The renderer should emit view events for selected objects and camera
 changes, but it should not mutate session state directly.
 
@@ -390,6 +414,10 @@ The MVP should begin with local service adapters:
 - `mockChatAdapter` for chat responses.
 - `mutationAdapter` for validating and applying control mutations.
 - `sessionStorage` for optional local persistence.
+
+Do not add a Python/FastAPI backend for the MVP. The API shape below is
+the compatibility path for a future backend, not a requirement for the
+first implementation.
 
 When a backend is added, preserve these contracts:
 
@@ -435,8 +463,8 @@ ready signal plus visual content assertions.
 
 ### Implementation Sequence
 
-1. Create the Vite + React + TypeScript web app and wire root Makefile
-   targets to the real web commands.
+1. Create the Bun-managed Vite + React + TypeScript web app and wire
+   root Makefile targets to the real web commands.
 2. Implement the three-column shell and responsive panel behavior.
 3. Define the session state types, baseline state, reducer/actions,
    selectors, and local persistence.
@@ -452,7 +480,7 @@ ready signal plus visual content assertions.
 
 The MVP is ready to call complete only when:
 
-- `npm`/`bun` install instructions are documented;
+- Bun install instructions are documented;
 - `make fmt-check`, `make build`, `make test`, and `make lint` run real
   commands instead of placeholders;
 - the app opens to the three-column UI;
@@ -460,6 +488,12 @@ The MVP is ready to call complete only when:
 - controls mutate shared state and visible scene output;
 - chat uses the current session context;
 - the e2e suite verifies the full MVP flow.
+
+### Branch and License Decisions
+
+- Use `dev` as the default branch.
+- Do MVP implementation work on feature branches off `dev`.
+- License the project under MIT.
 
 ### Risks and Mitigations
 
