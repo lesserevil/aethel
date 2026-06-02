@@ -1,10 +1,10 @@
 ---
 id: TASK-3.1
 title: Scaffold Vite React TypeScript web workspace
-status: To Do
+status: Done
 assignee: []
 created_date: '2026-06-02 22:11'
-updated_date: '2026-06-02 23:05'
+updated_date: '2026-06-02 23:28'
 labels: []
 dependencies: []
 documentation:
@@ -35,7 +35,30 @@ Do not scaffold a landing page or marketing site. Do not add Omniverse, Python, 
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 web/ contains a Bun-managed Vite React TypeScript app with a working entrypoint.
-- [ ] #2 web/package.json exposes dev, build, typecheck, test, lint, fmt, and fmt-check scripts runnable through bun.
-- [ ] #3 The scaffolded app builds and has at least one passing placeholder test.
+- [x] #1 web/ contains a Bun-managed Vite React TypeScript app with a working entrypoint.
+- [x] #2 web/package.json exposes dev, build, typecheck, test, lint, fmt, and fmt-check scripts runnable through bun.
+- [x] #3 The scaffolded app builds and has at least one passing placeholder test.
 <!-- AC:END -->
+
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+UNDERSTANDING: Scaffolding web/ with Bun-managed Vite+React+TypeScript app. Scripts: dev, build, typecheck, test, lint, fmt, fmt-check. Deps: React, Vite, TypeScript, Vitest, React Testing Library, Playwright, Three.js, React Three Fiber. Verify with bun install + typecheck + build + test.
+<!-- SECTION:NOTES:END -->
+
+## Final Summary
+
+<!-- SECTION:FINAL_SUMMARY:BEGIN -->
+Scaffolded web/ Bun-managed Vite+React+TypeScript workspace. All 3 acceptance criteria met: (1) web/ has working entrypoint with React 18 + Vite 5 + TypeScript 5 + R3F + Three.js; (2) package.json exposes dev/build/typecheck/test/lint/fmt/fmt-check; (3) App builds successfully and 2 Vitest tests pass. Root Makefile wired to web/ scripts. All quality gates green: fmt-check, typecheck, lint, test (2/2), build.
+<!-- SECTION:FINAL_SUMMARY:END -->
+
+## Comments
+<!-- COMMENTS:BEGIN -->
+<!-- COMMENT:BEGIN -->
+index: 1
+author: oompah
+created: 2026-06-02 23:21
+
+Agent dispatched (profile: default)
+<!-- COMMENT:END -->
+<!-- COMMENTS:END -->
