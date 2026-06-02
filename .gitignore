@@ -37,11 +37,18 @@ venv/
 .coverage
 htmlcov/
 
-# ─── Node ─────────────────────────────────────────────────────────
+# ─── Node / Bun ───────────────────────────────────────────────────
 node_modules/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# ─── Web workspace artifacts ──────────────────────────────────────
+web/dist/
+web/coverage/
+web/playwright-report/
+web/test-results/
+*.tsbuildinfo
 
 # ─── Go ───────────────────────────────────────────────────────────
 vendor/

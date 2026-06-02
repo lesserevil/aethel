@@ -1,10 +1,10 @@
 ---
 id: TASK-3.1
 title: Scaffold Vite React TypeScript web workspace
-status: To Do
+status: In Progress
 assignee: []
 created_date: '2026-06-02 22:11'
-updated_date: '2026-06-02 23:05'
+updated_date: '2026-06-02 23:22'
 labels: []
 dependencies: []
 documentation:
@@ -39,3 +39,20 @@ Do not scaffold a landing page or marketing site. Do not add Omniverse, Python, 
 - [ ] #2 web/package.json exposes dev, build, typecheck, test, lint, fmt, and fmt-check scripts runnable through bun.
 - [ ] #3 The scaffolded app builds and has at least one passing placeholder test.
 <!-- AC:END -->
+
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+UNDERSTANDING: Scaffolding web/ with Bun-managed Vite+React+TypeScript app. Scripts: dev, build, typecheck, test, lint, fmt, fmt-check. Deps: React, Vite, TypeScript, Vitest, React Testing Library, Playwright, Three.js, React Three Fiber. Verify with bun install + typecheck + build + test.
+<!-- SECTION:NOTES:END -->
+
+## Comments
+<!-- COMMENTS:BEGIN -->
+<!-- COMMENT:BEGIN -->
+index: 1
+author: oompah
+created: 2026-06-02 23:21
+
+Agent dispatched (profile: default)
+<!-- COMMENT:END -->
+<!-- COMMENTS:END -->

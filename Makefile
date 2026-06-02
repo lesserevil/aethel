@@ -13,6 +13,9 @@ BACKLOG_CLI ?= bun x --bun $(BACKLOG_SOURCE)
 BACKLOG_DIR ?= backlog
 BACKLOG_PROJECT_NAME ?= $(notdir $(CURDIR))
 
+# Web workspace directory
+WEB_DIR := web
+
 help: ## Show this help.
 	@awk 'BEGIN {FS = ":.*?## "; printf "Usage: make <target>\n\nTargets:\n"} \
 		/^[a-zA-Z_-]+:.*?## / {printf "  \033[36m%-15s\033[0m %s\n", $$1, $$2}' \
@@ -48,27 +51,30 @@ init: ## Initialize repo: git init and Backlog.md from lesserevil.
 			--integration-mode none; \
 	else \
 		echo "[init] backlog: already initialized ($(BACKLOG_DIR)/ and config present)"; \
+	fi; \
+	if [ -d "$(WEB_DIR)" ]; then \
+		echo "[init] installing web dependencies (bun install)"; \
+		cd $(WEB_DIR) && bun install; \
 	fi
 
 # ─── Quality gates ────────────────────────────────────────────────
-# Stubs — replace the bodies with this project's real toolchain.
-# AGENTS.md references these target names; keep them named the same
-# so the documented workflow stays accurate.
+# These targets delegate to the web/ workspace via bun scripts.
+# Add additional workspaces here when they are added to the repo.
 
 fmt: ## Format all source files in place.
-	@echo "fmt: not yet configured — edit Makefile" && exit 1
+	cd $(WEB_DIR) && bun run fmt
 
 fmt-check: ## Check formatting without modifying files.
-	@echo "fmt-check: not yet configured — edit Makefile" && exit 1
+	cd $(WEB_DIR) && bun run fmt-check
 
 build: ## Build the project.
-	@echo "build: not yet configured — edit Makefile" && exit 1
+	cd $(WEB_DIR) && bun run build
 
 test: ## Run the test suite.
-	@echo "test: not yet configured — edit Makefile" && exit 1
+	cd $(WEB_DIR) && bun run test
 
 lint: ## Run static analysis / linters.
-	@echo "lint: not yet configured — edit Makefile" && exit 1
+	cd $(WEB_DIR) && bun run typecheck && bun run lint
 
 clean: ## Remove build artifacts.
-	@echo "clean: not yet configured — edit Makefile" && exit 1
+	rm -rf $(WEB_DIR)/dist $(WEB_DIR)/coverage $(WEB_DIR)/playwright-report
