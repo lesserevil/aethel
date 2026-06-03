@@ -1,10 +1,10 @@
 ---
 id: TASK-3.2
 title: Wire root Makefile gates to web app and document commands
-status: Open
+status: Done
 assignee: []
 created_date: '2026-06-02 22:11'
-updated_date: '2026-06-03 05:16'
+updated_date: '2026-06-03 08:21'
 labels: []
 dependencies:
   - TASK-3.1
@@ -37,7 +37,122 @@ Do not remove make init or the Backlog.md setup behavior. If dependency installa
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 Root Makefile quality gates run real web app commands.
-- [ ] #2 README/docs list actual install, dev, build, test, lint, and format commands.
-- [ ] #3 make fmt-check, make build, make test, and make lint pass from repo root.
+- [x] #1 Root Makefile quality gates run real web app commands.
+- [x] #2 README/docs list actual install, dev, build, test, lint, and format commands.
+- [x] #3 make fmt-check, make build, make test, and make lint pass from repo root.
 <!-- AC:END -->
+
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+Verification: Ran make fmt-check, make build, make test, and make lint from the repo root - all passed successfully. Confirmed README.md now shows the actual Bun-based web app commands instead of placeholder descriptions.
+<!-- SECTION:NOTES:END -->
+
+## Final Summary
+
+<!-- SECTION:FINAL_SUMMARY:BEGIN -->
+Wire root Makefile gates to web app and document commands: Verified that Makefile targets already correctly delegate to web workspace Bun scripts. Updated README.md to reflect actual Bun-based commands instead of placeholder descriptions. All quality gates (fmt-check, build, test, lint) now pass from repo root.
+<!-- SECTION:FINAL_SUMMARY:END -->
+
+## Comments
+<!-- COMMENTS:BEGIN -->
+<!-- COMMENT:BEGIN -->
+index: 1
+author: oompah
+created: 2026-06-03 06:09
+
+Agent dispatched (profile: default)
+<!-- COMMENT:END -->
+<!-- COMMENT:BEGIN -->
+index: 2
+author: oompah
+created: 2026-06-03 06:09
+
+Focus: Maintenance Engineer
+<!-- COMMENT:END -->
+<!-- COMMENT:BEGIN -->
+index: 3
+author: oompah
+created: 2026-06-03 06:10
+
+Run #1 [attempt=1, profile=default, role=fast -> Godspeed/nvidia/NVIDIA-Nemotron-3-Super-120B-A12B-NVFP4]
+- Turns: 0, Tool calls: 1
+- Tokens: 0 in / 0 out [0 total]
+- Cost: $0.0000
+- Exit: terminated, Duration: 1m 9s
+- Log: TASK-3.2__20260603T060945Z.jsonl
+<!-- COMMENT:END -->
+<!-- COMMENT:BEGIN -->
+index: 4
+author: oompah
+created: 2026-06-03 06:17
+
+Agent dispatched (profile: default)
+<!-- COMMENT:END -->
+<!-- COMMENT:BEGIN -->
+index: 5
+author: oompah
+created: 2026-06-03 06:17
+
+Focus: Maintenance Engineer
+<!-- COMMENT:END -->
+<!-- COMMENT:BEGIN -->
+index: 6
+author: oompah
+created: 2026-06-03 06:42
+
+Agent stalled 1 time(s) (1470s (191085 tokens)). Escalating from 'default' to 'standard'. Retrying in 10s (attempt #1)
+<!-- COMMENT:END -->
+<!-- COMMENT:BEGIN -->
+index: 7
+author: oompah
+created: 2026-06-03 06:42
+
+Run #1 [attempt=1, profile=default, role=fast -> Godspeed/nvidia/NVIDIA-Nemotron-3-Super-120B-A12B-NVFP4]
+- Turns: 15, Tool calls: 15
+- Tokens: 190.3K in / 824 out [191.1K total]
+- Cost: $0.0000
+- Exit: stalled, Duration: 24m 30s
+- Log: TASK-3.2__20260603T061743Z.jsonl
+<!-- COMMENT:END -->
+<!-- COMMENT:BEGIN -->
+index: 8
+author: oompah
+created: 2026-06-03 06:42
+
+Agent dispatched (profile: standard)
+<!-- COMMENT:END -->
+<!-- COMMENT:BEGIN -->
+index: 9
+author: oompah
+created: 2026-06-03 06:42
+
+Focus: Maintenance Engineer
+<!-- COMMENT:END -->
+<!-- COMMENT:BEGIN -->
+index: 10
+author: oompah
+created: 2026-06-03 07:51
+
+Agent stalled 2 time(s) (4180s (893882 tokens)). Escalating from 'standard' to 'deep'. Retrying in 20s (attempt #2)
+<!-- COMMENT:END -->
+<!-- COMMENT:BEGIN -->
+index: 11
+author: oompah
+created: 2026-06-03 07:51
+
+Run #2 [attempt=2, profile=standard, role=standard -> Godspeed/nvidia/NVIDIA-Nemotron-3-Super-120B-A12B-NVFP4]
+- Turns: 42, Tool calls: 42
+- Tokens: 889.5K in / 4.4K out [893.9K total]
+- Cost: $0.0000
+- Exit: stalled, Duration: 1h 9m 40s
+- Log: TASK-3.2__20260603T064215Z.jsonl
+<!-- COMMENT:END -->
+<!-- COMMENT:BEGIN -->
+index: 12
+author: oompah
+created: 2026-06-03 07:52
+
+Retrying (attempt #2, agent: deep)
+<!-- COMMENT:END -->
+<!-- COMMENTS:END -->

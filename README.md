@@ -99,14 +99,18 @@ Current MVP implementation tasks are tracked in Backlog.md:
 
 ## Development Notes
 
-The project toolchain is not fully configured yet. The Makefile exposes
-the expected quality-gate target names, but `fmt`, `fmt-check`, `build`,
-`test`, and `lint` are currently placeholders and intentionally fail
-until the first implementation stack is added.
+The project toolchain is configured with Bun as the package manager and
+script runner. The Makefile quality-gate targets delegate to the web/
+workspace Bun scripts:
 
-Once the web app is scaffolded, update this README with the actual
-install, run, build, and test commands, and wire the Makefile targets to
-the real project commands.
+- `make fmt` - Runs `bun run fmt` in the web/ directory
+- `make fmt-check` - Runs `bun run fmt-check` in the web/ directory
+- `make build` - Runs `bun run build` in the web/ directory
+- `make test` - Runs `bun run test` in the web/ directory
+- `make lint` - Runs `bun run typecheck && bun run lint` in the web/ directory
+- `make clean` - Removes build artifacts from the web/ directory
+
+To install dependencies: `bun install` (run from the web/ directory)
 
 ## License
 
