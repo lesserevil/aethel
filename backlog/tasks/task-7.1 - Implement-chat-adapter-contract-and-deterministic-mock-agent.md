@@ -1,10 +1,10 @@
 ---
 id: TASK-7.1
 title: Implement chat adapter contract and deterministic mock agent
-status: To Do
+status: Open
 assignee: []
 created_date: '2026-06-02 22:12'
-updated_date: '2026-06-02 23:05'
+updated_date: '2026-06-03 05:17'
 labels: []
 dependencies:
   - TASK-4.2

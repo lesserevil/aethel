@@ -1,10 +1,10 @@
 ---
 id: TASK-3.3
 title: Build responsive three-column Aethel app shell
-status: To Do
+status: Open
 assignee: []
 created_date: '2026-06-02 22:11'
-updated_date: '2026-06-02 23:05'
+updated_date: '2026-06-03 05:16'
 labels: []
 dependencies:
   - TASK-3.1

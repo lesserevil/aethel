@@ -1,9 +1,10 @@
 ---
 id: TASK-7.2
 title: Implement right chat panel message flow
-status: To Do
+status: Open
 assignee: []
 created_date: '2026-06-02 22:12'
+updated_date: '2026-06-03 05:17'
 labels: []
 dependencies:
   - TASK-7.1

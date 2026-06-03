@@ -1,9 +1,10 @@
 ---
 id: TASK-3
 title: Scaffold Aethel web app shell and three-column layout
-status: To Do
+status: Backlog
 assignee: []
 created_date: '2026-06-02 21:55'
+updated_date: '2026-06-02 23:18'
 labels: []
 dependencies: []
 documentation:

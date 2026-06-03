@@ -1,9 +1,10 @@
 ---
 id: TASK-4
 title: Implement MVP session state and mutation model
-status: To Do
+status: Backlog
 assignee: []
 created_date: '2026-06-02 21:55'
+updated_date: '2026-06-02 23:18'
 labels: []
 dependencies:
   - TASK-3

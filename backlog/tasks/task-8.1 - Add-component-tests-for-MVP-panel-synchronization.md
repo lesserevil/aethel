@@ -1,9 +1,10 @@
 ---
 id: TASK-8.1
 title: Add component tests for MVP panel synchronization
-status: To Do
+status: Open
 assignee: []
 created_date: '2026-06-02 22:12'
+updated_date: '2026-06-03 05:17'
 labels: []
 dependencies:
   - TASK-6.1

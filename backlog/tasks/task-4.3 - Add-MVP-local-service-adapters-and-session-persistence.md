@@ -1,9 +1,10 @@
 ---
 id: TASK-4.3
 title: Add MVP local service adapters and session persistence
-status: To Do
+status: Open
 assignee: []
 created_date: '2026-06-02 22:11'
+updated_date: '2026-06-03 05:16'
 labels: []
 dependencies:
   - TASK-4.2

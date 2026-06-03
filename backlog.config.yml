@@ -1,6 +1,6 @@
-project_name: "awhd"
-default_status: "To Do"
-statuses: ["To Do", "In Progress", "Done"]
+project_name: awhd
+default_status: Backlog
+statuses: [Backlog, Open, In Progress, Needs Answer, Needs Human, Needs CI Fix, Needs Rebase, In Review, Decomposed, Duplicate Candidate, Done, Merged, Archived]
 labels: []
 date_format: yyyy-mm-dd
 max_column_width: 20
@@ -12,5 +12,5 @@ filesystem_only: false
 bypass_git_hooks: false
 check_active_branches: true
 active_branch_days: 30
-task_prefix: "task"
-backlog_directory: "backlog"
+task_prefix: task
+backlog_directory: backlog

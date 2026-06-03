@@ -1,7 +1,7 @@
 ---
 id: TASK-8.3
 title: Verify MVP delivery gates and close MVP plan
-status: To Do
+status: Open
 assignee: []
 created_date: '2026-06-02 22:12'
 updated_date: '2026-06-02 23:47'

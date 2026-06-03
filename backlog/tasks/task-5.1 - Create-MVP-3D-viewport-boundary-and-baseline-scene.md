@@ -1,10 +1,10 @@
 ---
 id: TASK-5.1
 title: Create MVP 3D viewport boundary and baseline scene
-status: To Do
+status: Open
 assignee: []
 created_date: '2026-06-02 22:11'
-updated_date: '2026-06-02 23:05'
+updated_date: '2026-06-03 05:17'
 labels: []
 dependencies:
   - TASK-4.1

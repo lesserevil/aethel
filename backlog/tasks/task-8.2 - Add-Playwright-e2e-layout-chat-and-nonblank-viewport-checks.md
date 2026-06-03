@@ -1,9 +1,10 @@
 ---
 id: TASK-8.2
 title: Add Playwright e2e layout chat and nonblank viewport checks
-status: To Do
+status: Open
 assignee: []
 created_date: '2026-06-02 22:12'
+updated_date: '2026-06-03 05:52'
 labels: []
 dependencies:
   - TASK-8.1

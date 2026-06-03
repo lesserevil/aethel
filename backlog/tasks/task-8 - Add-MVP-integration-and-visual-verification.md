@@ -1,9 +1,10 @@
 ---
 id: TASK-8
 title: Add MVP integration and visual verification
-status: To Do
+status: Backlog
 assignee: []
 created_date: '2026-06-02 21:56'
+updated_date: '2026-06-02 23:18'
 labels: []
 dependencies:
   - TASK-5

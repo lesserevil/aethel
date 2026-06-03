@@ -1,18 +1,34 @@
 ---
 id: TASK-3.1
 title: Scaffold Vite React TypeScript web workspace
-status: Done
+status: Merged
 assignee: []
-created_date: '2026-06-02 22:11'
-updated_date: '2026-06-02 23:28'
+created_date: 2026-06-02 22:11
+updated_date: 2026-06-03 06:07
 labels: []
 dependencies: []
 documentation:
-  - plans/aethel_mvp_plan.md
-  - docs/language-and-tooling.md
+- plans/aethel_mvp_plan.md
+- docs/language-and-tooling.md
 parent_task_id: TASK-3
 priority: high
 ordinal: 12000
+oompah.task_costs:
+  total_input_tokens: 54
+  total_output_tokens: 16576
+  total_cost_usd: 0.0
+  by_model:
+    unknown:
+      input_tokens: 54
+      output_tokens: 16576
+      cost_usd: 0.0
+  runs:
+  - profile: default
+    model: unknown
+    input_tokens: 54
+    output_tokens: 16576
+    cost_usd: 0.0
+    recorded_at: '2026-06-02T23:28:54.500491+00:00'
 ---
 
 ## Description
@@ -60,5 +76,31 @@ author: oompah
 created: 2026-06-02 23:21
 
 Agent dispatched (profile: default)
+<!-- COMMENT:END -->
+<!-- COMMENT:BEGIN -->
+index: 2
+author: oompah
+created: 2026-06-02 23:21
+
+Focus: Integration Tests Session Specialist
+<!-- COMMENT:END -->
+<!-- COMMENT:BEGIN -->
+index: 3
+author: oompah
+created: 2026-06-02 23:28
+
+Agent completed successfully in 425s (16630 tokens)
+<!-- COMMENT:END -->
+<!-- COMMENT:BEGIN -->
+index: 4
+author: oompah
+created: 2026-06-02 23:28
+
+Run #1 [attempt=1, profile=default, role=fast -> Claude/default]
+- Turns: 87, Tool calls: 55
+- Tokens: 54 in / 16.6K out [16.6K total]
+- Cost: $0.0000
+- Exit: normal, Duration: 7m 5s
+- Log: TASK-3.1__20260602T232151Z.jsonl
 <!-- COMMENT:END -->
 <!-- COMMENTS:END -->

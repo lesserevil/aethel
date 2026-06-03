@@ -1,9 +1,10 @@
 ---
 id: TASK-6.1
 title: Implement agent control groups in left panel
-status: To Do
+status: Open
 assignee: []
 created_date: '2026-06-02 22:12'
+updated_date: '2026-06-03 05:17'
 labels: []
 dependencies:
   - TASK-4.2

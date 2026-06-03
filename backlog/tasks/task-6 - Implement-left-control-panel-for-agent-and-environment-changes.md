@@ -1,9 +1,10 @@
 ---
 id: TASK-6
 title: Implement left control panel for agent and environment changes
-status: To Do
+status: Backlog
 assignee: []
 created_date: '2026-06-02 21:56'
+updated_date: '2026-06-02 23:18'
 labels: []
 dependencies:
   - TASK-4

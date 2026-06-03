@@ -1,9 +1,10 @@
 ---
 id: TASK-5.2
 title: Bind 3D viewport visuals to session state
-status: To Do
+status: Open
 assignee: []
 created_date: '2026-06-02 22:12'
+updated_date: '2026-06-03 05:17'
 labels: []
 dependencies:
   - TASK-5.1

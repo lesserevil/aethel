@@ -1,10 +1,10 @@
 ---
 id: TASK-4.2
 title: Implement session reducer actions selectors and mutation log
-status: To Do
+status: Open
 assignee: []
 created_date: '2026-06-02 22:11'
-updated_date: '2026-06-02 23:05'
+updated_date: '2026-06-03 05:16'
 labels: []
 dependencies:
   - TASK-4.1

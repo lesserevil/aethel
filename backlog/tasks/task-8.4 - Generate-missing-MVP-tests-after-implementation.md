@@ -1,9 +1,10 @@
 ---
 id: TASK-8.4
 title: Generate missing MVP tests after implementation
-status: To Do
+status: Open
 assignee: []
 created_date: '2026-06-02 23:46'
+updated_date: '2026-06-03 05:53'
 labels: []
 dependencies:
   - TASK-4.3
@@ -14,7 +15,7 @@ dependencies:
 documentation:
   - plans/aethel_mvp_plan.md
 parent_task_id: TASK-8
-priority: medium
+priority: high
 ordinal: 30000
 ---
 

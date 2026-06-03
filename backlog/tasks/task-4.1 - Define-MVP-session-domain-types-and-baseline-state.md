@@ -1,9 +1,10 @@
 ---
 id: TASK-4.1
 title: Define MVP session domain types and baseline state
-status: To Do
+status: Open
 assignee: []
 created_date: '2026-06-02 22:11'
+updated_date: '2026-06-03 05:16'
 labels: []
 dependencies:
   - TASK-3.1

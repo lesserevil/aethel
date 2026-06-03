@@ -1,9 +1,10 @@
 ---
 id: TASK-8.5
 title: Add GitHub Actions CI for MVP quality gates
-status: To Do
+status: Open
 assignee: []
 created_date: '2026-06-02 23:46'
+updated_date: '2026-06-03 05:53'
 labels: []
 dependencies:
   - TASK-3.2
