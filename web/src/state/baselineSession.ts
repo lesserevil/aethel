@@ -1,93 +1,76 @@
-import { 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  SessionState, 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  AgentState, 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  EnvironmentState, 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  SceneObjectState, 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  ChatState, 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  ChatMessage, 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  MutationRecord, 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  UiState 
-} from './sessionTypes';
+import { SessionState } from "./sessionTypes";
 
 /**
  * Baseline session fixture for MVP
- * Includes one default agent, one default environment preset, 
+ * Includes one default agent, one default environment preset,
  * at least three scene objects, empty chat history, and no applied mutations
  */
 export const baselineSession: SessionState = {
-  sessionId: 'baseline-session-001',
+  sessionId: "baseline-session-001",
   agent: {
-    id: 'agent-001',
-    displayName: 'Aethel Agent',
-    personaPreset: 'helpful',
-    tone: 'friendly',
+    id: "agent-001",
+    displayName: "Aethel Agent",
+    personaPreset: "helpful",
+    tone: "friendly",
     behavior: {
       curiosity: 0.7,
       formality: 0.5,
-      skepticism: 0.3
+      skepticism: 0.3,
     },
     appearance: {
-      avatarPreset: 'humanoid',
-      accentColor: '#4CC9F0',
-      idlePose: 'standing'
-    }
+      avatarPreset: "humanoid",
+      accentColor: "#4CC9F0",
+      idlePose: "standing",
+    },
   },
   environment: {
-    preset: 'laboratory',
-    timeOfDay: 'day',
-    lighting: 'bright',
-    ambience: 'peaceful',
-    weather: 'clear',
+    preset: "laboratory",
+    timeOfDay: "day",
+    lighting: "bright",
+    ambience: "peaceful",
+    weather: "clear",
     objects: [
       {
-        id: 'obj-001',
-        label: 'Workstation',
-        type: 'desk',
+        id: "obj-001",
+        label: "Workstation",
+        type: "desk",
         enabled: true,
         position: { x: -2, y: 0, z: 0 },
         rotation: { x: 0, y: 0, z: 0 },
-        scale: { x: 1, y: 1, z: 1 }
+        scale: { x: 1, y: 1, z: 1 },
       },
       {
-        id: 'obj-002',
-        label: 'Display Screen',
-        type: 'monitor',
+        id: "obj-002",
+        label: "Display Screen",
+        type: "monitor",
         enabled: true,
         position: { x: 0, y: 1.5, z: -1 },
         rotation: { x: 0, y: 0, z: 0 },
-        scale: { x: 1, y: 1, z: 1 }
+        scale: { x: 1, y: 1, z: 1 },
       },
       {
-        id: 'obj-003',
-        label: 'Storage Unit',
-        type: 'cabinet',
+        id: "obj-003",
+        label: "Storage Unit",
+        type: "cabinet",
         enabled: true,
         position: { x: 2, y: 0, z: 0 },
         rotation: { x: 0, y: 0, z: 0 },
-        scale: { x: 1, y: 1, z: 1 }
-      }
-    ]
+        scale: { x: 1, y: 1, z: 1 },
+      },
+    ],
   },
   chat: {
     messages: [], // Empty chat history as requested
     pendingMessageId: undefined,
-    error: undefined
+    error: undefined,
   },
   mutations: [], // No applied mutations as requested
   ui: {
-    selectedPanel: 'controls',
-    activeControlTab: 'agent',
+    selectedPanel: "controls",
+    activeControlTab: "agent",
     pendingRequestIds: [],
-    selectedObjectId: undefined
-  }
+    selectedObjectId: undefined,
+  },
 };
 
 /**
@@ -99,21 +82,21 @@ export const baselineSessionWithChat: SessionState = {
     ...baselineSession.chat,
     messages: [
       {
-        id: 'msg-001',
-        content: 'Hello! I am your Aethel agent. How can I assist you today?',
+        id: "msg-001",
+        content: "Hello! I am your Aethel agent. How can I assist you today?",
         timestamp: Date.now() - 10000, // 10 seconds ago
-        sender: 'agent',
+        sender: "agent",
         metadata: {
-          agentId: 'agent-001',
-          confidence: 0.95
-        }
+          agentId: "agent-001",
+          confidence: 0.95,
+        },
       },
       {
-        id: 'msg-002',
-        content: 'Hi there! I\'m looking to understand what this system can do.',
+        id: "msg-002",
+        content: "Hi there! I'm looking to understand what this system can do.",
         timestamp: Date.now() - 8000, // 8 seconds ago
-        sender: 'user'
-      }
-    ]
-  }
+        sender: "user",
+      },
+    ],
+  },
 };

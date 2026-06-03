@@ -1,59 +1,59 @@
-import { SessionState, baselineSession } from './baselineSession';
-import { setAgentIdentity, setAgentBehavior, setAgentAppearance, 
-         setEnvironmentPreset, toggleObjectEnabled, appendChatMessage, 
-         appendMutation, setPendingError, setSelectedObject, resetSession } from './sessionActions';
-import { MutationRecord } from './sessionTypes';
-import { createMutationRecord } from './mutationLog';
+import { SessionState } from "./sessionTypes";
+import { baselineSession } from "./baselineSession";
+import { SceneObjectState } from "./sessionTypes";
 
 // Reducer function that handles all action types
-export const reducer = (state: SessionState = baselineSession, action: any): SessionState => {
+export const reducer = (
+  state: SessionState = baselineSession,
+  action: any,
+): SessionState => {
   // Switch based on action type
   switch (action.type) {
-    case 'session/agent_identity_change': {
+    case "session/agent_identity_change": {
       return {
         ...state,
         agent: {
           ...state.agent,
-          ...action.payload
-        }
+          ...action.payload,
+        },
       };
     }
-    case 'session/agent_behavior_change': {
+    case "session/agent_behavior_change": {
       return {
         ...state,
         agent: {
           ...state.agent,
           behavior: {
             ...state.agent.behavior,
-            ...action.payload
-          }
-        }
+            ...action.payload,
+          },
+        },
       };
     }
-    case 'session/agent_appearance_change': {
+    case "session/agent_appearance_change": {
       return {
         ...state,
         agent: {
           ...state.agent,
           appearance: {
             ...state.agent.appearance,
-            ...action.payload
-          }
-        }
+            ...action.payload,
+          },
+        },
       };
     }
-    case 'session/environment_preset_change': {
+    case "session/environment_preset_change": {
       return {
         ...state,
         environment: {
           ...state.environment,
-          ...action.payload
-        }
+          ...action.payload,
+        },
       };
     }
-    case 'session/object_toggle': {
+    case "session/object_toggle": {
       const { id, enabled } = action.payload;
-      const updatedObjects = state.environment.objects.map(obj => {
+      const updatedObjects = state.environment.objects.map((obj: SceneObjectState) => {
         if (obj.id === id) {
           return { ...obj, enabled };
         }
@@ -63,48 +63,48 @@ export const reducer = (state: SessionState = baselineSession, action: any): Ses
         ...state,
         environment: {
           ...state.environment,
-          objects: updatedObjects
-        }
+          objects: updatedObjects,
+        },
       };
     }
-    case 'session/chat_append': {
+    case "session/chat_append": {
       const newMessage = action.payload.message;
       return {
         ...state,
         chat: {
           ...state.chat,
-          messages: [...state.chat.messages, newMessage]
-        }
+          messages: [...state.chat.messages, newMessage],
+        },
       };
     }
-    case 'session/mutation_append': {
+    case "session/mutation_append": {
       const newMutation = action.payload.mutation;
       // Ensure mutation has id and timestamp; if not, add using helper (not required for MVP)
       return {
         ...state,
-        mutations: [...state.mutations, newMutation]
+        mutations: [...state.mutations, newMutation],
       };
     }
-    case 'session/pending_error': {
+    case "session/pending_error": {
       return {
         ...state,
         chat: {
           ...state.chat,
-          error: action.payload.error
-        }
+          error: action.payload.error,
+        },
       };
     }
-    case 'session/selected_object_change': {
+    case "session/selected_object_change": {
       const { id } = action.payload;
       return {
         ...state,
         ui: {
           ...state.ui,
-          selectedObjectId: id
-        }
+          selectedObjectId: id,
+        },
       };
     }
-    case 'session/reset_baseline': {
+    case "session/reset_baseline": {
       // Preserve chat message history to avoid erasing it
       const preservedMessages = state.chat.messages;
       const baseline = baselineSession;
@@ -112,8 +112,8 @@ export const reducer = (state: SessionState = baselineSession, action: any): Ses
         ...baseline,
         chat: {
           ...baseline.chat,
-          messages: preservedMessages // Keep existing chat messages
-        }
+          messages: preservedMessages, // Keep existing chat messages
+        },
       };
     }
     default: {
