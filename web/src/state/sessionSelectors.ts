@@ -1,11 +1,19 @@
-import { SessionState, ChatMessage, MutationRecord } from './sessionTypes';
-import { createMutationRecord } from './mutationLog';
+import {
+  SessionState,
+  ChatMessage,
+  MutationSource,
+  MutationTarget,
+  MutationStatus,
+} from "./sessionTypes";
+import { createMutationRecord } from "./mutationLog";
 
 /**
  * Builds a ChatContext object from session state.
  * This ensures components get a stable, read-only view of chat data.
  */
-export const selectChatContext = (state: SessionState): {
+export const selectChatContext = (
+  state: SessionState,
+): {
   messages: ChatMessage[];
   pendingMessageId?: string;
   error?: string;
@@ -38,10 +46,10 @@ export const createMutationHelper = ({
   timestamp,
   idGenerator,
 }: {
-  source: string;
-  target: string;
+  source: MutationSource;
+  target: MutationTarget;
   summary: string;
-  status: 'pending' | 'applied' | 'failed';
+  status: MutationStatus;
   payload?: Record<string, unknown>;
   timestamp?: number;
   idGenerator?: () => string;

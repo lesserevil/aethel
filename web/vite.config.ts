@@ -15,4 +15,9 @@ export default defineConfig({
       reporter: ["text", "json", "html"],
     },
   },
+  // Add esbuild options for JSX
+  esbuild: {
+    jsx: "automatic",
+    jsxImportSource: "react",
+  },
 });

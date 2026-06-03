@@ -1,7 +1,8 @@
-import { createContext, useContext, useReducer, ReactNode } from 'react';
-import { SessionState, baselineSession } from './baselineSession';
-import { reducer } from './sessionReducer';
-import { selectChatContext, selectRendererProps } from './sessionSelectors';
+import { createContext, useContext, useReducer, ReactNode } from "react";
+import { SessionState } from "./sessionTypes";
+import { baselineSession } from "./baselineSession";
+import { reducer } from "./sessionReducer";
+import { selectChatContext, selectRendererProps } from "./sessionSelectors";
 
 // Create React context for the session state and dispatch
 export const SessionContext = createContext<{
@@ -22,9 +23,7 @@ export const SessionContext = createContext<{
  * Selectors are provided for components to derive derived data such as
  * chat context and renderer props without mutating state.
  */
-export const SessionProvider: React.FC<{ children: ReactNode }> = ({
-  children,
-}) => {
+export const SessionProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   // Initialize the reducer with the baseline session
   const [state, dispatch] = useReducer(reducer, baselineSession);
 
@@ -49,7 +48,7 @@ export const SessionProvider: React.FC<{ children: ReactNode }> = ({
 export const useSessionState = (): SessionState => {
   const context = useContext(SessionContext);
   if (!context) {
-    throw new Error('useSessionState must be used within a SessionProvider');
+    throw new Error("useSessionState must be used within a SessionProvider");
   }
   return context.state;
 };
@@ -69,7 +68,7 @@ export const useRendererProps = () => {
 export const useSessionDispatch = () => {
   const context = useContext(SessionContext);
   if (!context) {
-    throw new Error('useSessionDispatch must be used within a SessionProvider');
+    throw new Error("useSessionDispatch must be used within a SessionProvider");
   }
   // The dispatch function is untyped loosely; casting is performed elsewhere
   return context.dispatch;

@@ -1,4 +1,5 @@
 import "./app-shell.css";
+import { ControlPanel } from "../components/controls/ControlPanel";
 
 export function AppShell() {
   return (
@@ -10,7 +11,7 @@ export function AppShell() {
         aria-label="Control panel"
         data-testid="control-panel"
       >
-        Control Panel Placeholder
+        <ControlPanel />
       </aside>
 
       <main

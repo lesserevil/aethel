@@ -1,4 +1,9 @@
-import { MutationRecord, MutationSource, MutationTarget, MutationStatus } from './sessionTypes';
+import {
+  MutationRecord,
+  MutationSource,
+  MutationTarget,
+  MutationStatus,
+} from "./sessionTypes";
 
 /**
  * Creates a MutationRecord with a deterministic ID and timestamp.
@@ -33,7 +38,8 @@ export const createMutationRecord = ({
   idGenerator?: () => string;
 }): MutationRecord => {
   // Default deterministic ID generation: "mr-<timestamp>-<seq>"
-  const generateId = idGenerator ?? (() => `mr-${timestamp}-${Math.floor(Math.random() * 1000)}`);
+  const generateId =
+    idGenerator ?? (() => `mr-${timestamp}-${Math.floor(Math.random() * 1000)}`);
   const id = generateId();
 
   return {

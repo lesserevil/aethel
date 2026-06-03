@@ -19,16 +19,19 @@ export interface AgentState {
   displayName: string;
   personaPreset: string; // e.g., "helpful", "analytical", "creative"
   tone: string; // e.g., "friendly", "formal", "casual"
-  behavior: {
-    curiosity: number; // 0-1 scale
-    formality: number; // 0-1 scale
-    skepticism: number; // 0-1 scale
-  };
+  behavior: BehaviorState;
   appearance: {
     avatarPreset: string; // e.g., "robot", "humanoid", "abstract"
     accentColor: string; // CSS color string
     idlePose: string; // e.g., "standing", "waiting", "thinking"
   };
+}
+
+// Behavior state definition
+export interface BehaviorState {
+  curiosity: number; // 0-1 scale
+  formality: number; // 0-1 scale
+  skepticism: number; // 0-1 scale
 }
 
 // Environment state definition
@@ -78,7 +81,7 @@ export interface ChatMessage {
   id: string;
   content: string;
   timestamp: number; // Unix timestamp in milliseconds
-  sender: 'user' | 'agent' | 'system';
+  sender: "user" | "agent" | "system";
   // Optional metadata for agent messages
   metadata?: {
     agentId?: string;
@@ -87,20 +90,24 @@ export interface ChatMessage {
 }
 
 // Mutation record definition
+export type MutationSource = "control-panel" | "chat-confirmed" | "system";
+export type MutationTarget = "agent" | "environment" | "session" | "chat";
+export type MutationStatus = "pending" | "applied" | "failed";
+
 export interface MutationRecord {
   id: string;
   timestamp: number; // Unix timestamp in milliseconds
-  source: 'control-panel' | 'chat-confirmed' | 'system';
-  target: 'agent' | 'environment' | 'session' | 'chat';
+  source: MutationSource;
+  target: MutationTarget;
   summary: string; // Human-readable description of the change
-  status: 'pending' | 'applied' | 'failed';
+  status: MutationStatus;
   // Typed payload for the applied change - keeping minimal for MVP
   payload?: Record<string, unknown>;
 }
 
 // UI state definition
 export interface UiState {
-  selectedPanel: 'controls' | 'chat' | 'viewport'; // Currently active panel
+  selectedPanel: "controls" | "chat" | "viewport"; // Currently active panel
   activeControlTab: string; // e.g., 'agent', 'environment', 'objects'
   pendingRequestIds: string[]; // IDs of requests currently in flight
   selectedObjectId?: string; // Currently selected object in viewport
