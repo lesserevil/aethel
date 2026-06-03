@@ -1,10 +1,10 @@
 ---
 id: TASK-7.1
 title: Implement chat adapter contract and deterministic mock agent
-status: Open
+status: In Progress
 assignee: []
 created_date: '2026-06-02 22:12'
-updated_date: '2026-06-03 05:17'
+updated_date: '2026-06-03 20:16'
 labels: []
 dependencies:
   - TASK-4.2
@@ -39,3 +39,53 @@ Do not import NVIDIA, OpenAI, FastAPI, or other model/backend SDKs in this task.
 - [ ] #2 Mock adapter returns deterministic context-aware responses.
 - [ ] #3 Tests cover normal response, error/cancel behavior, and no state mutation.
 <!-- AC:END -->
+
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+Verification: executed `make test`; all 6 tests pass, confirming required context validation, deterministic responses, abort handling, and no state mutation.
+<!-- SECTION:NOTES:END -->
+
+## Comments
+<!-- COMMENTS:BEGIN -->
+<!-- COMMENT:BEGIN -->
+index: 1
+author: oompah
+created: 2026-06-03 20:02
+
+Agent dispatched (profile: default)
+<!-- COMMENT:END -->
+<!-- COMMENT:BEGIN -->
+index: 2
+author: oompah
+created: 2026-06-03 20:03
+
+Focus: Feature Developer
+<!-- COMMENT:END -->
+<!-- COMMENT:BEGIN -->
+index: 3
+author: oompah
+created: 2026-06-03 20:09
+
+Agent completed successfully in 383s (2682737 tokens)
+<!-- COMMENT:END -->
+<!-- COMMENT:BEGIN -->
+index: 4
+author: oompah
+created: 2026-06-03 20:09
+
+Run #1 [attempt=1, profile=default, role=fast -> InferenceAPI/nvidia/nvidia/Nemotron-3-Nano-30B-A3B]
+- Turns: 88, Tool calls: 87
+- Tokens: 2.7M in / 25.4K out [2.7M total]
+- Cost: $0.0000
+- Exit: normal, Duration: 6m 23s
+- Log: TASK-7.1__20260603T200301Z.jsonl
+<!-- COMMENT:END -->
+<!-- COMMENT:BEGIN -->
+index: 5
+author: oompah
+created: 2026-06-03 20:11
+
+Agent dispatched (profile: default)
+<!-- COMMENT:END -->
+<!-- COMMENTS:END -->
