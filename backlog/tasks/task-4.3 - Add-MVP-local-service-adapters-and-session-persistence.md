@@ -1,10 +1,10 @@
 ---
 id: TASK-4.3
 title: Add MVP local service adapters and session persistence
-status: Open
+status: In Progress
 assignee: []
 created_date: '2026-06-02 22:11'
-updated_date: '2026-06-03 05:16'
+updated_date: '2026-06-04 16:46'
 labels: []
 dependencies:
   - TASK-4.2
@@ -39,3 +39,34 @@ Do not make UI components import browser storage directly. Do not persist provid
 - [ ] #2 sessionStorage helpers load/save serializable SessionState with defensive parsing.
 - [ ] #3 Tests cover valid, invalid, missing, and corrupt persistence cases.
 <!-- AC:END -->
+
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+Understanding: services files exist from prior work. 40 vitest tests pass. make lint fails with ~30 TS errors. Fixed: apiInterfaces.ts missing imports, sessionTypes.ts missing type aliases, sessionActions.ts invalid as-const and ChatMessage import, sessionReducer.ts bad import path, various unused imports.
+<!-- SECTION:NOTES:END -->
+
+## Comments
+<!-- COMMENTS:BEGIN -->
+<!-- COMMENT:BEGIN -->
+index: 1
+author: oompah
+created: 2026-06-04 16:20
+
+Agent dispatched (profile: default)
+<!-- COMMENT:END -->
+<!-- COMMENT:BEGIN -->
+index: 2
+author: oompah
+created: 2026-06-04 16:20
+
+Focus: Integration Tests Session Specialist
+<!-- COMMENT:END -->
+<!-- COMMENT:BEGIN -->
+index: 3
+author: oompah
+created: 2026-06-04 16:42
+
+Agent dispatched (profile: default)
+<!-- COMMENT:END -->
+<!-- COMMENTS:END -->
