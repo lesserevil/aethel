@@ -1,5 +1,7 @@
 import "./app-shell.css";
 import { ControlPanel } from "../components/controls/ControlPanel";
+import { AethelViewport } from "../components/viewport";
+import { baselineSession } from "../state/baselineSession";
 
 export function AppShell() {
   return (
@@ -7,9 +9,7 @@ export function AppShell() {
       <aside
         className="app-shell__control-panel"
         id="control-panel"
-        role="region"
-        aria-label="Control panel"
-        data-testid="control-panel"
+        data-testid="control-panel-container"
       >
         <ControlPanel />
       </aside>
@@ -21,7 +21,11 @@ export function AppShell() {
         aria-label="3D viewport"
         data-testid="viewport-panel"
       >
-        Viewport Panel Placeholder
+        <AethelViewport
+          agent={baselineSession.agent}
+          environment={baselineSession.environment}
+          selectedObjectId={baselineSession.ui.selectedObjectId}
+        />
       </main>
 
       <aside

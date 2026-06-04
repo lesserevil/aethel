@@ -20,18 +20,18 @@
 // DEALINGS IN THE SOFTWARE.
 //
 
-import type { AgentState } from '../state/sessionTypes';
-import type { EnvironmentState } from '../state/sessionTypes';
-import type { ChatMessage } from '../state/sessionTypes';
+import type { AgentState } from "../state/sessionTypes";
+import type { EnvironmentState } from "../state/sessionTypes";
+import type { ChatMessage } from "../state/sessionTypes";
 
 /**
  * Error type used by the chat adapter.
  */
 export class ChatError extends Error {
-  public readonly name = 'ChatError';
+  public readonly name = "ChatError";
   constructor(message: string) {
     super(message);
-    this.name = 'ChatError';
+    this.name = "ChatError";
   }
 }
 
@@ -94,24 +94,24 @@ export const mockChatAdapter: ChatAdapter = {
   async send(request, signal) {
     // Validate required fields
     if (!request.sessionId) {
-      throw new ChatError('sessionId is required');
+      throw new ChatError("sessionId is required");
     }
     if (!request.userMessage) {
-      throw new ChatError('userMessage is required');
+      throw new ChatError("userMessage is required");
     }
     if (!request.agentState) {
-      throw new ChatError('agentState is required');
+      throw new ChatError("agentState is required");
     }
     if (!request.environmentState) {
-      throw new ChatError('environmentState is required');
+      throw new ChatError("environmentState is required");
     }
     if (!request.recentMessages) {
-      throw new ChatError('recentMessages is required');
+      throw new ChatError("recentMessages is required");
     }
 
     // Cancellation support
     if (signal?.aborted) {
-      throw new ChatError('Request aborted');
+      throw new ChatError("Request aborted");
     }
 
     // Extract context information
@@ -122,13 +122,12 @@ export const mockChatAdapter: ChatAdapter = {
     let response = [
       `Response from ${displayName} (${personaPreset})`,
       `Environment: ${environmentPreset}`,
-    ].join(' ');
+    ].join(" ");
 
     // Optionally include snippet of recent user message for context
     const lastUserMessage = request.recentMessages
-      .filter(msg => msg.sender === 'user')
-      .pop()
-      ?.content;
+      .filter((msg) => msg.sender === "user")
+      .pop()?.content;
     if (lastUserMessage) {
       response += ` Context: "${lastUserMessage.substring(0, 30)}"`;
     }
@@ -136,7 +135,7 @@ export const mockChatAdapter: ChatAdapter = {
     // Return deterministic response with stable message ID
     return {
       response,
-      newMessageId: 'mock-message-id',
+      newMessageId: "mock-message-id",
     };
   },
 };

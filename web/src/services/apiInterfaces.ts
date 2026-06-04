@@ -1,6 +1,8 @@
 // TypeScript Interfaces for Future REST API Integration
 // These interfaces define the shape of requests and responses for session and mutation APIs
 
+import type { SessionState, MutationRecord } from "../state/sessionTypes";
+
 /** Interface for session-related API operations */
 export interface SessionAPI {
   /** Retrieve the current session state */
@@ -23,9 +25,9 @@ export interface MutationAPI {
 
 /** Shape of a control panel mutation payload for REST */
 export interface ControlPanelMutationPayload {
-  source: 'control-panel' | 'chat-confirmed' | 'system';
-  target: 'agent' | 'environment' | 'session' | 'chat';
+  source: "control-panel" | "chat-confirmed" | "system";
+  target: "agent" | "environment" | "session" | "chat";
   summary: string;
-  status: 'pending' | 'applied' | 'failed';
+  status: "pending" | "applied" | "failed";
   payload?: Record<string, unknown>;
 }
