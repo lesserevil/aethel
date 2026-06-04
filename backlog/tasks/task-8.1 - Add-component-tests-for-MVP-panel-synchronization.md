@@ -4,7 +4,7 @@ title: Add component tests for MVP panel synchronization
 status: Done
 assignee: []
 created_date: '2026-06-02 22:12'
-updated_date: '2026-06-04 17:10'
+updated_date: '2026-06-04 17:18'
 labels: []
 dependencies:
   - TASK-6.1
@@ -54,7 +54,7 @@ DISCOVERY (2026-06-04): The panelSynchronization.test.tsx file already existed w
 ## Final Summary
 
 <!-- SECTION:FINAL_SUMMARY:BEGIN -->
-23 component/integration tests in web/src/app/panelSynchronization.test.tsx verified passing. Tests cover all 3 required synchronization scenarios (agent appearance, agent behavior/persona, environment/object) across 4 test suites. All 183 project tests pass. WebGL stubbed via R3F/Drei mocks. Draft-vs-applied isolation verified. MutationRecord entries, ChatPanel system messages, and ViewportPanel renderer props all asserted.
+Merge conflict resolved: rebased TASK-8.1 onto origin/dev. The original implementation commit (9b720d8) was already in dev as commit 0978370, so it was skipped during rebase. The two metadata/verification commits were cleanly rebased on top. All 273 tests pass (17 test files). Branch force-pushed. Merge-conflict label removed.
 <!-- SECTION:FINAL_SUMMARY:END -->
 
 ## Comments
