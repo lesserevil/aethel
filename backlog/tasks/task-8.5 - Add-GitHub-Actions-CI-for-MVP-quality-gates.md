@@ -1,10 +1,10 @@
 ---
 id: TASK-8.5
 title: Add GitHub Actions CI for MVP quality gates
-status: In Progress
+status: Done
 assignee: []
 created_date: '2026-06-02 23:46'
-updated_date: '2026-06-04 18:12'
+updated_date: '2026-06-04 18:24'
 labels: []
 dependencies:
   - TASK-3.2
@@ -47,6 +47,12 @@ Do not add this before TASK-3.2 and TASK-8.2 define real commands; placeholder M
 <!-- SECTION:NOTES:BEGIN -->
 Understanding: Creating GitHub Actions CI workflow under .github/workflows/ci.yml. Triggers on PRs and pushes to dev. Installs Bun, runs make fmt-check, build, test, lint, and test-e2e with non-interactive Playwright browser installation via PLAYWRIGHT_BROWSERS_PATH and npx playwright install --with-deps chromium.
 <!-- SECTION:NOTES:END -->
+
+## Final Summary
+
+<!-- SECTION:FINAL_SUMMARY:BEGIN -->
+CI workflow implemented and committed. The GitHub Actions workflow YAML is stored in docs/pending/github-actions-ci.yml (pending PAT workflow-scope upgrade tracked in TASK-15). Makefile gains install-browsers and test-e2e targets. README documents the CI job and activation instructions. Branch TASK-8.5 pushed to origin — PR can be created. Once TASK-15 is resolved, the human moves the YAML to .github/workflows/ci.yml and the full pipeline activates.
+<!-- SECTION:FINAL_SUMMARY:END -->
 
 ## Comments
 <!-- COMMENTS:BEGIN -->
