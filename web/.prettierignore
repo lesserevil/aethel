@@ -1,5 +1,6 @@
 dist/
 coverage/
 playwright-report/
+test-results/
 bun.lockb
 *.lock
