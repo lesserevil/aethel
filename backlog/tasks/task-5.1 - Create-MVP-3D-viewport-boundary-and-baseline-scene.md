@@ -1,10 +1,10 @@
 ---
 id: TASK-5.1
 title: Create MVP 3D viewport boundary and baseline scene
-status: In Progress
+status: Done
 assignee: []
 created_date: '2026-06-02 22:11'
-updated_date: '2026-06-04 02:35'
+updated_date: '2026-06-04 02:46'
 labels: []
 dependencies:
   - TASK-4.1
@@ -45,6 +45,12 @@ A mounted but blank canvas is not acceptable. Do not store React Three Fiber or 
 <!-- SECTION:NOTES:BEGIN -->
 UNDERSTANDING: Implementing AethelViewport with React Three Fiber. Existing types in sessionTypes.ts, baseline session in baselineSession.ts. Plan: create viewport/ with types.ts + scene sub-components + AethelViewport.tsx + tests, wire into AppShell. R3F v8 + drei v9 installed.
 <!-- SECTION:NOTES:END -->
+
+## Final Summary
+
+<!-- SECTION:FINAL_SUMMARY:BEGIN -->
+Implemented AethelViewport MVP 3D viewport under web/src/components/viewport/ using React Three Fiber. Delivers: (1) AethelViewport component with typed props (AgentState, EnvironmentState, selectedObjectId, onViewEvent, onReady); (2) procedural primitive scene — floor + 4 boundary walls + ambient/directional lighting (SceneEnvironment), box+sphere agent avatar with Html name label (AgentAvatar), and 3+ typed primitive scene objects (SceneObjects); (3) OrbitControls with camera framing on agent; (4) data-viewport-ready attribute as deterministic ready signal for e2e hooks; (5) 13 AethelViewport unit tests + 4 AppShell integration tests, all passing. AppShell wired with baselineSession. Canvas fills viewport panel with no decorative borders. No GLTF or external art assets used.
+<!-- SECTION:FINAL_SUMMARY:END -->
 
 ## Comments
 <!-- COMMENTS:BEGIN -->
