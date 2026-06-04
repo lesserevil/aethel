@@ -1,10 +1,10 @@
 ---
 id: TASK-6.2
 title: Implement environment controls object toggles and reset flow
-status: In Progress
+status: Done
 assignee: []
 created_date: '2026-06-02 22:12'
-updated_date: '2026-06-03 20:44'
+updated_date: '2026-06-04 16:37'
 labels: []
 dependencies:
   - TASK-4.2
@@ -41,8 +41,6 @@ Do not make reset delete chat history. Do not leave stale draft values or pendin
 - [x] #3 Reset restores baseline agent/environment state while preserving chat history.
 <!-- AC:END -->
 
-
-
 ## Implementation Notes
 
 <!-- SECTION:NOTES:BEGIN -->
@@ -61,7 +59,15 @@ Implementation complete. Created ControlPanel component with:
 - Reset Scene button that restores baseline, records reset mutation, clears draft, preserves chat history
 
 All state tests pass (24/24). Build, lint, and fmt-check pass. Dev server starts successfully.
+
+Duplicate investigation (2026-06-04): Confirmed TASK-6.2 is the original task, not a duplicate of any other task. No other task covers environment controls + object toggles + reset flow. Implementation committed at 257b061 and task remains Done.
 <!-- SECTION:NOTES:END -->
+
+## Final Summary
+
+<!-- SECTION:FINAL_SUMMARY:BEGIN -->
+Merge conflict resolved: rebased TASK-6.2 onto origin/dev. The original implementation commit was already in dev (77f94cd), so it was skipped during rebase. The 4 subsequent bookkeeping commits were cleanly applied. All 270 tests pass. Force-pushed to origin/TASK-6.2.
+<!-- SECTION:FINAL_SUMMARY:END -->
 
 ## Comments
 <!-- COMMENTS:BEGIN -->
@@ -467,5 +473,26 @@ author: oompah
 created: 2026-06-03 20:35
 
 Retrying (attempt #4, agent: deep)
+<!-- COMMENT:END -->
+<!-- COMMENT:BEGIN -->
+index: 50
+author: oompah
+created: 2026-06-04 16:20
+
+Agent dispatched (profile: default)
+<!-- COMMENT:END -->
+<!-- COMMENT:BEGIN -->
+index: 51
+author: oompah
+created: 2026-06-04 16:20
+
+Focus: Duplicate Investigator
+<!-- COMMENT:END -->
+<!-- COMMENT:BEGIN -->
+index: 52
+author: oompah
+created: 2026-06-04 16:29
+
+Agent dispatched (profile: default)
 <!-- COMMENT:END -->
 <!-- COMMENTS:END -->
