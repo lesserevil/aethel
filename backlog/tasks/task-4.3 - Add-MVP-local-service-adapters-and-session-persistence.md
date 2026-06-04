@@ -1,40 +1,18 @@
 ---
 id: TASK-4.3
 title: Add MVP local service adapters and session persistence
-status: In Progress
+status: Done
 assignee: []
-created_date: 2026-06-02 22:11
-updated_date: 2026-06-04 17:03
+created_date: '2026-06-02 22:11'
+updated_date: '2026-06-04 17:04'
 labels:
-- merge-conflict
+  - merge-conflict
 dependencies:
-- TASK-4.2
+  - TASK-4.2
 documentation:
-- plans/aethel_mvp_plan.md
+  - plans/aethel_mvp_plan.md
 parent_task_id: TASK-4
 ordinal: 17000
-oompah.task_costs:
-  total_input_tokens: 95
-  total_output_tokens: 25297
-  total_cost_usd: 0.0
-  by_model:
-    unknown:
-      input_tokens: 95
-      output_tokens: 25297
-      cost_usd: 0.0
-  runs:
-  - profile: default
-    model: unknown
-    input_tokens: 50
-    output_tokens: 17572
-    cost_usd: 0.0
-    recorded_at: '2026-06-04T16:49:24.941047+00:00'
-  - profile: standard
-    model: unknown
-    input_tokens: 45
-    output_tokens: 7725
-    cost_usd: 0.0
-    recorded_at: '2026-06-04T17:01:26.956855+00:00'
 ---
 
 ## Description
