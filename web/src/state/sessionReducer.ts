@@ -1,10 +1,12 @@
-import { SessionState } from "./sessionTypes";
+import { SessionState, AgentState, SceneObjectState } from "./sessionTypes";
 import { baselineSession } from "./baselineSession";
-import { SceneObjectState } from "./sessionTypes";
 
-// Reducer function that handles all action types
+// Reducer function that handles all action types.
+// The action parameter is `any` because a full discriminated-union type would
+// require exporting every action shape; that can be tightened incrementally.
 export const reducer = (
   state: SessionState = baselineSession,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   action: any,
 ): SessionState => {
   // Switch based on action type
@@ -38,6 +40,26 @@ export const reducer = (
           appearance: {
             ...state.agent.appearance,
             ...action.payload,
+          },
+        },
+      };
+    }
+    case "session/agent_full_change": {
+      // Single-dispatch full agent update used by the Apply Agent Changes flow.
+      // Deep-merge nested behavior and appearance so callers can pass partial objects.
+      const payload = action.payload as Partial<Omit<AgentState, "id">>;
+      return {
+        ...state,
+        agent: {
+          ...state.agent,
+          ...payload,
+          behavior: {
+            ...state.agent.behavior,
+            ...(payload.behavior ?? {}),
+          },
+          appearance: {
+            ...state.agent.appearance,
+            ...(payload.appearance ?? {}),
           },
         },
       };
@@ -79,7 +101,6 @@ export const reducer = (
     }
     case "session/mutation_append": {
       const newMutation = action.payload.mutation;
-      // Ensure mutation has id and timestamp; if not, add using helper (not required for MVP)
       return {
         ...state,
         mutations: [...state.mutations, newMutation],
@@ -107,17 +128,15 @@ export const reducer = (
     case "session/reset_baseline": {
       // Preserve chat message history to avoid erasing it
       const preservedMessages = state.chat.messages;
-      const baseline = baselineSession;
       return {
-        ...baseline,
+        ...baselineSession,
         chat: {
-          ...baseline.chat,
+          ...baselineSession.chat,
           messages: preservedMessages, // Keep existing chat messages
         },
       };
     }
     default: {
-      // For unknown actions, return the current state unchanged
       return state;
     }
   }

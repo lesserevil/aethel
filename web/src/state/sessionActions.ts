@@ -10,6 +10,7 @@ import {
 export const SET_AGENT_IDENTITY_CHANGE = "session/agent_identity_change" as const;
 export const SET_AGENT_BEHAVIOR_CHANGE = "session/agent_behavior_change" as const;
 export const SET_AGENT_APPEARANCE_CHANGE = "session/agent_appearance_change" as const;
+export const SET_AGENT_FULL_CHANGE = "session/agent_full_change" as const;
 export const SET_ENVIRONMENT_PRESET_CHANGE = "session/environment_preset_change" as const;
 export const SET_OBJECT_TOGGLE = "session/object_toggle" as const;
 export const APPEND_CHAT_MESSAGE = "session/chat_append" as const;
@@ -31,6 +32,16 @@ export const setAgentBehavior = (updates: Partial<BehaviorState>) => ({
 
 export const setAgentAppearance = (updates: Partial<AgentState["appearance"]>) => ({
   type: SET_AGENT_APPEARANCE_CHANGE,
+  payload: updates,
+});
+
+/**
+ * Atomically replace all mutable agent fields (identity + behavior + appearance)
+ * in one dispatch — used by the Apply Agent Changes flow so a single state
+ * transition covers the whole apply action.
+ */
+export const setAgentFull = (updates: Partial<Omit<AgentState, "id">>) => ({
+  type: SET_AGENT_FULL_CHANGE,
   payload: updates,
 });
 
