@@ -3,13 +3,13 @@ id: TASK-7.1
 title: Implement chat adapter contract and deterministic mock agent
 status: In Progress
 assignee: []
-created_date: 2026-06-02 22:12
-updated_date: 2026-06-04 16:20
+created_date: '2026-06-02 22:12'
+updated_date: '2026-06-04 16:34'
 labels: []
 dependencies:
-- TASK-4.2
+  - TASK-4.2
 documentation:
-- plans/aethel_mvp_plan.md
+  - plans/aethel_mvp_plan.md
 parent_task_id: TASK-7
 priority: high
 ordinal: 22000
@@ -35,15 +35,19 @@ Do not import NVIDIA, OpenAI, FastAPI, or other model/backend SDKs in this task.
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 Chat adapter types include current agent, environment, and recent message context.
-- [ ] #2 Mock adapter returns deterministic context-aware responses.
-- [ ] #3 Tests cover normal response, error/cancel behavior, and no state mutation.
+- [x] #1 Chat adapter types include current agent, environment, and recent message context.
+- [x] #2 Mock adapter returns deterministic context-aware responses.
+- [x] #3 Tests cover normal response, error/cancel behavior, and no state mutation.
 <!-- AC:END -->
+
+
 
 ## Implementation Notes
 
 <!-- SECTION:NOTES:BEGIN -->
 Verification: executed `make test`; all 6 tests pass, confirming required context validation, deterministic responses, abort handling, and no state mutation.
+
+Verification: All 6 chat adapter tests pass (33 total). Implementation verified correct: required field validation, deterministic context-aware responses referencing agent displayName/personaPreset and environment preset, AbortSignal cancellation, no state mutation. Branch pushed to origin/TASK-7.1.
 <!-- SECTION:NOTES:END -->
 
 ## Comments
