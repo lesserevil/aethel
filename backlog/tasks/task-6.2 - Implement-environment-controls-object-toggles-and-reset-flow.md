@@ -3,14 +3,14 @@ id: TASK-6.2
 title: Implement environment controls object toggles and reset flow
 status: In Progress
 assignee: []
-created_date: 2026-06-02 22:12
-updated_date: 2026-06-04 16:20
+created_date: '2026-06-02 22:12'
+updated_date: '2026-06-04 16:25'
 labels: []
 dependencies:
-- TASK-4.2
-- TASK-3.3
+  - TASK-4.2
+  - TASK-3.3
 documentation:
-- plans/aethel_mvp_plan.md
+  - plans/aethel_mvp_plan.md
 parent_task_id: TASK-6
 priority: high
 ordinal: 21000
@@ -41,8 +41,6 @@ Do not make reset delete chat history. Do not leave stale draft values or pendin
 - [x] #3 Reset restores baseline agent/environment state while preserving chat history.
 <!-- AC:END -->
 
-
-
 ## Implementation Notes
 
 <!-- SECTION:NOTES:BEGIN -->
@@ -61,6 +59,8 @@ Implementation complete. Created ControlPanel component with:
 - Reset Scene button that restores baseline, records reset mutation, clears draft, preserves chat history
 
 All state tests pass (24/24). Build, lint, and fmt-check pass. Dev server starts successfully.
+
+Verification complete: All 24 tests pass. Build succeeds. Branch pushed to origin/TASK-6.2. Implementation covers all acceptance criteria: environment preset select, time/lighting/ambience/weather controls, object toggles, Apply button with validation+mutation+chat message, Reset button preserving chat history.
 <!-- SECTION:NOTES:END -->
 
 ## Comments
