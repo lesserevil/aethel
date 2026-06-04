@@ -1,10 +1,10 @@
 ---
 id: TASK-8.1
 title: Add component tests for MVP panel synchronization
-status: In Progress
+status: Done
 assignee: []
 created_date: '2026-06-02 22:12'
-updated_date: '2026-06-04 17:07'
+updated_date: '2026-06-04 17:10'
 labels: []
 dependencies:
   - TASK-6.1
@@ -38,9 +38,9 @@ Use a renderer stub or spy for these tests rather than depending on WebGL. Full 
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 Tests verify agent appearance, behavior/persona, and environment/object changes across panels.
-- [ ] #2 Tests assert mutation records and chat system/context entries are produced.
-- [ ] #3 Tests assert viewport boundary receives updated session-derived props.
+- [x] #1 Tests verify agent appearance, behavior/persona, and environment/object changes across panels.
+- [x] #2 Tests assert mutation records and chat system/context entries are produced.
+- [x] #3 Tests assert viewport boundary receives updated session-derived props.
 <!-- AC:END -->
 
 ## Implementation Notes
@@ -50,6 +50,12 @@ UNDERSTANDING: Task requires component/integration tests that render AppShell wi
 
 DISCOVERY (2026-06-04): The panelSynchronization.test.tsx file already existed with a complete test suite of 23 integration tests covering all 3 required scenarios. Running 'bunx vitest run' after 'bun install' confirmed all 183 tests pass including the 23 panel synchronization tests. No code changes were needed — the tests were already implemented and passing.
 <!-- SECTION:NOTES:END -->
+
+## Final Summary
+
+<!-- SECTION:FINAL_SUMMARY:BEGIN -->
+23 component/integration tests in web/src/app/panelSynchronization.test.tsx verified passing. Tests cover all 3 required synchronization scenarios (agent appearance, agent behavior/persona, environment/object) across 4 test suites. All 183 project tests pass. WebGL stubbed via R3F/Drei mocks. Draft-vs-applied isolation verified. MutationRecord entries, ChatPanel system messages, and ViewportPanel renderer props all asserted.
+<!-- SECTION:FINAL_SUMMARY:END -->
 
 ## Comments
 <!-- COMMENTS:BEGIN -->
