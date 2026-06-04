@@ -1,10 +1,4 @@
-import {
-  SessionState,
-  ChatMessage,
-  MutationSource,
-  MutationTarget,
-  MutationStatus,
-} from "./sessionTypes";
+import { SessionState, ChatMessage, MutationRecord } from "./sessionTypes";
 import { createMutationRecord } from "./mutationLog";
 
 /**
@@ -45,10 +39,10 @@ export const createMutationHelper = ({
   timestamp,
   idGenerator,
 }: {
-  source: MutationSource;
-  target: MutationTarget;
+  source: string;
+  target: string;
   summary: string;
-  status: MutationStatus;
+  status: "pending" | "applied" | "failed";
   payload?: Record<string, unknown>;
   timestamp?: number;
   idGenerator?: () => string;

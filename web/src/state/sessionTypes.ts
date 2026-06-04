@@ -31,7 +31,11 @@ export interface AgentState {
   displayName: string;
   personaPreset: string; // e.g., "helpful", "analytical", "creative"
   tone: string; // e.g., "friendly", "formal", "casual"
-  behavior: BehaviorState;
+  behavior: {
+    curiosity: number; // 0-1 scale
+    formality: number; // 0-1 scale
+    skepticism: number; // 0-1 scale
+  };
   appearance: {
     avatarPreset: string; // e.g., "robot", "humanoid", "abstract"
     accentColor: string; // CSS color string
@@ -98,10 +102,10 @@ export interface ChatMessage {
 export interface MutationRecord {
   id: string;
   timestamp: number; // Unix timestamp in milliseconds
-  source: MutationSource;
-  target: MutationTarget;
+  source: "control-panel" | "chat-confirmed" | "system";
+  target: "agent" | "environment" | "session" | "chat";
   summary: string; // Human-readable description of the change
-  status: MutationStatus;
+  status: "pending" | "applied" | "failed";
   // Typed payload for the applied change - keeping minimal for MVP
   payload?: Record<string, unknown>;
 }
