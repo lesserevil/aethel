@@ -1,5 +1,5 @@
-// Tests for SceneEnvironment — primarily the deriveSceneLighting pure function.
-// These are unit tests for the lighting derivation logic that drives visible scene output.
+// Tests for SceneEnvironment — deriveSceneLighting pure function and
+// data attribute exposure for environment state testability.
 
 import { describe, it, expect } from "vitest";
 import { deriveSceneLighting } from "./SceneEnvironment";
