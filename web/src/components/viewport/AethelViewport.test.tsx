@@ -10,6 +10,9 @@
 //   - onReady callback fires after mount
 //   - onViewEvent is forwarded from scene interactions
 //   - The agent's displayName appears in the scene
+//   - Agent appearance changes (avatarPreset, idlePose, accentColor) are reflected
+//   - Environment state is passed through to SceneEnvironment
+//   - Viewport does NOT mutate state — only emits events via onViewEvent
 
 import { describe, it, expect, vi, beforeAll } from "vitest";
 import { render, screen, waitFor } from "@testing-library/react";
@@ -127,6 +130,8 @@ beforeAll(() => {
 // ── Tests ──────────────────────────────────────────────────────────────────
 
 describe("AethelViewport", () => {
+  // ── Mount and basic structure ────────────────────────────────────────
+
   it("renders without crashing", () => {
     expect(() =>
       render(<AethelViewport agent={testAgent} environment={testEnvironment} />),
@@ -168,9 +173,24 @@ describe("AethelViewport", () => {
     expect(screen.getByTestId("r3f-canvas")).toBeInTheDocument();
   });
 
+  // ── Agent appearance state → visible output ──────────────────────────
+
   it("renders agent name label with displayName", () => {
     render(<AethelViewport agent={testAgent} environment={testEnvironment} />);
     expect(screen.getByTestId("agent-name-label")).toHaveTextContent("Test Agent");
+  });
+
+  it("renders updated displayName when agent prop changes", () => {
+    const { rerender } = render(
+      <AethelViewport agent={testAgent} environment={testEnvironment} />,
+    );
+    rerender(
+      <AethelViewport
+        agent={{ ...testAgent, displayName: "Updated Agent" }}
+        environment={testEnvironment}
+      />,
+    );
+    expect(screen.getByTestId("agent-name-label")).toHaveTextContent("Updated Agent");
   });
 
   it("renders agent avatar elements", () => {
@@ -180,12 +200,68 @@ describe("AethelViewport", () => {
     expect(screen.getByTestId("agent-head")).toBeInTheDocument();
   });
 
-  it("renders all three enabled scene objects", () => {
-    render(<AethelViewport agent={testAgent} environment={testEnvironment} />);
-    expect(screen.getByTestId("scene-object-obj-001")).toBeInTheDocument();
-    expect(screen.getByTestId("scene-object-obj-002")).toBeInTheDocument();
-    expect(screen.getByTestId("scene-object-obj-003")).toBeInTheDocument();
+  it("reflects avatarPreset on agent-avatar data attribute", () => {
+    render(
+      <AethelViewport
+        agent={{
+          ...testAgent,
+          appearance: { ...testAgent.appearance, avatarPreset: "robot" },
+        }}
+        environment={testEnvironment}
+      />,
+    );
+    expect(screen.getByTestId("agent-avatar")).toHaveAttribute(
+      "data-avatar-preset",
+      "robot",
+    );
   });
+
+  it("reflects idlePose on agent-avatar data attribute", () => {
+    render(
+      <AethelViewport
+        agent={{
+          ...testAgent,
+          appearance: { ...testAgent.appearance, idlePose: "thinking" },
+        }}
+        environment={testEnvironment}
+      />,
+    );
+    expect(screen.getByTestId("agent-avatar")).toHaveAttribute(
+      "data-idle-pose",
+      "thinking",
+    );
+  });
+
+  it("applies accent color from agent state to the name label", () => {
+    render(
+      <AethelViewport
+        agent={{
+          ...testAgent,
+          appearance: { ...testAgent.appearance, accentColor: "#FF6B6B" },
+        }}
+        environment={testEnvironment}
+      />,
+    );
+    const label = screen.getByTestId("agent-name-label");
+    expect(label).toHaveStyle({ color: "#FF6B6B" });
+  });
+
+  it("renders abstract avatarPreset without crashing (sphere body)", () => {
+    expect(() =>
+      render(
+        <AethelViewport
+          agent={{
+            ...testAgent,
+            appearance: { ...testAgent.appearance, avatarPreset: "abstract" },
+          }}
+          environment={testEnvironment}
+        />,
+      ),
+    ).not.toThrow();
+    expect(screen.getByTestId("agent-body")).toBeInTheDocument();
+  });
+
+  // ── Environment state → scene output ────────────────────────────────
 
   it("renders scene environment elements", () => {
     render(<AethelViewport agent={testAgent} environment={testEnvironment} />);
@@ -196,6 +272,59 @@ describe("AethelViewport", () => {
     expect(screen.getByTestId("wall-east")).toBeInTheDocument();
     expect(screen.getByTestId("wall-west")).toBeInTheDocument();
   });
+
+  it("renders ambient and directional lights from SceneEnvironment", () => {
+    render(<AethelViewport agent={testAgent} environment={testEnvironment} />);
+    expect(screen.getByTestId("ambient-light")).toBeInTheDocument();
+    expect(screen.getByTestId("key-light")).toBeInTheDocument();
+    expect(screen.getByTestId("fill-light")).toBeInTheDocument();
+  });
+
+  it("renders all three enabled scene objects", () => {
+    render(<AethelViewport agent={testAgent} environment={testEnvironment} />);
+    expect(screen.getByTestId("scene-object-obj-001")).toBeInTheDocument();
+    expect(screen.getByTestId("scene-object-obj-002")).toBeInTheDocument();
+    expect(screen.getByTestId("scene-object-obj-003")).toBeInTheDocument();
+  });
+
+  it("does not render disabled scene objects", () => {
+    const envWithDisabled: EnvironmentState = {
+      ...testEnvironment,
+      objects: [
+        ...testEnvironment.objects,
+        {
+          id: "obj-disabled",
+          label: "Hidden Object",
+          type: "chair",
+          enabled: false,
+        },
+      ],
+    };
+    render(<AethelViewport agent={testAgent} environment={envWithDisabled} />);
+    expect(screen.queryByTestId("scene-object-obj-disabled")).not.toBeInTheDocument();
+  });
+
+  it("shows previously disabled object when environment prop updates to enable it", () => {
+    const envWithDisabled: EnvironmentState = {
+      ...testEnvironment,
+      objects: testEnvironment.objects.map((o) =>
+        o.id === "obj-002" ? { ...o, enabled: false } : o,
+      ),
+    };
+    const { rerender } = render(
+      <AethelViewport agent={testAgent} environment={envWithDisabled} />,
+    );
+    expect(screen.queryByTestId("scene-object-obj-002")).not.toBeInTheDocument();
+
+    const envWithEnabled: EnvironmentState = {
+      ...testEnvironment,
+      objects: testEnvironment.objects.map((o) => ({ ...o, enabled: true })),
+    };
+    rerender(<AethelViewport agent={testAgent} environment={envWithEnabled} />);
+    expect(screen.getByTestId("scene-object-obj-002")).toBeInTheDocument();
+  });
+
+  // ── View events (no direct state mutation) ───────────────────────────
 
   it("forwards onViewEvent for background clicks", () => {
     const onViewEvent = vi.fn();
@@ -214,23 +343,6 @@ describe("AethelViewport", () => {
     expect(onViewEvent).toHaveBeenCalledWith(
       expect.objectContaining({ type: "background-click" }),
     );
-  });
-
-  it("does not render disabled scene objects", () => {
-    const envWithDisabled: EnvironmentState = {
-      ...testEnvironment,
-      objects: [
-        ...testEnvironment.objects,
-        {
-          id: "obj-disabled",
-          label: "Hidden Object",
-          type: "chair",
-          enabled: false,
-        },
-      ],
-    };
-    render(<AethelViewport agent={testAgent} environment={envWithDisabled} />);
-    expect(screen.queryByTestId("scene-object-obj-disabled")).not.toBeInTheDocument();
   });
 
   it("accepts selectedObjectId prop without crashing", () => {

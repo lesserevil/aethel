@@ -1,11 +1,34 @@
+import { useCallback } from "react";
 import { AgentControlPanel } from "./ControlPanel";
 import { ControlPanel as EnvironmentControlPanel } from "../components/controls/ControlPanel";
 import { AethelViewport } from "../components/viewport";
-import { baselineSession } from "../state/baselineSession";
 import { ChatPanel } from "./ChatPanel";
+import { useRendererProps, useSessionDispatch } from "../state/SessionProvider";
+import { setSelectedObject } from "../state/sessionActions";
+import type { ViewEvent } from "../components/viewport/types";
 import "./app-shell.css";
 
 export function AppShell() {
+  // Read live renderer props from session state (agent, environment, selectedObjectId)
+  const rendererProps = useRendererProps();
+  const dispatch = useSessionDispatch();
+
+  // Forward viewport view events to session state through the dispatch boundary.
+  // The renderer must NOT mutate state directly — only emit events here.
+  const handleViewEvent = useCallback(
+    (event: ViewEvent) => {
+      if (event.type === "object-click" && event.objectId !== undefined) {
+        // Object selected in viewport → update shared selectedObjectId
+        dispatch(setSelectedObject(event.objectId));
+      } else if (event.type === "background-click") {
+        // Click on empty background → deselect
+        dispatch(setSelectedObject(undefined));
+      }
+      // camera-change, object-hover, object-blur are informational only for now
+    },
+    [dispatch],
+  );
+
   return (
     <div className="app-shell" role="region" aria-label="Aethel application shell">
       <aside
@@ -25,9 +48,10 @@ export function AppShell() {
         data-testid="viewport-panel"
       >
         <AethelViewport
-          agent={baselineSession.agent}
-          environment={baselineSession.environment}
-          selectedObjectId={baselineSession.ui.selectedObjectId}
+          agent={rendererProps.agent}
+          environment={rendererProps.environment}
+          selectedObjectId={rendererProps.selectedObjectId}
+          onViewEvent={handleViewEvent}
         />
       </main>
 

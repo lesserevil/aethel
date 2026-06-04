@@ -1,5 +1,6 @@
 // AgentAvatar — procedural primitive agent avatar
-// Uses simple Three.js primitives (box + sphere) to represent the agent.
+// Uses simple Three.js primitives to represent the agent.
+// Body shape varies with avatarPreset; arm pose varies with idlePose.
 // Displays a readable name label via @react-three/drei Html.
 // No GLTF, art assets, or external pipelines.
 
@@ -13,47 +14,173 @@ interface AgentAvatarProps {
   isSelected?: boolean;
 }
 
+/**
+ * Derive body geometry dimensions from avatarPreset.
+ * Returns plain numbers — no Three.js geometry objects escape this function.
+ */
+export function deriveBodyGeometry(avatarPreset: string): {
+  bodyType: "box" | "sphere" | "cylinder";
+  bodyDims: [number, number, number];
+  headScale: number;
+  metalness: number;
+  roughness: number;
+} {
+  switch (avatarPreset) {
+    case "robot":
+      // More angular/mechanical: wider box body, lower metalness warmth
+      return {
+        bodyType: "box",
+        bodyDims: [0.6, 1.0, 0.4],
+        headScale: 0.28,
+        metalness: 0.7,
+        roughness: 0.3,
+      };
+    case "abstract":
+      // Sphere-dominant form
+      return {
+        bodyType: "sphere",
+        bodyDims: [0.45, 0.45, 0.45],
+        headScale: 0.18,
+        metalness: 0.1,
+        roughness: 0.2,
+      };
+    case "humanoid":
+    default:
+      return {
+        bodyType: "box",
+        bodyDims: [0.5, 1.0, 0.3],
+        headScale: 0.22,
+        metalness: 0.3,
+        roughness: 0.5,
+      };
+  }
+}
+
+/**
+ * Derive arm positions and rotations from idlePose.
+ * Returns plain numbers — no Three.js objects escape this function.
+ */
+export function deriveArmPose(idlePose: string): {
+  leftArmPos: [number, number, number];
+  rightArmPos: [number, number, number];
+  leftArmRot: [number, number, number];
+  rightArmRot: [number, number, number];
+} {
+  switch (idlePose) {
+    case "waiting":
+      // Arms slightly raised and bent outward
+      return {
+        leftArmPos: [-0.38, 0.72, 0],
+        rightArmPos: [0.38, 0.72, 0],
+        leftArmRot: [0, 0, -0.3],
+        rightArmRot: [0, 0, 0.3],
+      };
+    case "thinking":
+      // Right arm raised to chin height, left arm at side
+      return {
+        leftArmPos: [-0.35, 0.6, 0],
+        rightArmPos: [0.3, 1.1, 0.15],
+        leftArmRot: [0, 0, 0],
+        rightArmRot: [-1.1, 0, 0.4],
+      };
+    case "standing":
+    default:
+      return {
+        leftArmPos: [-0.35, 0.6, 0],
+        rightArmPos: [0.35, 0.6, 0],
+        leftArmRot: [0, 0, 0],
+        rightArmRot: [0, 0, 0],
+      };
+  }
+}
+
 export function AgentAvatar({
   agent,
   position = [0, 0, 0],
   isSelected = false,
 }: AgentAvatarProps) {
   const accentColor = agent.appearance.accentColor;
-  const bodyColor = accentColor;
-  // Head is slightly lighter
   const headColor = "#ffffff";
   const [px, py, pz] = position;
 
-  return (
-    <group position={[px, py, pz]} data-testid="agent-avatar">
-      {/* Body — box primitive */}
-      <mesh position={[0, 0.6, 0]} castShadow data-testid="agent-body">
-        <boxGeometry args={[0.5, 1.0, 0.3]} />
-        <meshStandardMaterial
-          color={bodyColor}
-          roughness={0.5}
-          metalness={0.3}
-          emissive={isSelected ? accentColor : "#000000"}
-          emissiveIntensity={isSelected ? 0.3 : 0}
-        />
-      </mesh>
+  const { bodyType, bodyDims, headScale, metalness, roughness } = deriveBodyGeometry(
+    agent.appearance.avatarPreset,
+  );
 
-      {/* Head — sphere primitive */}
+  const { leftArmPos, rightArmPos, leftArmRot, rightArmRot } = deriveArmPose(
+    agent.appearance.idlePose,
+  );
+
+  // For abstract preset, body is a sphere so raise the center
+  const bodyCenterY = bodyType === "sphere" ? 0.75 : 0.6;
+
+  return (
+    <group
+      position={[px, py, pz]}
+      data-testid="agent-avatar"
+      data-avatar-preset={agent.appearance.avatarPreset}
+      data-idle-pose={agent.appearance.idlePose}
+    >
+      {/* Body — shape depends on avatarPreset */}
+      {bodyType === "box" && (
+        <mesh position={[0, bodyCenterY, 0]} castShadow data-testid="agent-body">
+          <boxGeometry args={bodyDims} />
+          <meshStandardMaterial
+            color={accentColor}
+            roughness={roughness}
+            metalness={metalness}
+            emissive={isSelected ? accentColor : "#000000"}
+            emissiveIntensity={isSelected ? 0.3 : 0}
+          />
+        </mesh>
+      )}
+      {bodyType === "sphere" && (
+        <mesh position={[0, bodyCenterY, 0]} castShadow data-testid="agent-body">
+          <sphereGeometry args={[bodyDims[0], 16, 16]} />
+          <meshStandardMaterial
+            color={accentColor}
+            roughness={roughness}
+            metalness={metalness}
+            emissive={isSelected ? accentColor : "#000000"}
+            emissiveIntensity={isSelected ? 0.3 : 0}
+          />
+        </mesh>
+      )}
+
+      {/* Head — sphere primitive, scaled by preset */}
       <mesh position={[0, 1.35, 0]} castShadow data-testid="agent-head">
-        <sphereGeometry args={[0.22, 16, 16]} />
+        <sphereGeometry args={[headScale, 16, 16]} />
         <meshStandardMaterial color={headColor} roughness={0.4} metalness={0.1} />
       </mesh>
 
-      {/* Left arm */}
-      <mesh position={[-0.35, 0.6, 0]} castShadow>
+      {/* Left arm — position/rotation driven by idlePose */}
+      <mesh
+        position={leftArmPos}
+        rotation={leftArmRot}
+        castShadow
+        data-testid="agent-arm-left"
+      >
         <boxGeometry args={[0.15, 0.8, 0.2]} />
-        <meshStandardMaterial color={bodyColor} roughness={0.5} metalness={0.3} />
+        <meshStandardMaterial
+          color={accentColor}
+          roughness={roughness}
+          metalness={metalness}
+        />
       </mesh>
 
-      {/* Right arm */}
-      <mesh position={[0.35, 0.6, 0]} castShadow>
+      {/* Right arm — position/rotation driven by idlePose */}
+      <mesh
+        position={rightArmPos}
+        rotation={rightArmRot}
+        castShadow
+        data-testid="agent-arm-right"
+      >
         <boxGeometry args={[0.15, 0.8, 0.2]} />
-        <meshStandardMaterial color={bodyColor} roughness={0.5} metalness={0.3} />
+        <meshStandardMaterial
+          color={accentColor}
+          roughness={roughness}
+          metalness={metalness}
+        />
       </mesh>
 
       {/* Name label — rendered in HTML overlay, positioned above agent head */}

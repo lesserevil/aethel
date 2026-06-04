@@ -1,10 +1,10 @@
 ---
 id: TASK-5.2
 title: Bind 3D viewport visuals to session state
-status: Open
+status: In Progress
 assignee: []
 created_date: '2026-06-02 22:12'
-updated_date: '2026-06-03 05:17'
+updated_date: '2026-06-04 14:15'
 labels: []
 dependencies:
   - TASK-5.1
@@ -40,3 +40,20 @@ Do not create a parallel renderer-only state model. Avoid expensive full scene r
 - [ ] #2 Environment and object state changes update visible scene output.
 - [ ] #3 Viewport emits selection/camera events without direct shared-state mutation.
 <!-- AC:END -->
+
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+UNDERSTANDING: AppShell.tsx passes hardcoded baselineSession values to AethelViewport instead of live session state. Fix: (1) AppShell uses useRendererProps()+useSessionDispatch() for live state, (2) SceneEnvironment consumes EnvironmentState for lighting/timeOfDay/preset, (3) AgentAvatar reflects avatarPreset+idlePose, (4) onViewEvent dispatches session/selected_object_change. All with tests.
+<!-- SECTION:NOTES:END -->
+
+## Comments
+<!-- COMMENTS:BEGIN -->
+<!-- COMMENT:BEGIN -->
+index: 1
+author: oompah
+created: 2026-06-04 14:13
+
+Agent dispatched (profile: default)
+<!-- COMMENT:END -->
+<!-- COMMENTS:END -->
