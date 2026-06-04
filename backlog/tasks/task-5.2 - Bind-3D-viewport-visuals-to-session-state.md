@@ -4,7 +4,7 @@ title: Bind 3D viewport visuals to session state
 status: In Progress
 assignee: []
 created_date: '2026-06-02 22:12'
-updated_date: '2026-06-04 14:15'
+updated_date: '2026-06-04 16:35'
 labels: []
 dependencies:
   - TASK-5.1
@@ -45,6 +45,8 @@ Do not create a parallel renderer-only state model. Avoid expensive full scene r
 
 <!-- SECTION:NOTES:BEGIN -->
 UNDERSTANDING: AppShell.tsx passes hardcoded baselineSession values to AethelViewport instead of live session state. Fix: (1) AppShell uses useRendererProps()+useSessionDispatch() for live state, (2) SceneEnvironment consumes EnvironmentState for lighting/timeOfDay/preset, (3) AgentAvatar reflects avatarPreset+idlePose, (4) onViewEvent dispatches session/selected_object_change. All with tests.
+
+DISCOVERY: All core bindings implemented. Adding data-preset/data-time-of-day/data-lighting attributes to SceneEnvironment group for verifiable integration tests of environment state flow. Writing AppShell+AethelViewport tests that prove environment preset/lighting changes visible in scene output.
 <!-- SECTION:NOTES:END -->
 
 ## Comments
@@ -53,6 +55,27 @@ UNDERSTANDING: AppShell.tsx passes hardcoded baselineSession values to AethelVie
 index: 1
 author: oompah
 created: 2026-06-04 14:13
+
+Agent dispatched (profile: default)
+<!-- COMMENT:END -->
+<!-- COMMENT:BEGIN -->
+index: 2
+author: oompah
+created: 2026-06-04 16:20
+
+Agent dispatched (profile: default)
+<!-- COMMENT:END -->
+<!-- COMMENT:BEGIN -->
+index: 3
+author: oompah
+created: 2026-06-04 16:20
+
+Focus: Integration Tests Session Specialist
+<!-- COMMENT:END -->
+<!-- COMMENT:BEGIN -->
+index: 4
+author: oompah
+created: 2026-06-04 16:29
 
 Agent dispatched (profile: default)
 <!-- COMMENT:END -->

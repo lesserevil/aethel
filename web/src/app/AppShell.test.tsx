@@ -73,13 +73,25 @@ function renderWithSession(stateOverride?: Partial<SessionState>, dispatchSpy = 
     ? { ...baselineSession, ...stateOverride }
     : { ...baselineSession };
 
-  render(
+  const result = render(
     <SessionContext.Provider value={{ state, dispatch: dispatchSpy }}>
       <AppShell />
     </SessionContext.Provider>,
   );
 
-  return { dispatchSpy, state };
+  return { dispatchSpy, state, ...result };
+}
+
+/**
+ * Re-render AppShell inside an existing render result with a new session state.
+ * Used for testing state transition effects.
+ */
+function makeSessionElement(state: SessionState, dispatchSpy = vi.fn()) {
+  return (
+    <SessionContext.Provider value={{ state, dispatch: dispatchSpy }}>
+      <AppShell />
+    </SessionContext.Provider>
+  );
 }
 
 // ── Tests ──────────────────────────────────────────────────────────────────
@@ -230,6 +242,23 @@ describe("AppShell — session state binding", () => {
         },
       }),
     ).not.toThrow();
+  });
+
+  it("does not mutate session state when environment display updates — only emits events", () => {
+    // Render with one environment; verify dispatch is only called on explicit user events,
+    // not on initial render or re-render from prop changes.
+    const dispatchSpy = vi.fn();
+    const { rerender } = render(makeSessionElement(baselineSession, dispatchSpy));
+    const callCountAfterMount = dispatchSpy.mock.calls.length;
+
+    const updatedState: SessionState = {
+      ...baselineSession,
+      environment: { ...baselineSession.environment, timeOfDay: "evening" },
+    };
+    rerender(makeSessionElement(updatedState, dispatchSpy));
+
+    // No additional dispatches should occur from re-render alone
+    expect(dispatchSpy.mock.calls.length).toBe(callCountAfterMount);
   });
 
   // ── Baseline rendering ────────────────────────────────────────────────
