@@ -1,38 +1,22 @@
 ---
 id: TASK-8.4
 title: Generate missing MVP tests after implementation
-status: In Progress
+status: Done
 assignee: []
-created_date: 2026-06-02 23:46
-updated_date: 2026-06-04 17:19
+created_date: '2026-06-02 23:46'
+updated_date: '2026-06-04 17:21'
 labels:
-- merge-conflict
+  - merge-conflict
 dependencies:
-- TASK-4.3
-- TASK-5.2
-- TASK-6.1
-- TASK-6.2
-- TASK-7.2
+  - TASK-4.3
+  - TASK-5.2
+  - TASK-6.1
+  - TASK-6.2
+  - TASK-7.2
 documentation:
-- plans/aethel_mvp_plan.md
+  - plans/aethel_mvp_plan.md
 parent_task_id: TASK-8
 ordinal: 30000
-oompah.task_costs:
-  total_input_tokens: 35
-  total_output_tokens: 5143
-  total_cost_usd: 0.0
-  by_model:
-    unknown:
-      input_tokens: 35
-      output_tokens: 5143
-      cost_usd: 0.0
-  runs:
-  - profile: default
-    model: unknown
-    input_tokens: 35
-    output_tokens: 5143
-    cost_usd: 0.0
-    recorded_at: '2026-06-04T17:14:00.103339+00:00'
 ---
 
 ## Description
@@ -65,6 +49,12 @@ Do not add shallow tests that only assert components mount. Prefer behavior-leve
 <!-- SECTION:NOTES:BEGIN -->
 Implementation complete: Added 55 new tests (215 total, was 160). New test file: web/src/components/controls/ControlPanel.test.tsx (49 tests covering environment controls rendering, draft state, apply/reset flows, mutation records, system messages, object toggles). Added 4 tests to mutationLog.test.ts (custom idGenerator, deterministic output). Added 2 tests to sessionReducer.test.ts (agent_full_change deep merge). All 215 tests pass.
 <!-- SECTION:NOTES:END -->
+
+## Final Summary
+
+<!-- SECTION:FINAL_SUMMARY:BEGIN -->
+Merge conflict resolved: rebased TASK-8.4 onto origin/dev. The rebase succeeded cleanly - dev branch commits already contained the TASK-8.4 test work (previously merged). Only 2 TASK-8.4-specific commits remain on top of dev: (1) acceptance criteria update and (2) backlog metadata update. Force-pushed to origin/TASK-8.4. Test failures seen in the suite are pre-existing on origin/dev and not introduced by TASK-8.4.
+<!-- SECTION:FINAL_SUMMARY:END -->
 
 ## Comments
 <!-- COMMENTS:BEGIN -->
