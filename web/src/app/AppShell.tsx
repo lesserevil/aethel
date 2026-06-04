@@ -2,6 +2,7 @@ import { AgentControlPanel } from "./ControlPanel";
 import { ControlPanel as EnvironmentControlPanel } from "../components/controls/ControlPanel";
 import { AethelViewport } from "../components/viewport";
 import { baselineSession } from "../state/baselineSession";
+import { ChatPanel } from "./ChatPanel";
 import "./app-shell.css";
 
 export function AppShell() {
@@ -37,7 +38,7 @@ export function AppShell() {
         aria-label="Chat panel"
         data-testid="chat-panel"
       >
-        Chat Panel Placeholder
+        <ChatPanel />
       </aside>
     </div>
   );

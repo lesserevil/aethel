@@ -1,6 +1,5 @@
 import { createContext, useContext, useReducer, ReactNode } from "react";
-import { SessionState } from "./sessionTypes";
-import { baselineSession } from "./baselineSession";
+import { SessionState, baselineSession } from "./baselineSession";
 import { reducer } from "./sessionReducer";
 import { selectChatContext, selectRendererProps } from "./sessionSelectors";
 

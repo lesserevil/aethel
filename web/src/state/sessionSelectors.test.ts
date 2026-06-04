@@ -53,6 +53,7 @@ describe("SessionSelectors", () => {
   });
 
   test("selectRendererProps does not mutate state", () => {
+    const before = dummyState.ui.selectedObjectId;
     const result = selectRendererProps(dummyState);
     expect(result.selectedObjectId).toBeUndefined();
     // Ensure original state is still undefined (not mutated)
