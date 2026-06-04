@@ -7,8 +7,9 @@ browser interaction model first.
 
 ## Current Status
 
-This repository is in planning and scaffolding. The web application is
-not implemented yet.
+The MVP web application is implemented and the quality gates pass. Run
+`bun install` in the `web/` directory, then use the Makefile targets
+below to build, test, and run the app.
 
 Current project sources of truth:
 

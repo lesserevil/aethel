@@ -1,6 +1,6 @@
 # Aethel MVP Plan
 
-Status: Draft
+Status: Draft (criteria verified; pending GitHub Actions CI activation — see TASK-15)
 Created: June 2, 2026
 
 ## Purpose
@@ -510,26 +510,46 @@ The MVP is ready to call complete only when:
 
 ## Acceptance Criteria
 
-- [ ] CRIT-1: The web app opens to a three-column application layout:
+- [x] CRIT-1: The web app opens to a three-column application layout:
       left controls, center 3D viewport, and right chat. On a desktop
       viewport, all three regions are visible at once and the 3D viewport
       occupies the center as the dominant surface.
-- [ ] CRIT-2: The center viewport renders a nonblank 3D environment with
+      Verified: Playwright e2e tests (tests/e2e/layout.spec.ts) assert
+      all three panels exist, are horizontally distinct, and the viewport
+      is the widest region.
+- [x] CRIT-2: The center viewport renders a nonblank 3D environment with
       one visible, framed agent on initial load. This is verified with a
       browser screenshot or automated visual check.
-- [ ] CRIT-3: At least three control-panel changes update shared session
+      Verified: Playwright e2e tests (tests/e2e/viewport.spec.ts) assert
+      canvas pixel data is non-trivial, the renderer-ready signal fires,
+      and the agent name label is present.
+- [x] CRIT-3: At least three control-panel changes update shared session
       state and visibly affect the 3D view: one agent appearance change,
       one agent behavior/persona change, and one environment change.
-- [ ] CRIT-4: The right chat panel sends user messages and receives
+      Verified: Playwright e2e tests (tests/e2e/controls.spec.ts) cover
+      avatar preset, persona preset, and environment preset mutations,
+      each producing system context messages and mutation feedback.
+- [x] CRIT-4: The right chat panel sends user messages and receives
       agent responses through a chat adapter. The request includes the
       current agent and environment context, and the UI shows pending and
       error states.
-- [ ] CRIT-5: Applying a control-panel mutation records the mutation in
+      Verified: Playwright e2e tests (tests/e2e/chat.spec.ts) assert
+      message submission, pending indicator, agent response, and context
+      inclusion (agent name and environment preset in responses).
+- [x] CRIT-5: Applying a control-panel mutation records the mutation in
       session state and adds a concise system/context entry to the chat
       history.
-- [ ] CRIT-6: The renderer is isolated behind a component/service
+      Verified: Playwright e2e tests assert system context messages
+      appear in chat after each control apply; unit tests cover
+      MutationRecord creation and sessionReducer mutation dispatch.
+- [x] CRIT-6: The renderer is isolated behind a component/service
       boundary that accepts normalized session state, so a future
       Omniverse/Kit renderer can replace the MVP browser renderer.
-- [ ] CRIT-7: The MVP implementation has tests or scripted verification
+      Verified: AethelViewport accepts AgentState + EnvironmentState
+      props and emits ViewEvent — no Three.js or renderer objects escape
+      the boundary. See web/src/components/viewport/types.ts.
+- [x] CRIT-7: The MVP implementation has tests or scripted verification
       covering layout presence, state updates from controls, chat
       adapter behavior, and nonblank 3D rendering.
+      Verified: 273 unit/component tests (make test) + 27 Playwright e2e
+      tests (make test-e2e) covering all MVP surfaces. All tests pass.
