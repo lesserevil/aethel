@@ -1,10 +1,10 @@
 ---
 id: TASK-8.5
 title: Add GitHub Actions CI for MVP quality gates
-status: Open
+status: In Progress
 assignee: []
 created_date: '2026-06-02 23:46'
-updated_date: '2026-06-03 05:53'
+updated_date: '2026-06-04 18:12'
 labels: []
 dependencies:
   - TASK-3.2
@@ -41,3 +41,20 @@ Do not add this before TASK-3.2 and TASK-8.2 define real commands; placeholder M
 - [ ] #2 CI installs Bun and runs make fmt-check, make build, make test, make lint, and the documented e2e command.
 - [ ] #3 README or docs describe any CI-specific setup required by the workflow.
 <!-- AC:END -->
+
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+Understanding: Creating GitHub Actions CI workflow under .github/workflows/ci.yml. Triggers on PRs and pushes to dev. Installs Bun, runs make fmt-check, build, test, lint, and test-e2e with non-interactive Playwright browser installation via PLAYWRIGHT_BROWSERS_PATH and npx playwright install --with-deps chromium.
+<!-- SECTION:NOTES:END -->
+
+## Comments
+<!-- COMMENTS:BEGIN -->
+<!-- COMMENT:BEGIN -->
+index: 1
+author: oompah
+created: 2026-06-04 18:11
+
+Agent dispatched (profile: default)
+<!-- COMMENT:END -->
+<!-- COMMENTS:END -->

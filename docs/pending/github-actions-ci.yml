@@ -1,0 +1,81 @@
+# PENDING ACTIVATION - GitHub Actions CI Workflow
+#
+# This file is the intended .github/workflows/ci.yml for the Aethel project.
+# It has been stored here temporarily because the GitHub PAT used by the
+# automated agent does not have the 'workflow' scope required to push files
+# under .github/workflows/.
+#
+# TO ACTIVATE CI (see also TASK-15 in Backlog.md):
+# 1. Update the lesserevil PAT at https://github.com/settings/tokens to
+#    include the 'workflow' scope.
+# 2. Run from the repo root:
+#      mkdir -p .github/workflows
+#      cp docs/pending/github-actions-ci.yml .github/workflows/ci.yml
+#      git add .github/workflows/ci.yml docs/pending/github-actions-ci.yml
+#      git commit -m "TASK-15: Activate GitHub Actions CI workflow"
+#      git push origin dev
+# 3. Delete this pending file once the workflow is active.
+#
+name: CI
+
+on:
+  push:
+    branches:
+      - dev
+  pull_request:
+    branches:
+      - dev
+
+jobs:
+  quality-gates:
+    name: Quality Gates
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Cache Bun dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.bun/install/cache
+            web/node_modules
+          key: ${{ runner.os }}-bun-${{ hashFiles('web/bun.lock', 'web/package.json') }}
+          restore-keys: |
+            ${{ runner.os }}-bun-
+
+      - name: Install web dependencies
+        run: cd web && bun install --frozen-lockfile
+
+      - name: Check formatting
+        run: make fmt-check
+
+      - name: Build
+        run: make build
+
+      - name: Unit / component tests
+        run: make test
+
+      - name: Lint
+        run: make lint
+
+      - name: Install Playwright browsers
+        run: make install-browsers
+
+      - name: End-to-end tests
+        run: make test-e2e
+
+      - name: Upload Playwright report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: web/playwright-report/
+          retention-days: 7

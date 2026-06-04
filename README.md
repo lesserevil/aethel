@@ -108,9 +108,36 @@ workspace Bun scripts:
 - `make build` - Runs `bun run build` in the web/ directory
 - `make test` - Runs `bun run test` in the web/ directory
 - `make lint` - Runs `bun run typecheck && bun run lint` in the web/ directory
+- `make install-browsers` - Installs Playwright Chrome browser non-interactively (required before `make test-e2e`)
+- `make test-e2e` - Runs Playwright end-to-end tests (requires `make install-browsers` first)
 - `make clean` - Removes build artifacts from the web/ directory
 
 To install dependencies: `bun install` (run from the web/ directory)
+
+## Continuous Integration
+
+The CI workflow is defined in `docs/pending/github-actions-ci.yml` and
+is ready to activate. It cannot currently be placed under
+`.github/workflows/ci.yml` because the project PAT does not yet have the
+`workflow` scope required by GitHub. See **TASK-15** in Backlog.md for
+the activation steps.
+
+Once activated, the workflow runs on all pull requests and pushes to the
+`dev` branch. The CI job:
+
+1. Installs Bun via `oven-sh/setup-bun@v2`.
+2. Installs web dependencies with `bun install --frozen-lockfile`.
+3. Runs `make fmt-check`, `make build`, `make test`, and `make lint`.
+4. Installs Playwright's Chrome browser non-interactively with
+   `make install-browsers` (`bunx playwright install chrome --with-deps`).
+5. Runs the end-to-end test suite with `make test-e2e`.
+
+The Playwright HTML report is uploaded as a build artifact named
+`playwright-report` and is retained for 7 days.
+
+No secrets or external services are required for CI. The `CI=true`
+environment variable set by GitHub Actions activates Playwright's CI
+behaviour (retries, single-worker, `forbidOnly`).
 
 ## License
 

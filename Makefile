@@ -6,7 +6,7 @@
 
 .DEFAULT_GOAL := help
 
-.PHONY: help init fmt fmt-check build test test-e2e lint clean
+.PHONY: help init fmt fmt-check build test test-e2e lint install-browsers clean
 
 BACKLOG_SOURCE ?= github:lesserevil/Backlog.md
 BACKLOG_CLI ?= bun x --bun $(BACKLOG_SOURCE)
@@ -73,8 +73,11 @@ build: ## Build the project.
 test: ## Run the test suite.
 	cd $(WEB_DIR) && bun run test
 
-test-e2e: ## Run Playwright end-to-end tests (requires: bun run install-browsers first).
+test-e2e: ## Run Playwright end-to-end tests (requires: make install-browsers first).
 	cd $(WEB_DIR) && bun run test:e2e
+
+install-browsers: ## Install Playwright browsers non-interactively (required before test-e2e on CI).
+	cd $(WEB_DIR) && bunx playwright install chrome --with-deps
 
 lint: ## Run static analysis / linters.
 	cd $(WEB_DIR) && bun run typecheck && bun run lint
