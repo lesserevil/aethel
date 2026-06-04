@@ -3,12 +3,14 @@
 
 export type SessionId = string;
 
-// Narrowed literal-union type aliases used by mutationLog and action creators
+// ── Primitive union types used in MutationRecord ──────────────────────────────
+
 export type MutationSource = "control-panel" | "chat-confirmed" | "system";
 export type MutationTarget = "agent" | "environment" | "session" | "chat";
 export type MutationStatus = "pending" | "applied" | "failed";
 
-// Core session state
+// ── Core session state ────────────────────────────────────────────────────────
+
 export interface SessionState {
   sessionId: SessionId;
   agent: AgentState;
@@ -18,24 +20,21 @@ export interface SessionState {
   ui: UiState;
 }
 
-// Agent behavior sub-type alias (used in action creators)
+// ── Agent state ───────────────────────────────────────────────────────────────
+
+/** Sliced sub-type for behavior fields – useful in action creators. */
 export interface BehaviorState {
-  curiosity: number; // 0-1 scale
-  formality: number; // 0-1 scale
-  skepticism: number; // 0-1 scale
+  curiosity: number; // 0–1 scale
+  formality: number; // 0–1 scale
+  skepticism: number; // 0–1 scale
 }
 
-// Agent state definition
 export interface AgentState {
   id: string;
   displayName: string;
   personaPreset: string; // e.g., "helpful", "analytical", "creative"
   tone: string; // e.g., "friendly", "formal", "casual"
-  behavior: {
-    curiosity: number; // 0-1 scale
-    formality: number; // 0-1 scale
-    skepticism: number; // 0-1 scale
-  };
+  behavior: BehaviorState;
   appearance: {
     avatarPreset: string; // e.g., "robot", "humanoid", "abstract"
     accentColor: string; // CSS color string
@@ -43,7 +42,8 @@ export interface AgentState {
   };
 }
 
-// Environment state definition
+// ── Environment state ─────────────────────────────────────────────────────────
+
 export interface EnvironmentState {
   preset: string; // e.g., "laboratory", "office", "outdoor"
   timeOfDay: string; // e.g., "morning", "afternoon", "evening", "night"
@@ -53,67 +53,54 @@ export interface EnvironmentState {
   objects: SceneObjectState[];
 }
 
-// Scene object state definition
 export interface SceneObjectState {
   id: string;
   label: string;
   type: string; // e.g., "chair", "table", "plant", "computer"
   enabled: boolean;
-  // Transform hints for renderer (position, rotation, scale)
-  // Keeping as simple values to avoid renderer-specific objects
-  position?: {
-    x: number;
-    y: number;
-    z: number;
-  };
-  rotation?: {
-    x: number; // in degrees
-    y: number; // in degrees
-    z: number; // in degrees
-  };
-  scale?: {
-    x: number;
-    y: number;
-    z: number;
-  };
+  /** Transform hints for the renderer (optional, plain values only). */
+  position?: { x: number; y: number; z: number };
+  rotation?: { x: number; y: number; z: number }; // degrees
+  scale?: { x: number; y: number; z: number };
 }
 
-// Chat state definition
+// ── Chat state ────────────────────────────────────────────────────────────────
+
 export interface ChatState {
   messages: ChatMessage[];
-  pendingMessageId?: string; // ID of message currently being processed
-  error?: string; // Error message if last message failed
+  pendingMessageId?: string; // ID of the message currently being processed
+  error?: string; // Error from the last failed request
 }
 
-// Chat message definition
 export interface ChatMessage {
   id: string;
   content: string;
   timestamp: number; // Unix timestamp in milliseconds
   sender: "user" | "agent" | "system";
-  // Optional metadata for agent messages
   metadata?: {
     agentId?: string;
-    confidence?: number; // 0-1 scale for agent confidence in response
+    confidence?: number; // 0–1 scale
   };
 }
 
-// Mutation record definition
+// ── Mutation record ───────────────────────────────────────────────────────────
+
 export interface MutationRecord {
   id: string;
   timestamp: number; // Unix timestamp in milliseconds
-  source: "control-panel" | "chat-confirmed" | "system";
-  target: "agent" | "environment" | "session" | "chat";
+  source: MutationSource;
+  target: MutationTarget;
   summary: string; // Human-readable description of the change
-  status: "pending" | "applied" | "failed";
-  // Typed payload for the applied change - keeping minimal for MVP
+  status: MutationStatus;
+  /** Typed payload for the applied change – plain JSON only. */
   payload?: Record<string, unknown>;
 }
 
-// UI state definition
+// ── UI state ──────────────────────────────────────────────────────────────────
+
 export interface UiState {
-  selectedPanel: "controls" | "chat" | "viewport"; // Currently active panel
+  selectedPanel: "controls" | "chat" | "viewport";
   activeControlTab: string; // e.g., 'agent', 'environment', 'objects'
   pendingRequestIds: string[]; // IDs of requests currently in flight
-  selectedObjectId?: string; // Currently selected object in viewport
+  selectedObjectId?: string; // Currently selected object in the viewport
 }

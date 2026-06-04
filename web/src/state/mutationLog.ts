@@ -6,19 +6,24 @@ import {
 } from "./sessionTypes";
 
 /**
- * Creates a MutationRecord with a deterministic ID and timestamp.
+ * Creates a MutationRecord with a consistent shape.
  *
- * @param params - The mutation record properties.
- * @param params.source - Source of the mutation.
- * @param params.target - Target of the mutation.
- * @param params.summary - Human-readable summary.
- * @param params.status - Status of the mutation.
- * @param params.payload - Optional typed payload.
- * @param params.timestamp - Timestamp in ms; defaults to Date.now().
- * @param params.idGenerator - Function that returns a string ID; defaults to simple incremental ID.
+ * Inject `idGenerator` and `timestamp` in tests for deterministic output:
+ * ```ts
+ * const record = createMutationRecord({
+ *   source: 'control-panel', target: 'agent',
+ *   summary: 'Changed display name', status: 'applied',
+ *   timestamp: 1000, idGenerator: () => 'mr-test-1',
+ * });
+ * ```
  *
- * This helper is designed to be used in tests with mocked idGenerator
- * and timestamp to ensure deterministic output.
+ * @param params.source      Who triggered the mutation.
+ * @param params.target      Which part of session state was affected.
+ * @param params.summary     Human-readable description shown in the UI.
+ * @param params.status      Initial status of the record.
+ * @param params.payload     Optional typed payload describing the change.
+ * @param params.timestamp   Override the current timestamp (ms since epoch).
+ * @param params.idGenerator Override the ID generator for deterministic tests.
  */
 export const createMutationRecord = ({
   source,
@@ -37,18 +42,9 @@ export const createMutationRecord = ({
   timestamp?: number;
   idGenerator?: () => string;
 }): MutationRecord => {
-  // Default deterministic ID generation: "mr-<timestamp>-<seq>"
-  const generateId =
-    idGenerator ?? (() => `mr-${timestamp}-${Math.floor(Math.random() * 1000)}`);
-  const id = generateId();
+  const id = idGenerator
+    ? idGenerator()
+    : `mr-${timestamp}-${Math.floor(Math.random() * 1_000_000)}`;
 
-  return {
-    id,
-    timestamp,
-    source,
-    target,
-    summary,
-    status,
-    payload,
-  };
+  return { id, timestamp, source, target, summary, status, payload };
 };

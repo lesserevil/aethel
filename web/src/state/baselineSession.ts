@@ -1,9 +1,9 @@
-import type { SessionState } from "./sessionTypes";
+import { SessionState } from "./sessionTypes";
 
 /**
- * Baseline session fixture for MVP
+ * Baseline session fixture for MVP.
  * Includes one default agent, one default environment preset,
- * at least three scene objects, empty chat history, and no applied mutations
+ * at least three scene objects, empty chat history, and no applied mutations.
  */
 export const baselineSession: SessionState = {
   sessionId: "baseline-session-001",
@@ -74,7 +74,8 @@ export const baselineSession: SessionState = {
 };
 
 /**
- * Alternative baseline with seeded chat history for testing
+ * Alternative baseline with seeded chat history – useful for tests that
+ * need existing messages without having to dispatch appendChatMessage actions.
  */
 export const baselineSessionWithChat: SessionState = {
   ...baselineSession,
@@ -84,17 +85,14 @@ export const baselineSessionWithChat: SessionState = {
       {
         id: "msg-001",
         content: "Hello! I am your Aethel agent. How can I assist you today?",
-        timestamp: Date.now() - 10000, // 10 seconds ago
+        timestamp: Date.now() - 10_000,
         sender: "agent",
-        metadata: {
-          agentId: "agent-001",
-          confidence: 0.95,
-        },
+        metadata: { agentId: "agent-001", confidence: 0.95 },
       },
       {
         id: "msg-002",
         content: "Hi there! I'm looking to understand what this system can do.",
-        timestamp: Date.now() - 8000, // 8 seconds ago
+        timestamp: Date.now() - 8_000,
         sender: "user",
       },
     ],
