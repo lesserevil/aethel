@@ -4,7 +4,7 @@ title: Implement environment controls object toggles and reset flow
 status: Done
 assignee: []
 created_date: '2026-06-02 22:12'
-updated_date: '2026-06-04 16:34'
+updated_date: '2026-06-04 16:37'
 labels: []
 dependencies:
   - TASK-4.2
@@ -62,6 +62,12 @@ All state tests pass (24/24). Build, lint, and fmt-check pass. Dev server starts
 
 Duplicate investigation (2026-06-04): Confirmed TASK-6.2 is the original task, not a duplicate of any other task. No other task covers environment controls + object toggles + reset flow. Implementation committed at 257b061 and task remains Done.
 <!-- SECTION:NOTES:END -->
+
+## Final Summary
+
+<!-- SECTION:FINAL_SUMMARY:BEGIN -->
+Merge conflict resolved: rebased TASK-6.2 onto origin/dev. The original implementation commit was already in dev (77f94cd), so it was skipped during rebase. The 4 subsequent bookkeeping commits were cleanly applied. All 270 tests pass. Force-pushed to origin/TASK-6.2.
+<!-- SECTION:FINAL_SUMMARY:END -->
 
 ## Comments
 <!-- COMMENTS:BEGIN -->
