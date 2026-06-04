@@ -1,7 +1,7 @@
 ---
 id: TASK-6.2
 title: Implement environment controls object toggles and reset flow
-status: In Progress
+status: Done
 assignee: []
 created_date: '2026-06-02 22:12'
 updated_date: '2026-06-04 16:25'
@@ -62,6 +62,12 @@ All state tests pass (24/24). Build, lint, and fmt-check pass. Dev server starts
 
 Verification complete: All 24 tests pass. Build succeeds. Branch pushed to origin/TASK-6.2. Implementation covers all acceptance criteria: environment preset select, time/lighting/ambience/weather controls, object toggles, Apply button with validation+mutation+chat message, Reset button preserving chat history.
 <!-- SECTION:NOTES:END -->
+
+## Final Summary
+
+<!-- SECTION:FINAL_SUMMARY:BEGIN -->
+Implemented environment controls in left ControlPanel. Created web/src/components/controls/ControlPanel.tsx with environment preset select, time-of-day, lighting, ambience, weather controls, and object toggles. Apply button validates draft, updates EnvironmentState, records MutationRecord, and appends chat system message. Reset button restores baseline state, records reset mutation, clears draft/status, preserves chat history. All 24 tests pass. Build succeeds. Not a duplicate.
+<!-- SECTION:FINAL_SUMMARY:END -->
 
 ## Comments
 <!-- COMMENTS:BEGIN -->
