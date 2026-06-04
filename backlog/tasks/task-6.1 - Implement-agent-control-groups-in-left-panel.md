@@ -4,7 +4,7 @@ title: Implement agent control groups in left panel
 status: Done
 assignee: []
 created_date: '2026-06-02 22:12'
-updated_date: '2026-06-04 03:30'
+updated_date: '2026-06-04 03:41'
 labels: []
 dependencies:
   - TASK-4.2
@@ -43,7 +43,7 @@ Do not apply every keystroke directly to shared state; use a draft/apply flow. A
 ## Final Summary
 
 <!-- SECTION:FINAL_SUMMARY:BEGIN -->
-Agent control groups implemented in left panel: AgentControlPanel component in web/src/app/ControlPanel.tsx with editable display name, persona/tone selects, avatar segmented control, accent color swatches, idle pose select, and curiosity/formality/skepticism sliders. Draft/apply flow dispatches one setAgentFull action, one MutationRecord, and one chat system message per apply. 29 tests pass. All quality gates pass.
+Merge conflict resolved: Rebased TASK-6.1 onto origin/dev (which had TASK-7.2 merged after the original TASK-6.1 PR). Two conflicts resolved: (1) task metadata file - kept HEAD (Done status, Final Summary from previous resolver); (2) AppShell.tsx - kept ChatPanel import added by TASK-7.2. All 113 tests pass. Force-pushed to origin/TASK-6.1.
 <!-- SECTION:FINAL_SUMMARY:END -->
 
 ## Comments
