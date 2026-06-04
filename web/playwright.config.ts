@@ -1,4 +1,36 @@
 import { defineConfig, devices } from "@playwright/test";
+import { execSync } from "child_process";
+import { existsSync } from "fs";
+
+/**
+ * Resolve the Chromium/Chrome executable for this environment.
+ *
+ * Prefers PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH env var, then falls back to
+ * well-known system Chrome locations. Returns undefined to let Playwright use
+ * its own bundled binary if none of the system paths exist.
+ */
+function resolveChromiumExecutable(): string | undefined {
+  if (process.env["PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH"]) {
+    return process.env["PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH"];
+  }
+  const candidates = [
+    "/usr/bin/google-chrome",
+    "/usr/bin/google-chrome-stable",
+    "/usr/bin/chromium-browser",
+    "/usr/bin/chromium",
+  ];
+  for (const p of candidates) {
+    if (existsSync(p)) {
+      try {
+        execSync(`test -x "${p}"`, { stdio: "ignore" });
+        return p;
+      } catch {
+        /* not executable */
+      }
+    }
+  }
+  return undefined;
+}
 
 /**
  * Playwright configuration for Aethel browser/e2e tests.
@@ -29,7 +61,15 @@ export default defineConfig({
   projects: [
     {
       name: "chromium",
-      use: { ...devices["Desktop Chrome"] },
+      use: {
+        ...devices["Desktop Chrome"],
+        // Use the system-installed Chrome when Playwright's bundled Chromium is
+        // unavailable (e.g., unsupported OS / CI without --with-deps).
+        // `channel: "chrome"` tells Playwright to find the system Google Chrome
+        // installation instead of the bundled headless shell. Falls back to the
+        // explicit executablePath for non-standard installations.
+        channel: "chrome",
+      },
     },
   ],
   /* Run the Vite dev server before starting the tests. */

@@ -58,7 +58,9 @@ describe("EnvironmentControlPanel — rendering", () => {
   it("renders the environment control panel aside", () => {
     renderReadOnly();
     expect(screen.getByTestId("control-panel")).toBeInTheDocument();
-    expect(screen.getByRole("region", { name: /environment controls/i })).toBeInTheDocument();
+    expect(
+      screen.getByRole("region", { name: /environment controls/i }),
+    ).toBeInTheDocument();
   });
 
   it("renders the environment preset select", () => {
@@ -617,9 +619,9 @@ describe("EnvironmentControlPanel — Reset restores draft to baseline", () => {
     fireEvent.change(screen.getByTestId("select-environment-preset"), {
       target: { value: "outdoor" },
     });
-    expect((screen.getByTestId("select-environment-preset") as HTMLSelectElement).value).toBe(
-      "outdoor",
-    );
+    expect(
+      (screen.getByTestId("select-environment-preset") as HTMLSelectElement).value,
+    ).toBe("outdoor");
 
     // Click Reset
     fireEvent.click(screen.getByTestId("btn-reset-scene"));
@@ -641,9 +643,9 @@ describe("EnvironmentControlPanel — Reset restores draft to baseline", () => {
     fireEvent.click(screen.getByTestId("btn-reset-scene"));
 
     await waitFor(() => {
-      expect(
-        (screen.getByTestId("select-time-of-day") as HTMLSelectElement).value,
-      ).toBe(baselineSession.environment.timeOfDay);
+      expect((screen.getByTestId("select-time-of-day") as HTMLSelectElement).value).toBe(
+        baselineSession.environment.timeOfDay,
+      );
     });
   });
 });
