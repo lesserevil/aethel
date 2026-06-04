@@ -1,30 +1,39 @@
-import { createContext, useContext, useReducer, ReactNode } from "react";
-import { SessionState, baselineSession } from "./baselineSession";
+import { createContext, useContext, useReducer, ReactNode, Dispatch } from "react";
+import { SessionState } from "./sessionTypes";
+import { baselineSession } from "./baselineSession";
 import { reducer } from "./sessionReducer";
-import { selectChatContext, selectRendererProps } from "./sessionSelectors";
+import { SessionAction } from "./sessionActions";
+import {
+  selectChatContext,
+  selectRendererProps,
+  ChatContext,
+  RendererProps,
+} from "./sessionSelectors";
 
-// Create React context for the session state and dispatch
-export const SessionContext = createContext<{
+// ── Context types ─────────────────────────────────────────────────────────────
+
+interface SessionContextValue {
   state: SessionState;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  dispatch: (action: any) => void;
-}>({
+  dispatch: Dispatch<SessionAction>;
+}
+
+// ── Context creation ──────────────────────────────────────────────────────────
+
+export const SessionContext = createContext<SessionContextValue>({
   state: baselineSession,
   dispatch: () => undefined,
 });
 
+// ── Provider ──────────────────────────────────────────────────────────────────
+
 /**
- * SessionProvider wraps the app and provides the session state and dispatch
- * functions to all descendants via React context.
+ * SessionProvider wraps the app and makes session state + typed dispatch
+ * available to all descendants via React context.
  *
- * The reducer is a pure function defined in ./sessionReducer.ts that
- * handles all action types and returns a new immutable state.
- *
- * Selectors are provided for components to derive data such as
- * chat context and renderer props without mutating state.
+ * The reducer is a pure function defined in ./sessionReducer.ts.
+ * Selectors are exposed via the hooks below.
  */
 export const SessionProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  // Initialize the reducer with the baseline session
   const [state, dispatch] = useReducer(reducer, baselineSession);
 
   return (
@@ -34,7 +43,9 @@ export const SessionProvider: React.FC<{ children: ReactNode }> = ({ children })
   );
 };
 
-// Hook to read session state (typed)
+// ── Hooks ─────────────────────────────────────────────────────────────────────
+
+/** Read the full session state. Throws if used outside SessionProvider. */
 export const useSessionState = (): SessionState => {
   const context = useContext(SessionContext);
   if (!context) {
@@ -43,22 +54,23 @@ export const useSessionState = (): SessionState => {
   return context.state;
 };
 
-// Hook to read derived data
-export const useChatContext = () => {
-  const state = useSessionState();
-  return selectChatContext(state);
-};
-
-export const useRendererProps = () => {
-  const state = useSessionState();
-  return selectRendererProps(state);
-};
-
-// Hook to dispatch actions
-export const useSessionDispatch = () => {
+/** Typed dispatch hook. Throws if used outside SessionProvider. */
+export const useSessionDispatch = (): Dispatch<SessionAction> => {
   const context = useContext(SessionContext);
   if (!context) {
     throw new Error("useSessionDispatch must be used within a SessionProvider");
   }
   return context.dispatch;
+};
+
+/** Derived chat context – stable slice of chat state for the chat panel. */
+export const useChatContext = (): ChatContext => {
+  const state = useSessionState();
+  return selectChatContext(state);
+};
+
+/** Derived renderer props – normalized props for the 3D viewport. */
+export const useRendererProps = (): RendererProps => {
+  const state = useSessionState();
+  return selectRendererProps(state);
 };

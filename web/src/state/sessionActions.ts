@@ -6,7 +6,8 @@ import {
   MutationRecord,
 } from "./sessionTypes";
 
-// Action type definitions
+// ── Action type constants ─────────────────────────────────────────────────────
+
 export const SET_AGENT_IDENTITY_CHANGE = "session/agent_identity_change" as const;
 export const SET_AGENT_BEHAVIOR_CHANGE = "session/agent_behavior_change" as const;
 export const SET_AGENT_APPEARANCE_CHANGE = "session/agent_appearance_change" as const;
@@ -14,13 +15,35 @@ export const SET_AGENT_FULL_CHANGE = "session/agent_full_change" as const;
 export const SET_ENVIRONMENT_PRESET_CHANGE = "session/environment_preset_change" as const;
 export const SET_OBJECT_TOGGLE = "session/object_toggle" as const;
 export const APPEND_CHAT_MESSAGE = "session/chat_append" as const;
+export const UPDATE_CHAT_MESSAGE = "session/chat_update" as const;
 export const APPEND_MUTATION = "session/mutation_append" as const;
 export const SET_PENDING_ERROR = "session/pending_error" as const;
+export const SET_PENDING_MESSAGE_ID = "session/pending_message_id" as const;
 export const SET_SELECTED_OBJECT = "session/selected_object_change" as const;
 export const RESET_SESSION = "session/reset_baseline" as const;
 
-// Action creators
-export const setAgentIdentity = (updates: Partial<AgentState>) => ({
+// ── Action type union ─────────────────────────────────────────────────────────
+
+export type SessionAction =
+  | ReturnType<typeof setAgentIdentity>
+  | ReturnType<typeof setAgentBehavior>
+  | ReturnType<typeof setAgentAppearance>
+  | ReturnType<typeof setAgentFull>
+  | ReturnType<typeof setEnvironmentPreset>
+  | ReturnType<typeof toggleObjectEnabled>
+  | ReturnType<typeof appendChatMessage>
+  | ReturnType<typeof updateChatMessage>
+  | ReturnType<typeof appendMutation>
+  | ReturnType<typeof setPendingError>
+  | ReturnType<typeof setPendingMessageId>
+  | ReturnType<typeof setSelectedObject>
+  | ReturnType<typeof resetSession>;
+
+// ── Action creators ───────────────────────────────────────────────────────────
+
+export const setAgentIdentity = (
+  updates: Partial<Omit<AgentState, "behavior" | "appearance">>,
+) => ({
   type: SET_AGENT_IDENTITY_CHANGE,
   payload: updates,
 });
@@ -45,7 +68,9 @@ export const setAgentFull = (updates: Partial<Omit<AgentState, "id">>) => ({
   payload: updates,
 });
 
-export const setEnvironmentPreset = (updates: Partial<EnvironmentState>) => ({
+export const setEnvironmentPreset = (
+  updates: Partial<Omit<EnvironmentState, "objects">>,
+) => ({
   type: SET_ENVIRONMENT_PRESET_CHANGE,
   payload: updates,
 });
@@ -60,6 +85,12 @@ export const appendChatMessage = (message: ChatMessage) => ({
   payload: { message },
 });
 
+/** Update an existing chat message by ID (e.g., to set agent response text). */
+export const updateChatMessage = (id: string, updates: Partial<ChatMessage>) => ({
+  type: UPDATE_CHAT_MESSAGE,
+  payload: { id, updates },
+});
+
 export const appendMutation = (mutation: MutationRecord) => ({
   type: APPEND_MUTATION,
   payload: { mutation },
@@ -68,6 +99,11 @@ export const appendMutation = (mutation: MutationRecord) => ({
 export const setPendingError = (error: string | undefined) => ({
   type: SET_PENDING_ERROR,
   payload: { error },
+});
+
+export const setPendingMessageId = (id: string | undefined) => ({
+  type: SET_PENDING_MESSAGE_ID,
+  payload: { id },
 });
 
 export const setSelectedObject = (id: string | undefined) => ({

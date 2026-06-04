@@ -1,59 +1,51 @@
-import { SessionState, ChatMessage, MutationRecord } from "./sessionTypes";
-import { createMutationRecord } from "./mutationLog";
+import { SessionState, ChatMessage, AgentState, EnvironmentState } from "./sessionTypes";
 
-/**
- * Builds a ChatContext object from session state.
- * This ensures components get a stable, read-only view of chat data.
- */
-export const selectChatContext = (
-  state: SessionState,
-): {
+// ── Chat context selector ─────────────────────────────────────────────────────
+
+export interface ChatContext {
   messages: ChatMessage[];
   pendingMessageId?: string;
   error?: string;
-} => ({
+}
+
+/**
+ * Returns a stable, read-only view of chat data from session state.
+ * Does NOT mutate or copy the messages array – callers must not modify it.
+ */
+export const selectChatContext = (state: SessionState): ChatContext => ({
   messages: state.chat.messages,
   pendingMessageId: state.chat.pendingMessageId,
   error: state.chat.error,
 });
 
+// ── Renderer props selector ───────────────────────────────────────────────────
+
+export interface RendererProps {
+  agent: AgentState;
+  environment: EnvironmentState;
+  selectedObjectId: string | undefined;
+}
+
 /**
- * Builds renderer props needed by the 3D viewport.
- * This selector isolates presentation logic from state mutations.
+ * Returns the normalized props needed by the 3D viewport renderer.
+ * Keeps renderer-specific fields out of session state by deriving them here.
+ * Does NOT mutate state.
  */
-export const selectRendererProps = (state: SessionState) => ({
+export const selectRendererProps = (state: SessionState): RendererProps => ({
   agent: state.agent,
   environment: state.environment,
   selectedObjectId: state.ui.selectedObjectId,
 });
 
+// ── Chat-request context builder ──────────────────────────────────────────────
+
 /**
- * Helper to create a MutationRecord entry with consistent shape.
+ * Builds the context payload included in every chat adapter request.
+ * Limits recent messages to the last `maxMessages` to avoid large payloads.
  */
-export const createMutationHelper = ({
-  source,
-  target,
-  summary,
-  status,
-  payload,
-  timestamp,
-  idGenerator,
-}: {
-  source: string;
-  target: string;
-  summary: string;
-  status: "pending" | "applied" | "failed";
-  payload?: Record<string, unknown>;
-  timestamp?: number;
-  idGenerator?: () => string;
-}) => {
-  return createMutationRecord({
-    source,
-    target,
-    summary,
-    status,
-    payload,
-    timestamp,
-    idGenerator,
-  });
-};
+export const selectChatRequestContext = (state: SessionState, maxMessages = 20) => ({
+  sessionId: state.sessionId,
+  agent: state.agent,
+  environment: state.environment,
+  recentMessages: state.chat.messages.slice(-maxMessages),
+});

@@ -1,10 +1,10 @@
 ---
 id: TASK-4.2
 title: Implement session reducer actions selectors and mutation log
-status: Open
+status: In Progress
 assignee: []
 created_date: '2026-06-02 22:11'
-updated_date: '2026-06-03 05:16'
+updated_date: '2026-06-04 15:57'
 labels: []
 dependencies:
   - TASK-4.1
@@ -39,3 +39,34 @@ Do not erase chat history during baseline reset unless a separate new-session ac
 - [ ] #2 Selectors produce chat context and renderer props without mutating state.
 - [ ] #3 Unit tests cover representative full state flows and reset behavior.
 <!-- AC:END -->
+
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+Understanding: session state layer is partially implemented but has 30+ TypeScript errors. Fixing: missing type exports (BehaviorState, MutationSource, MutationTarget, MutationStatus), as const on variable refs in sessionActions, ChatMessage not imported, unused imports, SessionProvider importing SessionState from wrong module, SceneObjectState implicit any. Also adding provider-level integration test.
+<!-- SECTION:NOTES:END -->
+
+## Comments
+<!-- COMMENTS:BEGIN -->
+<!-- COMMENT:BEGIN -->
+index: 1
+author: oompah
+created: 2026-06-04 15:46
+
+Agent dispatched (profile: default)
+<!-- COMMENT:END -->
+<!-- COMMENT:BEGIN -->
+index: 2
+author: oompah
+created: 2026-06-04 15:46
+
+Focus: Integration Tests Session Specialist
+<!-- COMMENT:END -->
+<!-- COMMENT:BEGIN -->
+index: 3
+author: oompah
+created: 2026-06-04 15:55
+
+Agent dispatched (profile: default)
+<!-- COMMENT:END -->
+<!-- COMMENTS:END -->
