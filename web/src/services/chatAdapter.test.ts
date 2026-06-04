@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { mockChatAdapter } from "./chatAdapter";
+import { mockChatAdapter, ChatError } from "./chatAdapter";
 
 function mockAgentState() {
   return {
@@ -101,5 +101,50 @@ describe("mockChatAdapter", () => {
     await expect(adapter.send(request, controller.signal)).rejects.toThrow(
       "Request aborted",
     );
+  });
+
+  it('does not mutate agentState, environmentState, or recentMessages', async () => {
+    const adapter = mockChatAdapter;
+    const agentState = mockAgentState();
+    const environmentState = mockEnvState();
+    const recentMessages = mockRecentMessages();
+
+    // Deep-copy initial state for comparison
+    const agentStateBefore = JSON.parse(JSON.stringify(agentState));
+    const envStateBefore = JSON.parse(JSON.stringify(environmentState));
+    const messagesBefore = JSON.parse(JSON.stringify(recentMessages));
+
+    const request = {
+      sessionId: 'test-session',
+      userMessage: 'Will you mutate state?',
+      agentState,
+      environmentState,
+      recentMessages,
+    };
+
+    await adapter.send(request);
+
+    // Verify none of the passed objects were mutated
+    expect(agentState).toEqual(agentStateBefore);
+    expect(environmentState).toEqual(envStateBefore);
+    expect(recentMessages).toEqual(messagesBefore);
+  });
+
+  it('returns a ChatError instance when throwing on validation failure', async () => {
+    const adapter = mockChatAdapter;
+    const request = {
+      sessionId: 'test-session',
+      userMessage: '',
+      agentState: mockAgentState(),
+      environmentState: mockEnvState(),
+      recentMessages: mockRecentMessages(),
+    };
+    try {
+      await adapter.send(request);
+      expect.fail('should have thrown');
+    } catch (err) {
+      expect(err).toBeInstanceOf(ChatError);
+      expect((err as ChatError).name).toBe('ChatError');
+    }
   });
 });
