@@ -1,7 +1,7 @@
 ---
 id: TASK-7.2
 title: Implement right chat panel message flow
-status: In Progress
+status: Done
 assignee: []
 created_date: '2026-06-02 22:12'
 updated_date: '2026-06-04 03:23'
@@ -47,6 +47,12 @@ Do not let chat directly mutate the environment in the MVP. Do not hard-code moc
 <!-- SECTION:NOTES:BEGIN -->
 Merge conflict resolved: rebased TASK-7.2 onto origin/dev (which included TASK-6.1). Conflicts were in AppShell.tsx (merged ChatPanel into TASK-6.1s AgentControlPanel+EnvironmentControlPanel structure), sessionActions.ts (kept HEAD/dev version with SET_AGENT_FULL_CHANGE and correct as-const types), sessionReducer.ts (kept HEAD/dev version with agent_full_change case). The formatting-only second commit was skipped as a no-op. All 113 tests pass.
 <!-- SECTION:NOTES:END -->
+
+## Final Summary
+
+<!-- SECTION:FINAL_SUMMARY:BEGIN -->
+Merge conflict resolved: successfully rebased TASK-7.2 (ChatPanel implementation) onto origin/dev (which added TASK-6.1 agent control groups). Conflicts in AppShell.tsx, sessionActions.ts, sessionReducer.ts were resolved by keeping TASK-6.1 improvements (AgentControlPanel, SET_AGENT_FULL_CHANGE, agent_full_change reducer case) while adding TASK-7.2s ChatPanel. All 113 tests pass. Force-pushed to origin/TASK-7.2.
+<!-- SECTION:FINAL_SUMMARY:END -->
 
 ## Comments
 <!-- COMMENTS:BEGIN -->
