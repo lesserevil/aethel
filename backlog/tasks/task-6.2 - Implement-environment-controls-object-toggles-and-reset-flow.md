@@ -4,7 +4,7 @@ title: Implement environment controls object toggles and reset flow
 status: Done
 assignee: []
 created_date: '2026-06-02 22:12'
-updated_date: '2026-06-04 16:25'
+updated_date: '2026-06-04 16:34'
 labels: []
 dependencies:
   - TASK-4.2
@@ -60,14 +60,8 @@ Implementation complete. Created ControlPanel component with:
 
 All state tests pass (24/24). Build, lint, and fmt-check pass. Dev server starts successfully.
 
-Verification complete: All 24 tests pass. Build succeeds. Branch pushed to origin/TASK-6.2. Implementation covers all acceptance criteria: environment preset select, time/lighting/ambience/weather controls, object toggles, Apply button with validation+mutation+chat message, Reset button preserving chat history.
+Duplicate investigation (2026-06-04): Confirmed TASK-6.2 is the original task, not a duplicate of any other task. No other task covers environment controls + object toggles + reset flow. Implementation committed at 257b061 and task remains Done.
 <!-- SECTION:NOTES:END -->
-
-## Final Summary
-
-<!-- SECTION:FINAL_SUMMARY:BEGIN -->
-Implemented environment controls in left ControlPanel. Created web/src/components/controls/ControlPanel.tsx with environment preset select, time-of-day, lighting, ambience, weather controls, and object toggles. Apply button validates draft, updates EnvironmentState, records MutationRecord, and appends chat system message. Reset button restores baseline state, records reset mutation, clears draft/status, preserves chat history. All 24 tests pass. Build succeeds. Not a duplicate.
-<!-- SECTION:FINAL_SUMMARY:END -->
 
 ## Comments
 <!-- COMMENTS:BEGIN -->
@@ -478,6 +472,20 @@ Retrying (attempt #4, agent: deep)
 index: 50
 author: oompah
 created: 2026-06-04 16:20
+
+Agent dispatched (profile: default)
+<!-- COMMENT:END -->
+<!-- COMMENT:BEGIN -->
+index: 51
+author: oompah
+created: 2026-06-04 16:20
+
+Focus: Duplicate Investigator
+<!-- COMMENT:END -->
+<!-- COMMENT:BEGIN -->
+index: 52
+author: oompah
+created: 2026-06-04 16:29
 
 Agent dispatched (profile: default)
 <!-- COMMENT:END -->
