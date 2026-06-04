@@ -3,14 +3,14 @@ id: TASK-6.2
 title: Implement environment controls object toggles and reset flow
 status: In Progress
 assignee: []
-created_date: '2026-06-02 22:12'
-updated_date: '2026-06-03 20:44'
+created_date: 2026-06-02 22:12
+updated_date: 2026-06-04 16:20
 labels: []
 dependencies:
-  - TASK-4.2
-  - TASK-3.3
+- TASK-4.2
+- TASK-3.3
 documentation:
-  - plans/aethel_mvp_plan.md
+- plans/aethel_mvp_plan.md
 parent_task_id: TASK-6
 priority: high
 ordinal: 21000
@@ -467,5 +467,12 @@ author: oompah
 created: 2026-06-03 20:35
 
 Retrying (attempt #4, agent: deep)
+<!-- COMMENT:END -->
+<!-- COMMENT:BEGIN -->
+index: 50
+author: oompah
+created: 2026-06-04 16:20
+
+Agent dispatched (profile: default)
 <!-- COMMENT:END -->
 <!-- COMMENTS:END -->
