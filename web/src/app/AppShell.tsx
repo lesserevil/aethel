@@ -1,7 +1,8 @@
-import "./app-shell.css";
-import { ControlPanel } from "../components/controls/ControlPanel";
+import { AgentControlPanel } from "./ControlPanel";
+import { ControlPanel as EnvironmentControlPanel } from "../components/controls/ControlPanel";
 import { AethelViewport } from "../components/viewport";
 import { baselineSession } from "../state/baselineSession";
+import "./app-shell.css";
 
 export function AppShell() {
   return (
@@ -11,7 +12,8 @@ export function AppShell() {
         id="control-panel"
         data-testid="control-panel-container"
       >
-        <ControlPanel />
+        <AgentControlPanel />
+        <EnvironmentControlPanel />
       </aside>
 
       <main

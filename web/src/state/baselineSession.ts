@@ -60,11 +60,11 @@ export const baselineSession: SessionState = {
     ],
   },
   chat: {
-    messages: [], // Empty chat history as requested
+    messages: [],
     pendingMessageId: undefined,
     error: undefined,
   },
-  mutations: [], // No applied mutations as requested
+  mutations: [],
   ui: {
     selectedPanel: "controls",
     activeControlTab: "agent",

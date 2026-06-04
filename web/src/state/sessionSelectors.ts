@@ -35,7 +35,6 @@ export const selectRendererProps = (state: SessionState) => ({
 
 /**
  * Helper to create a MutationRecord entry with consistent shape.
- * Usage: const mr = createMutationHelper({source: 'control-panel', target: 'agent', summary: 'Changed tone', status: 'applied'});
  */
 export const createMutationHelper = ({
   source,
@@ -54,7 +53,6 @@ export const createMutationHelper = ({
   timestamp?: number;
   idGenerator?: () => string;
 }) => {
-  // Leveraging the existing createMutationRecord to keep consistent IDs/timestamps
   return createMutationRecord({
     source,
     target,

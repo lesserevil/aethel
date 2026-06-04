@@ -3,6 +3,11 @@
 
 export type SessionId = string;
 
+// Narrowed literal-union type aliases used by mutationLog and action creators
+export type MutationSource = "control-panel" | "chat-confirmed" | "system";
+export type MutationTarget = "agent" | "environment" | "session" | "chat";
+export type MutationStatus = "pending" | "applied" | "failed";
+
 // Core session state
 export interface SessionState {
   sessionId: SessionId;
@@ -11,6 +16,13 @@ export interface SessionState {
   chat: ChatState;
   mutations: MutationRecord[];
   ui: UiState;
+}
+
+// Agent behavior sub-type alias (used in action creators)
+export interface BehaviorState {
+  curiosity: number; // 0-1 scale
+  formality: number; // 0-1 scale
+  skepticism: number; // 0-1 scale
 }
 
 // Agent state definition
@@ -25,13 +37,6 @@ export interface AgentState {
     accentColor: string; // CSS color string
     idlePose: string; // e.g., "standing", "waiting", "thinking"
   };
-}
-
-// Behavior state definition
-export interface BehaviorState {
-  curiosity: number; // 0-1 scale
-  formality: number; // 0-1 scale
-  skepticism: number; // 0-1 scale
 }
 
 // Environment state definition
@@ -90,10 +95,6 @@ export interface ChatMessage {
 }
 
 // Mutation record definition
-export type MutationSource = "control-panel" | "chat-confirmed" | "system";
-export type MutationTarget = "agent" | "environment" | "session" | "chat";
-export type MutationStatus = "pending" | "applied" | "failed";
-
 export interface MutationRecord {
   id: string;
   timestamp: number; // Unix timestamp in milliseconds
