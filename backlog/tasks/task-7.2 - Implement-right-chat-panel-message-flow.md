@@ -4,7 +4,7 @@ title: Implement right chat panel message flow
 status: In Progress
 assignee: []
 created_date: '2026-06-02 22:12'
-updated_date: '2026-06-04 03:05'
+updated_date: '2026-06-04 03:23'
 labels: []
 dependencies:
   - TASK-7.1
@@ -45,9 +45,7 @@ Do not let chat directly mutate the environment in the MVP. Do not hard-code moc
 ## Implementation Notes
 
 <!-- SECTION:NOTES:BEGIN -->
-DISCOVERY: Not a duplicate. TASK-7.1 (chat adapter contract) is complete. TASK-7.2 needs ChatPanel UI. Will implement: ChatPanel component in web/src/app/ChatPanel.tsx using useSessionState/useSessionDispatch hooks, mockChatAdapter injected via props, full test suite in ChatPanel.test.tsx, SessionProvider wrapping in App.tsx.
-
-Merge Conflict Resolver: Rebasing TASK-7.2 onto origin/dev. TASK-5.1 landed on dev with AethelViewport in AppShell plus code quality fixes. Resolving 4 conflicts: AppShell.tsx (merge both), baselineSession.ts (keep HEAD), chatAdapter.test.ts (keep HEAD), sessionStorageUtil.test.ts (keep HEAD).
+Merge conflict resolved: rebased TASK-7.2 onto origin/dev (which included TASK-6.1). Conflicts were in AppShell.tsx (merged ChatPanel into TASK-6.1s AgentControlPanel+EnvironmentControlPanel structure), sessionActions.ts (kept HEAD/dev version with SET_AGENT_FULL_CHANGE and correct as-const types), sessionReducer.ts (kept HEAD/dev version with agent_full_change case). The formatting-only second commit was skipped as a no-op. All 113 tests pass.
 <!-- SECTION:NOTES:END -->
 
 ## Comments
