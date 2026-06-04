@@ -122,8 +122,15 @@ describe("AppShell — session state binding", () => {
         },
       },
     });
-    const avatar = screen.getByTestId("agent-avatar");
-    expect(avatar).toHaveAttribute("data-avatar-preset", "robot");
+    // Three.js/R3F primitives do not support data-testid in real Chrome.
+    // The AethelViewport wrapper div and the agent-name-label (Html overlay)
+    // expose agent state as HTML data attributes for test assertions.
+    const viewport = screen.getByTestId("aethel-viewport");
+    expect(viewport).toHaveAttribute("data-avatar-preset", "robot");
+    expect(screen.getByTestId("agent-name-label")).toHaveAttribute(
+      "data-avatar-preset",
+      "robot",
+    );
   });
 
   it("reflects updated idlePose on the agent-avatar element", () => {
@@ -136,8 +143,12 @@ describe("AppShell — session state binding", () => {
         },
       },
     });
-    const avatar = screen.getByTestId("agent-avatar");
-    expect(avatar).toHaveAttribute("data-idle-pose", "thinking");
+    const viewport = screen.getByTestId("aethel-viewport");
+    expect(viewport).toHaveAttribute("data-idle-pose", "thinking");
+    expect(screen.getByTestId("agent-name-label")).toHaveAttribute(
+      "data-idle-pose",
+      "thinking",
+    );
   });
 
   // ── Environment state → viewport ─────────────────────────────────────
@@ -153,10 +164,14 @@ describe("AppShell — session state binding", () => {
         ],
       },
     });
-    // obj-001 and obj-003 are enabled
-    expect(screen.getByTestId("scene-object-obj-001")).toBeInTheDocument();
-    expect(screen.queryByTestId("scene-object-obj-002")).not.toBeInTheDocument();
-    expect(screen.getByTestId("scene-object-obj-003")).toBeInTheDocument();
+    // Three.js/R3F scene objects don't support data-testid in real Chrome.
+    // The viewport wrapper div carries data-enabled-objects (comma-separated IDs)
+    // so tests can verify which objects are enabled without Three.js queries.
+    const viewport = screen.getByTestId("aethel-viewport");
+    const enabledObjects = viewport.getAttribute("data-enabled-objects") ?? "";
+    expect(enabledObjects).toContain("obj-001");
+    expect(enabledObjects).not.toContain("obj-002");
+    expect(enabledObjects).toContain("obj-003");
   });
 
   it("does not render scene objects that are disabled in session state", () => {
@@ -169,9 +184,11 @@ describe("AppShell — session state binding", () => {
         })),
       },
     });
-    expect(screen.queryByTestId("scene-object-obj-001")).not.toBeInTheDocument();
-    expect(screen.queryByTestId("scene-object-obj-002")).not.toBeInTheDocument();
-    expect(screen.queryByTestId("scene-object-obj-003")).not.toBeInTheDocument();
+    const viewport = screen.getByTestId("aethel-viewport");
+    const enabledObjects = viewport.getAttribute("data-enabled-objects") ?? "";
+    expect(enabledObjects).not.toContain("obj-001");
+    expect(enabledObjects).not.toContain("obj-002");
+    expect(enabledObjects).not.toContain("obj-003");
   });
 
   // ── View event → dispatch (no direct state mutation) ─────────────────
@@ -224,11 +241,14 @@ describe("AppShell — session state binding", () => {
     expect(screen.getByTestId("chat-panel")).toBeInTheDocument();
   });
 
-  it("renders agent-avatar inside the viewport panel", () => {
+  it("renders agent viewport (aethel-viewport) inside the viewport panel", () => {
     renderWithSession();
     const viewportPanel = screen.getByTestId("viewport-panel");
+    // Three.js/R3F primitives don't support data-testid in real Chrome.
+    // The AethelViewport wrapper div (data-testid="aethel-viewport") is an HTML
+    // element inside the viewport panel — use that for DOM queries.
     expect(
-      viewportPanel.querySelector('[data-testid="agent-avatar"]'),
+      viewportPanel.querySelector('[data-testid="aethel-viewport"]'),
     ).toBeInTheDocument();
   });
 });

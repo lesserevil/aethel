@@ -123,6 +123,19 @@ export function AethelViewport({
       className="aethel-viewport"
       data-testid="aethel-viewport"
       data-viewport-ready={isReady ? "true" : "false"}
+      // Expose agent appearance and environment state as HTML data attributes on
+      // the wrapper div so that tests can verify state without querying Three.js
+      // scene objects (Three.js/R3F primitives do not support data-* props in
+      // real Chrome — they only work in the jsdom mocked environment).
+      data-avatar-preset={agent.appearance.avatarPreset}
+      data-idle-pose={agent.appearance.idlePose}
+      data-accent-color={agent.appearance.accentColor}
+      data-environment-preset={environment.preset}
+      // Comma-separated IDs of enabled scene objects for test assertions
+      data-enabled-objects={environment.objects
+        .filter((o) => o.enabled)
+        .map((o) => o.id)
+        .join(",")}
       style={{ width: "100%", height: "100%", position: "relative" }}
     >
       <Canvas

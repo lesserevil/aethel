@@ -115,15 +115,12 @@ export function AgentAvatar({
   const bodyCenterY = bodyType === "sphere" ? 0.75 : 0.6;
 
   return (
-    <group
-      position={[px, py, pz]}
-      data-testid="agent-avatar"
-      data-avatar-preset={agent.appearance.avatarPreset}
-      data-idle-pose={agent.appearance.idlePose}
-    >
+    // NOTE: Three.js/R3F primitives do not support data-* HTML attributes.
+    // Removing data-testid to prevent R3F crashes in headless browser environments.
+    <group position={[px, py, pz]}>
       {/* Body — shape depends on avatarPreset */}
       {bodyType === "box" && (
-        <mesh position={[0, bodyCenterY, 0]} castShadow data-testid="agent-body">
+        <mesh position={[0, bodyCenterY, 0]} castShadow>
           <boxGeometry args={bodyDims} />
           <meshStandardMaterial
             color={accentColor}
@@ -135,7 +132,7 @@ export function AgentAvatar({
         </mesh>
       )}
       {bodyType === "sphere" && (
-        <mesh position={[0, bodyCenterY, 0]} castShadow data-testid="agent-body">
+        <mesh position={[0, bodyCenterY, 0]} castShadow>
           <sphereGeometry args={[bodyDims[0], 16, 16]} />
           <meshStandardMaterial
             color={accentColor}
@@ -148,18 +145,13 @@ export function AgentAvatar({
       )}
 
       {/* Head — sphere primitive, scaled by preset */}
-      <mesh position={[0, 1.35, 0]} castShadow data-testid="agent-head">
+      <mesh position={[0, 1.35, 0]} castShadow>
         <sphereGeometry args={[headScale, 16, 16]} />
         <meshStandardMaterial color={headColor} roughness={0.4} metalness={0.1} />
       </mesh>
 
       {/* Left arm — position/rotation driven by idlePose */}
-      <mesh
-        position={leftArmPos}
-        rotation={leftArmRot}
-        castShadow
-        data-testid="agent-arm-left"
-      >
+      <mesh position={leftArmPos} rotation={leftArmRot} castShadow>
         <boxGeometry args={[0.15, 0.8, 0.2]} />
         <meshStandardMaterial
           color={accentColor}
@@ -169,12 +161,7 @@ export function AgentAvatar({
       </mesh>
 
       {/* Right arm — position/rotation driven by idlePose */}
-      <mesh
-        position={rightArmPos}
-        rotation={rightArmRot}
-        castShadow
-        data-testid="agent-arm-right"
-      >
+      <mesh position={rightArmPos} rotation={rightArmRot} castShadow>
         <boxGeometry args={[0.15, 0.8, 0.2]} />
         <meshStandardMaterial
           color={accentColor}
@@ -183,7 +170,10 @@ export function AgentAvatar({
         />
       </mesh>
 
-      {/* Name label — rendered in HTML overlay, positioned above agent head */}
+      {/* Name label — rendered in HTML overlay, positioned above agent head.
+          The data-avatar-preset and data-idle-pose attributes here are the
+          HTML-accessible equivalents; the AethelViewport wrapper div also
+          carries these for test convenience. */}
       <Html
         position={[0, 1.9, 0]}
         center
@@ -193,6 +183,8 @@ export function AgentAvatar({
       >
         <div
           data-testid="agent-name-label"
+          data-avatar-preset={agent.appearance.avatarPreset}
+          data-idle-pose={agent.appearance.idlePose}
           style={{
             background: "rgba(0,0,0,0.65)",
             color: accentColor,

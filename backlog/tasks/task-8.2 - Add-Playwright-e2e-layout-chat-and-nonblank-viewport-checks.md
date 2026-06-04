@@ -1,10 +1,10 @@
 ---
 id: TASK-8.2
 title: Add Playwright e2e layout chat and nonblank viewport checks
-status: Open
+status: In Progress
 assignee: []
 created_date: '2026-06-02 22:12'
-updated_date: '2026-06-03 05:52'
+updated_date: '2026-06-04 15:14'
 labels: []
 dependencies:
   - TASK-8.1
@@ -40,3 +40,34 @@ Do not only assert that a canvas element exists. Avoid flaky sleeps; wait for ex
 - [ ] #2 E2e visual check fails on a blank 3D viewport.
 - [ ] #3 E2e flow covers control mutation, chat send/response, and current context usage.
 <!-- AC:END -->
+
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+UNDERSTANDING: Task requires adding Playwright e2e tests. Web app already has playwright.config.ts configured with Chromium. Need to create web/tests/e2e/ directory with tests for: 3-column desktop layout, narrow viewport no-overlap, nonblank canvas pixel check, control mutation flow, chat with context. Will also add e2e script to package.json and Makefile.
+<!-- SECTION:NOTES:END -->
+
+## Comments
+<!-- COMMENTS:BEGIN -->
+<!-- COMMENT:BEGIN -->
+index: 1
+author: oompah
+created: 2026-06-04 15:08
+
+Agent dispatched (profile: default)
+<!-- COMMENT:END -->
+<!-- COMMENT:BEGIN -->
+index: 2
+author: oompah
+created: 2026-06-04 15:08
+
+Focus: Integration Tests Session Specialist
+<!-- COMMENT:END -->
+<!-- COMMENT:BEGIN -->
+index: 3
+author: oompah
+created: 2026-06-04 15:12
+
+Agent dispatched (profile: default)
+<!-- COMMENT:END -->
+<!-- COMMENTS:END -->

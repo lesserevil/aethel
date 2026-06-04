@@ -75,7 +75,11 @@ import type { SessionState } from "../state/sessionTypes";
  * A chat adapter stub is injected via the ChatPanel `adapter` prop so that
  * chat messages don't make real async network calls in tests.
  */
-function LiveSessionShell({ initialState = baselineSession }: { initialState?: SessionState }) {
+function LiveSessionShell({
+  initialState = baselineSession,
+}: {
+  initialState?: SessionState;
+}) {
   const [state, dispatch] = useReducer(reducer, initialState);
   return (
     <SessionContext.Provider value={{ state, dispatch }}>
@@ -109,8 +113,14 @@ describe("Panel synchronization — agent appearance change", () => {
     fireEvent.click(robotBtn);
     fireEvent.click(applyBtn);
 
-    const avatar = screen.getByTestId("agent-avatar");
-    expect(avatar).toHaveAttribute("data-avatar-preset", "robot");
+    // Three.js/R3F primitives don't support data-testid in real Chrome.
+    // The AethelViewport wrapper div exposes agent state as data attributes.
+    const viewport = screen.getByTestId("aethel-viewport");
+    expect(viewport).toHaveAttribute("data-avatar-preset", "robot");
+    expect(screen.getByTestId("agent-name-label")).toHaveAttribute(
+      "data-avatar-preset",
+      "robot",
+    );
   });
 
   it("after applying, the viewport agent avatar reflects the new accent color", () => {
@@ -136,7 +146,8 @@ describe("Panel synchronization — agent appearance change", () => {
 
     // The system message content should reference "robot" or "Agent updated"
     const anyMentionsChange = systemMessages.some(
-      (el) => el.textContent?.includes("robot") || el.textContent?.includes("Agent updated"),
+      (el) =>
+        el.textContent?.includes("robot") || el.textContent?.includes("Agent updated"),
     );
     expect(anyMentionsChange).toBe(true);
   });
@@ -166,7 +177,8 @@ describe("Panel synchronization — agent appearance change", () => {
     fireEvent.click(applyBtn);
 
     const agentMutations = capturedState.mutations.filter(
-      (m) => m.source === "control-panel" && m.target === "agent" && m.status === "applied",
+      (m) =>
+        m.source === "control-panel" && m.target === "agent" && m.status === "applied",
     );
     expect(agentMutations.length).toBeGreaterThanOrEqual(1);
   });
@@ -177,9 +189,10 @@ describe("Panel synchronization — agent appearance change", () => {
     // Click the robot button but do NOT apply
     fireEvent.click(robotBtn);
 
-    // Viewport should still show the baseline (humanoid)
-    const avatar = screen.getByTestId("agent-avatar");
-    expect(avatar).toHaveAttribute("data-avatar-preset", "humanoid");
+    // Viewport should still show the baseline (humanoid) — the draft change
+    // should not yet be reflected in the viewport wrapper data attribute.
+    const viewport = screen.getByTestId("aethel-viewport");
+    expect(viewport).toHaveAttribute("data-avatar-preset", "humanoid");
   });
 });
 
@@ -207,8 +220,8 @@ describe("Panel synchronization — agent behavior/persona change", () => {
     fireEvent.change(personaSelect, { target: { value: "analytical" } });
     fireEvent.click(applyBtn);
 
-    // The viewport agent avatar and name label should still render (not crash)
-    expect(screen.getByTestId("agent-avatar")).toBeInTheDocument();
+    // The viewport and name label should still render after a persona change (no crash)
+    expect(screen.getByTestId("aethel-viewport")).toBeInTheDocument();
     expect(screen.getByTestId("agent-name-label")).toBeInTheDocument();
   });
 
@@ -429,7 +442,10 @@ describe("Panel synchronization — environment/object change", () => {
     fireEvent.click(applyBtn);
 
     const envMutations = capturedState.mutations.filter(
-      (m) => m.source === "control-panel" && m.target === "environment" && m.status === "applied",
+      (m) =>
+        m.source === "control-panel" &&
+        m.target === "environment" &&
+        m.status === "applied",
     );
     expect(envMutations.length).toBeGreaterThanOrEqual(1);
   });
@@ -537,9 +553,10 @@ describe("Panel synchronization — cross-panel coherence", () => {
     fireEvent.click(abstractBtn);
     fireEvent.click(applyBtn);
 
-    // Viewport must show updated preset immediately — no chat interaction needed
-    const avatar = screen.getByTestId("agent-avatar");
-    expect(avatar).toHaveAttribute("data-avatar-preset", "abstract");
+    // Viewport must show updated preset immediately — no chat interaction needed.
+    // Use the AethelViewport wrapper div (HTML element) not a Three.js primitive.
+    const viewport = screen.getByTestId("aethel-viewport");
+    expect(viewport).toHaveAttribute("data-avatar-preset", "abstract");
   });
 
   it("applying a persona change appends exactly one system message to chat history", () => {

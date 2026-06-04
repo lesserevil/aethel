@@ -116,13 +116,12 @@ export function SceneEnvironment({
   } = deriveSceneLighting(environment);
 
   return (
-    <group data-testid="scene-environment">
+    // NOTE: Three.js/R3F scene objects (group, mesh, lights) do NOT support
+    // HTML data-* attributes. Removing data-testid from JSX Three.js primitives
+    // to avoid R3F crashes when it tries to apply the props to Three.js objects.
+    <group>
       {/* Ambient light — base scene illumination */}
-      <ambientLight
-        intensity={ambientIntensity}
-        color={ambientColor}
-        data-testid="ambient-light"
-      />
+      <ambientLight intensity={ambientIntensity} color={ambientColor} />
 
       {/* Key light — directional from upper-front */}
       <directionalLight
@@ -130,7 +129,6 @@ export function SceneEnvironment({
         intensity={keyIntensity}
         color={keyColor}
         castShadow
-        data-testid="key-light"
       />
 
       {/* Fill light — soft from opposite side */}
@@ -138,56 +136,34 @@ export function SceneEnvironment({
         position={[-4, 6, -5]}
         intensity={fillIntensity}
         color={fillColor}
-        data-testid="fill-light"
       />
 
       {/* Floor plane */}
-      <mesh
-        rotation={[-Math.PI / 2, 0, 0]}
-        position={[0, -0.5, 0]}
-        receiveShadow
-        data-testid="floor"
-      >
+      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.5, 0]} receiveShadow>
         <planeGeometry args={[size, size]} />
         <meshStandardMaterial color={floorColor} roughness={0.8} metalness={0.1} />
       </mesh>
 
       {/* North wall */}
-      <mesh
-        position={[0, wallHeight / 2 - 0.5, -half]}
-        receiveShadow
-        data-testid="wall-north"
-      >
+      <mesh position={[0, wallHeight / 2 - 0.5, -half]} receiveShadow>
         <boxGeometry args={[size, wallHeight, wallThickness]} />
         <meshStandardMaterial color={wallColor} roughness={0.9} metalness={0.05} />
       </mesh>
 
       {/* South wall */}
-      <mesh
-        position={[0, wallHeight / 2 - 0.5, half]}
-        receiveShadow
-        data-testid="wall-south"
-      >
+      <mesh position={[0, wallHeight / 2 - 0.5, half]} receiveShadow>
         <boxGeometry args={[size, wallHeight, wallThickness]} />
         <meshStandardMaterial color={wallColor} roughness={0.9} metalness={0.05} />
       </mesh>
 
       {/* West wall */}
-      <mesh
-        position={[-half, wallHeight / 2 - 0.5, 0]}
-        receiveShadow
-        data-testid="wall-west"
-      >
+      <mesh position={[-half, wallHeight / 2 - 0.5, 0]} receiveShadow>
         <boxGeometry args={[wallThickness, wallHeight, size]} />
         <meshStandardMaterial color={wallColor} roughness={0.9} metalness={0.05} />
       </mesh>
 
       {/* East wall */}
-      <mesh
-        position={[half, wallHeight / 2 - 0.5, 0]}
-        receiveShadow
-        data-testid="wall-east"
-      >
+      <mesh position={[half, wallHeight / 2 - 0.5, 0]} receiveShadow>
         <boxGeometry args={[wallThickness, wallHeight, size]} />
         <meshStandardMaterial color={wallColor} roughness={0.9} metalness={0.05} />
       </mesh>

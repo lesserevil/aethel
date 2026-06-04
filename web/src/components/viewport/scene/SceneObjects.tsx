@@ -73,6 +73,8 @@ function SceneObject({
   };
 
   return (
+    // NOTE: Three.js/R3F primitives do not support data-* HTML attributes.
+    // Using userData for scene object metadata instead of data-testid.
     <mesh
       position={[pos.x, pos.y, pos.z]}
       rotation={[toRad(rot.x), toRad(rot.y), toRad(rot.z)]}
@@ -82,8 +84,7 @@ function SceneObject({
       onClick={handleClick}
       onPointerOver={handlePointerOver}
       onPointerOut={handlePointerOut}
-      data-testid={`scene-object-${obj.id}`}
-      userData={{ objectId: obj.id, label: obj.label }}
+      userData={{ objectId: obj.id, label: obj.label, testid: `scene-object-${obj.id}` }}
     >
       {geometry === "box" && <boxGeometry args={dims} />}
       {geometry === "sphere" && <sphereGeometry args={[dims[0], 16, 16]} />}
@@ -109,7 +110,7 @@ export function SceneObjects({
   const enabledObjects = objects.filter((obj) => obj.enabled);
 
   return (
-    <group data-testid="scene-objects">
+    <group>
       {enabledObjects.map((obj) => (
         <SceneObject
           key={obj.id}
