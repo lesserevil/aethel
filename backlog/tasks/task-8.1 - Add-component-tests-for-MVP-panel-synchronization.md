@@ -1,10 +1,10 @@
 ---
 id: TASK-8.1
 title: Add component tests for MVP panel synchronization
-status: Open
+status: In Progress
 assignee: []
 created_date: '2026-06-02 22:12'
-updated_date: '2026-06-03 05:17'
+updated_date: '2026-06-04 14:48'
 labels: []
 dependencies:
   - TASK-6.1
@@ -42,3 +42,20 @@ Use a renderer stub or spy for these tests rather than depending on WebGL. Full 
 - [ ] #2 Tests assert mutation records and chat system/context entries are produced.
 - [ ] #3 Tests assert viewport boundary receives updated session-derived props.
 <!-- AC:END -->
+
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+UNDERSTANDING: Task requires component/integration tests that render AppShell with a live session reducer and verify cross-panel synchronization for 3 change scenarios: (1) agent appearance, (2) agent behavior/persona, (3) environment/object. Tests must assert shared state updates via reducer, MutationRecord entries appended, ChatPanel displays system messages, and ViewportPanel receives updated renderer props.
+<!-- SECTION:NOTES:END -->
+
+## Comments
+<!-- COMMENTS:BEGIN -->
+<!-- COMMENT:BEGIN -->
+index: 1
+author: oompah
+created: 2026-06-04 14:46
+
+Agent dispatched (profile: default)
+<!-- COMMENT:END -->
+<!-- COMMENTS:END -->
