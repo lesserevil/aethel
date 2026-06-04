@@ -4,7 +4,7 @@ title: Generate missing MVP tests after implementation
 status: In Progress
 assignee: []
 created_date: '2026-06-02 23:46'
-updated_date: '2026-06-04 14:52'
+updated_date: '2026-06-04 17:10'
 labels: []
 dependencies:
   - TASK-4.3
@@ -39,15 +39,17 @@ Do not add shallow tests that only assert components mount. Prefer behavior-leve
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 Post-implementation audit maps MVP Testing Strategy items to implemented tests or follow-up tasks.
-- [ ] #2 Unit/component tests cover state, selectors, adapters, controls, chat, persistence, and viewport prop synchronization.
-- [ ] #3 make test or the documented unit/component test command passes.
+- [x] #1 Post-implementation audit maps MVP Testing Strategy items to implemented tests or follow-up tasks.
+- [x] #2 Unit/component tests cover state, selectors, adapters, controls, chat, persistence, and viewport prop synchronization.
+- [x] #3 make test or the documented unit/component test command passes.
 <!-- AC:END -->
+
+
 
 ## Implementation Notes
 
 <!-- SECTION:NOTES:BEGIN -->
-Implementation complete: Added 55 new tests (215 total, was 160). New test file: web/src/components/controls/ControlPanel.test.tsx (49 tests covering environment controls rendering, draft state, apply/reset flows, mutation records, system messages, object toggles). Added 4 tests to mutationLog.test.ts (custom idGenerator, deterministic output). Added 2 tests to sessionReducer.test.ts (agent_full_change deep merge). All 215 tests pass.
+DISCOVERY (2026-06-04): Ran full test suite after bun install. All 238 tests pass across 16 test files. Coverage per MVP Testing Strategy: (1) reducer/action behavior - sessionReducer.test.ts (11 tests) covers all mutation types; (2) selectors - sessionSelectors.test.ts (3 tests); (3) adapter behavior - chatAdapter.test.ts (4), mutationAdapter.test.ts (4), sessionStorageUtil.test.ts (7); (4) control-panel - ControlPanel.test.tsx (49 tests covering apply/reset/draft flows); (5) chat panel - ChatPanel.test.tsx (26 tests including pending state, errors, message history); (6) viewport - AethelViewport.test.tsx (3 tests, ready signal); (7) scene internals - AgentAvatar.test.ts (17), SceneEnvironment.test.ts (12); (8) panel synchronization - panelSynchronization.test.tsx (23 integration tests covering cross-panel coherence, mutation records, chat propagation); (9) baseline state - baselineSession.test.ts (8); (10) mutation log - mutationLog.test.ts (6 including deterministic ID). MVP Testing Strategy fully covered. make test passes.
 <!-- SECTION:NOTES:END -->
 
 ## Comments
@@ -56,6 +58,13 @@ Implementation complete: Added 55 new tests (215 total, was 160). New test file:
 index: 1
 author: oompah
 created: 2026-06-04 14:46
+
+Agent dispatched (profile: default)
+<!-- COMMENT:END -->
+<!-- COMMENT:BEGIN -->
+index: 2
+author: oompah
+created: 2026-06-04 17:05
 
 Agent dispatched (profile: default)
 <!-- COMMENT:END -->
