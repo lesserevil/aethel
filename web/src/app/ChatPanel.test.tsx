@@ -340,8 +340,7 @@ describe("ChatPanel", () => {
     it("clears the error banner after a successful subsequent send", async () => {
       let callCount = 0;
       const mixedAdapter: ChatAdapter = {
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        async send(_: ChatRequest): Promise<ChatResponse> {
+        async send(): Promise<ChatResponse> {
           callCount++;
           if (callCount === 1) throw new ChatError("First call failed");
           return { response: "OK", newMessageId: "id-2" };
