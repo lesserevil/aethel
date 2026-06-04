@@ -4,7 +4,7 @@ title: Implement agent control groups in left panel
 status: Done
 assignee: []
 created_date: '2026-06-02 22:12'
-updated_date: '2026-06-04 03:02'
+updated_date: '2026-06-04 03:41'
 labels: []
 dependencies:
   - TASK-4.2
@@ -43,7 +43,7 @@ Do not apply every keystroke directly to shared state; use a draft/apply flow. A
 ## Final Summary
 
 <!-- SECTION:FINAL_SUMMARY:BEGIN -->
-Resolved merge conflict between TASK-6.1 (AgentControlPanel in left panel) and TASK-5.1 (AethelViewport). Conflicts were in AppShell.tsx (merged both teams' import changes and component usage) and apiInterfaces.ts (kept import type from TASK-5.1). Rebased TASK-6.1 onto origin/dev. All 87 tests pass. Force-pushed to origin/TASK-6.1.
+Merge conflict resolved: Rebased TASK-6.1 onto origin/dev (which had TASK-7.2 merged after the original TASK-6.1 PR). Two conflicts resolved: (1) task metadata file - kept HEAD (Done status, Final Summary from previous resolver); (2) AppShell.tsx - kept ChatPanel import added by TASK-7.2. All 113 tests pass. Force-pushed to origin/TASK-6.1.
 <!-- SECTION:FINAL_SUMMARY:END -->
 
 ## Comments
@@ -1230,5 +1230,38 @@ author: oompah
 created: 2026-06-04 02:58
 
 Agent dispatched (profile: standard)
+<!-- COMMENT:END -->
+<!-- COMMENT:BEGIN -->
+index: 145
+author: oompah
+created: 2026-06-04 02:58
+
+Focus: Merge Conflict Resolver
+<!-- COMMENT:END -->
+<!-- COMMENT:BEGIN -->
+index: 146
+author: oompah
+created: 2026-06-04 03:03
+
+Agent completed successfully in 315s (12149 tokens)
+<!-- COMMENT:END -->
+<!-- COMMENT:BEGIN -->
+index: 147
+author: oompah
+created: 2026-06-04 03:03
+
+Run #YOLO-reopen [attempt=YOLO-reopen, profile=standard, role=standard -> Claude/default]
+- Turns: 95, Tool calls: 65
+- Tokens: 53 in / 12.1K out [12.1K total]
+- Cost: $0.0000
+- Exit: normal, Duration: 5m 15s
+- Log: TASK-6.1__20260604T025802Z.jsonl
+<!-- COMMENT:END -->
+<!-- COMMENT:BEGIN -->
+index: 148
+author: oompah
+created: 2026-06-04 03:26
+
+Agent dispatched (profile: default)
 <!-- COMMENT:END -->
 <!-- COMMENTS:END -->
