@@ -4,6 +4,9 @@
 //
 // Lighting and colors are driven by EnvironmentState (timeOfDay, lighting, preset).
 
+// Side-effect import: activates the global JSX.IntrinsicElements augmentation
+// from @react-three/fiber so TypeScript recognises <mesh>, <group>, etc.
+import "@react-three/fiber";
 import type { EnvironmentState } from "../../../state/sessionTypes";
 
 // ── Lighting configuration derived from session state ─────────────────────

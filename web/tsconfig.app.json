@@ -18,7 +18,10 @@
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+
+    /* Include @react-three/fiber global JSX augmentation (mesh, group, etc.) */
+    "types": ["@react-three/fiber"]
   },
   "include": ["src"],
   "exclude": [

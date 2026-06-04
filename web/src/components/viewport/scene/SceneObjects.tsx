@@ -2,6 +2,9 @@
 // Maps object types to Three.js primitive geometries.
 // No external assets, GLTF, or art pipeline dependencies.
 
+// Side-effect import: activates the global JSX.IntrinsicElements augmentation
+// from @react-three/fiber so TypeScript recognises <mesh>, <group>, etc.
+import "@react-three/fiber";
 import type { SceneObjectState } from "../../../state/sessionTypes";
 import type { ViewEvent } from "../types";
 

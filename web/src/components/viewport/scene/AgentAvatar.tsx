@@ -4,6 +4,9 @@
 // Displays a readable name label via @react-three/drei Html.
 // No GLTF, art assets, or external pipelines.
 
+// Side-effect import: activates the global JSX.IntrinsicElements augmentation
+// from @react-three/fiber so TypeScript recognises <mesh>, <group>, etc.
+import "@react-three/fiber";
 import { Html } from "@react-three/drei";
 import type { AgentState } from "../../../state/sessionTypes";
 

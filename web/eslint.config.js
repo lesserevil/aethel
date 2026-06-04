@@ -21,6 +21,12 @@ export default tseslint.config(
       "@typescript-eslint/no-explicit-any": "warn",
       // Allow empty interfaces for forward declarations
       "@typescript-eslint/no-empty-object-type": "off",
+      // Allow unused variables/parameters prefixed with underscore (convention for
+      // intentionally unused parameters in callbacks and test stubs)
+      "@typescript-eslint/no-unused-vars": [
+        "error",
+        { argsIgnorePattern: "^_", varsIgnorePattern: "^_" },
+      ],
     },
   },
 );
