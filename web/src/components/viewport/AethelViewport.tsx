@@ -2,13 +2,16 @@
 //
 // Renders a deterministic procedural primitive scene:
 //   - Floor + 4 boundary walls (SceneEnvironment)
-//   - Ambient + directional lighting (SceneEnvironment)
+//   - Ambient + directional lighting driven by EnvironmentState (SceneEnvironment)
 //   - At least 3 optional primitive scene objects (SceneObjects)
 //   - One visible primitive agent avatar with name label (AgentAvatar)
 //   - Orbit/pan/zoom camera controls (OrbitControls)
 //
 // Important: NO Three.js or R3F objects leak into shared session state.
 // The canvas fills its container — no decorative card borders.
+//
+// View events (object clicks, camera changes) are emitted via onViewEvent.
+// The component does NOT mutate shared session state directly.
 
 import { useCallback, useRef, useState } from "react";
 import { Canvas } from "@react-three/fiber";
@@ -60,7 +63,8 @@ function SceneContent({
     <>
       <ReadySignal onReady={markReady} />
 
-      <SceneEnvironment />
+      {/* Environment drives lighting + geometry colors from EnvironmentState */}
+      <SceneEnvironment environment={environment} />
 
       <AgentAvatar agent={agent} position={[0, 0, 0]} />
 
