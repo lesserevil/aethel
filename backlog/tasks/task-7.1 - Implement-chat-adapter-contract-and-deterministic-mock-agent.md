@@ -1,7 +1,7 @@
 ---
 id: TASK-7.1
 title: Implement chat adapter contract and deterministic mock agent
-status: In Progress
+status: Done
 assignee: []
 created_date: '2026-06-02 22:12'
 updated_date: '2026-06-04 16:34'
@@ -40,8 +40,6 @@ Do not import NVIDIA, OpenAI, FastAPI, or other model/backend SDKs in this task.
 - [x] #3 Tests cover normal response, error/cancel behavior, and no state mutation.
 <!-- AC:END -->
 
-
-
 ## Implementation Notes
 
 <!-- SECTION:NOTES:BEGIN -->
@@ -49,6 +47,12 @@ Verification: executed `make test`; all 6 tests pass, confirming required contex
 
 Verification: All 6 chat adapter tests pass (33 total). Implementation verified correct: required field validation, deterministic context-aware responses referencing agent displayName/personaPreset and environment preset, AbortSignal cancellation, no state mutation. Branch pushed to origin/TASK-7.1.
 <!-- SECTION:NOTES:END -->
+
+## Final Summary
+
+<!-- SECTION:FINAL_SUMMARY:BEGIN -->
+Implemented ChatRequest, ChatResponse, ChatAdapter types and mockChatAdapter in web/src/services/chatAdapter.ts. The mock adapter validates required fields (sessionId, userMessage, agentState, environmentState, recentMessages), returns deterministic responses referencing agent displayName/personaPreset and environment preset, supports AbortSignal cancellation, and does not mutate session state. All 6 adapter tests pass (33 total across the project). Runs fully in-browser with no backend required.
+<!-- SECTION:FINAL_SUMMARY:END -->
 
 ## Comments
 <!-- COMMENTS:BEGIN -->
