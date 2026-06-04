@@ -4,7 +4,7 @@ title: Add Playwright e2e layout chat and nonblank viewport checks
 status: In Progress
 assignee: []
 created_date: '2026-06-02 22:12'
-updated_date: '2026-06-04 15:14'
+updated_date: '2026-06-04 17:47'
 labels: []
 dependencies:
   - TASK-8.1
@@ -45,6 +45,8 @@ Do not only assert that a canvas element exists. Avoid flaky sleeps; wait for ex
 
 <!-- SECTION:NOTES:BEGIN -->
 UNDERSTANDING: Task requires adding Playwright e2e tests. Web app already has playwright.config.ts configured with Chromium. Need to create web/tests/e2e/ directory with tests for: 3-column desktop layout, narrow viewport no-overlap, nonblank canvas pixel check, control mutation flow, chat with context. Will also add e2e script to package.json and Makefile.
+
+UNDERSTANDING: The e2e test infrastructure is already committed (commit a37d68c). Files include: web/tests/e2e/layout.spec.ts, viewport.spec.ts, chat.spec.ts, controls.spec.ts, plus playwright.config.ts, docs/e2e-testing.md, and Makefile test-e2e target. Verifying tests work and closing task.
 <!-- SECTION:NOTES:END -->
 
 ## Comments
@@ -67,6 +69,74 @@ Focus: Integration Tests Session Specialist
 index: 3
 author: oompah
 created: 2026-06-04 15:12
+
+Agent dispatched (profile: default)
+<!-- COMMENT:END -->
+<!-- COMMENT:BEGIN -->
+index: 4
+author: oompah
+created: 2026-06-04 17:23
+
+Agent dispatched (profile: default)
+<!-- COMMENT:END -->
+<!-- COMMENT:BEGIN -->
+index: 5
+author: oompah
+created: 2026-06-04 17:23
+
+Focus: Integration Tests Session Specialist
+<!-- COMMENT:END -->
+<!-- COMMENT:BEGIN -->
+index: 6
+author: oompah
+created: 2026-06-04 17:36
+
+Agent dispatched (profile: default)
+<!-- COMMENT:END -->
+<!-- COMMENT:BEGIN -->
+index: 7
+author: oompah
+created: 2026-06-04 17:36
+
+Focus: Integration Tests Session Specialist
+<!-- COMMENT:END -->
+<!-- COMMENT:BEGIN -->
+index: 8
+author: oompah
+created: 2026-06-04 17:37
+
+Agent failed: Exception: Control request timeout: initialize. Retrying in 10s (attempt #1)
+<!-- COMMENT:END -->
+<!-- COMMENT:BEGIN -->
+index: 9
+author: oompah
+created: 2026-06-04 17:37
+
+Run #1 [attempt=1, profile=default, role=fast -> Claude/default]
+- Turns: 0, Tool calls: 0
+- Tokens: 0 in / 0 out [0 total]
+- Cost: $0.0000
+- Exit: error, Duration: 1m 13s
+- Log: TASK-8.2__20260604T173640Z.jsonl
+<!-- COMMENT:END -->
+<!-- COMMENT:BEGIN -->
+index: 10
+author: oompah
+created: 2026-06-04 17:38
+
+Agent dispatched (profile: standard)
+<!-- COMMENT:END -->
+<!-- COMMENT:BEGIN -->
+index: 11
+author: oompah
+created: 2026-06-04 17:38
+
+Focus: Integration Tests Session Specialist
+<!-- COMMENT:END -->
+<!-- COMMENT:BEGIN -->
+index: 12
+author: oompah
+created: 2026-06-04 17:43
 
 Agent dispatched (profile: default)
 <!-- COMMENT:END -->

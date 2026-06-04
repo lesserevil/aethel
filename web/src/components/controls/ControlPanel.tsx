@@ -8,7 +8,7 @@ import {
   resetSession,
 } from "../../state/sessionActions";
 import { createMutationRecord } from "../../state/mutationLog";
-import { ChatMessage, MutationRecord } from "../../state/sessionTypes";
+import { ChatMessage, MutationRecord, SceneObjectState } from "../../state/sessionTypes";
 import { baselineSession } from "../../state/baselineSession";
 import "./ControlPanel.css";
 
@@ -115,7 +115,7 @@ export function ControlPanel() {
       weather: state.environment.weather as WeatherValue,
     });
     const initialObjectDrafts: Record<string, boolean> = {};
-    objects.forEach((obj) => {
+    objects.forEach((obj: SceneObjectState) => {
       initialObjectDrafts[obj.id] = obj.enabled;
     });
     setObjectDrafts(initialObjectDrafts);
@@ -189,7 +189,7 @@ export function ControlPanel() {
         return `Invalid weather preset: ${draftEnv.weather}`;
 
       // Validate object IDs exist
-      const validObjectIds = new Set(objects.map((o) => o.id));
+      const validObjectIds = new Set(objects.map((o: SceneObjectState) => o.id));
       for (const id of Object.keys(objDrafts)) {
         if (!validObjectIds.has(id)) return `Invalid object ID: ${id}`;
       }
@@ -220,7 +220,9 @@ export function ControlPanel() {
         changes.push(`weather: ${draftEnv.weather}`);
       }
 
-      const toggledObjects = objects.filter((obj) => objDrafts[obj.id] !== obj.enabled);
+      const toggledObjects = objects.filter(
+        (obj: SceneObjectState) => objDrafts[obj.id] !== obj.enabled,
+      );
       if (toggledObjects.length > 0) {
         changes.push(`${toggledObjects.length} object(s) toggled`);
       }
@@ -250,7 +252,7 @@ export function ControlPanel() {
 
       // Apply object toggles
       Object.entries(objectDrafts).forEach(([id, enabled]) => {
-        const currentObj = objects.find((o) => o.id === id);
+        const currentObj = objects.find((o: SceneObjectState) => o.id === id);
         if (currentObj && currentObj.enabled !== enabled) {
           dispatch(toggleObjectEnabled(id, enabled));
         }
@@ -335,7 +337,7 @@ export function ControlPanel() {
       });
 
       const baselineObjectDrafts: Record<string, boolean> = {};
-      baselineSession.environment.objects.forEach((obj) => {
+      baselineSession.environment.objects.forEach((obj: SceneObjectState) => {
         baselineObjectDrafts[obj.id] = obj.enabled;
       });
       setObjectDrafts(baselineObjectDrafts);
@@ -484,7 +486,7 @@ export function ControlPanel() {
         <section className="control-panel__section" data-testid="section-objects">
           <h3 className="control-panel__subsection-title">Scene Objects</h3>
           <div className="control-panel__object-list">
-            {objects.map((obj) => (
+            {objects.map((obj: SceneObjectState) => (
               <label
                 key={obj.id}
                 className="control-panel__object-item"
