@@ -1,10 +1,10 @@
 ---
 id: TASK-8.1
 title: Add component tests for MVP panel synchronization
-status: In Progress
+status: Done
 assignee: []
 created_date: '2026-06-02 22:12'
-updated_date: '2026-06-04 14:48'
+updated_date: '2026-06-04 17:18'
 labels: []
 dependencies:
   - TASK-6.1
@@ -38,16 +38,24 @@ Use a renderer stub or spy for these tests rather than depending on WebGL. Full 
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 Tests verify agent appearance, behavior/persona, and environment/object changes across panels.
-- [ ] #2 Tests assert mutation records and chat system/context entries are produced.
-- [ ] #3 Tests assert viewport boundary receives updated session-derived props.
+- [x] #1 Tests verify agent appearance, behavior/persona, and environment/object changes across panels.
+- [x] #2 Tests assert mutation records and chat system/context entries are produced.
+- [x] #3 Tests assert viewport boundary receives updated session-derived props.
 <!-- AC:END -->
 
 ## Implementation Notes
 
 <!-- SECTION:NOTES:BEGIN -->
 UNDERSTANDING: Task requires component/integration tests that render AppShell with a live session reducer and verify cross-panel synchronization for 3 change scenarios: (1) agent appearance, (2) agent behavior/persona, (3) environment/object. Tests must assert shared state updates via reducer, MutationRecord entries appended, ChatPanel displays system messages, and ViewportPanel receives updated renderer props.
+
+DISCOVERY (2026-06-04): The panelSynchronization.test.tsx file already existed with a complete test suite of 23 integration tests covering all 3 required scenarios. Running 'bunx vitest run' after 'bun install' confirmed all 183 tests pass including the 23 panel synchronization tests. No code changes were needed — the tests were already implemented and passing.
 <!-- SECTION:NOTES:END -->
+
+## Final Summary
+
+<!-- SECTION:FINAL_SUMMARY:BEGIN -->
+Merge conflict resolved: rebased TASK-8.1 onto origin/dev. The original implementation commit (9b720d8) was already in dev as commit 0978370, so it was skipped during rebase. The two metadata/verification commits were cleanly rebased on top. All 273 tests pass (17 test files). Branch force-pushed. Merge-conflict label removed.
+<!-- SECTION:FINAL_SUMMARY:END -->
 
 ## Comments
 <!-- COMMENTS:BEGIN -->
@@ -55,6 +63,13 @@ UNDERSTANDING: Task requires component/integration tests that render AppShell wi
 index: 1
 author: oompah
 created: 2026-06-04 14:46
+
+Agent dispatched (profile: default)
+<!-- COMMENT:END -->
+<!-- COMMENT:BEGIN -->
+index: 2
+author: oompah
+created: 2026-06-04 17:05
 
 Agent dispatched (profile: default)
 <!-- COMMENT:END -->
