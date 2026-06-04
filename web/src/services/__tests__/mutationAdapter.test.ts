@@ -62,7 +62,9 @@ describe("validateAndNormalizeMutation", () => {
     ];
 
     for (const payload of invalidPayloads) {
-      expect(() => validateAndNormalizeMutation(payload as any)).toThrowError();
+      expect(() =>
+        validateAndNormalizeMutation(payload as unknown as Record<string, unknown>),
+      ).toThrowError();
     }
   });
 

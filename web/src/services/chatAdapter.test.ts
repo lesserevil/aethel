@@ -103,7 +103,7 @@ describe("mockChatAdapter", () => {
     );
   });
 
-  it('does not mutate agentState, environmentState, or recentMessages', async () => {
+  it("does not mutate agentState, environmentState, or recentMessages", async () => {
     const adapter = mockChatAdapter;
     const agentState = mockAgentState();
     const environmentState = mockEnvState();
@@ -115,8 +115,8 @@ describe("mockChatAdapter", () => {
     const messagesBefore = JSON.parse(JSON.stringify(recentMessages));
 
     const request = {
-      sessionId: 'test-session',
-      userMessage: 'Will you mutate state?',
+      sessionId: "test-session",
+      userMessage: "Will you mutate state?",
       agentState,
       environmentState,
       recentMessages,
@@ -130,21 +130,21 @@ describe("mockChatAdapter", () => {
     expect(recentMessages).toEqual(messagesBefore);
   });
 
-  it('returns a ChatError instance when throwing on validation failure', async () => {
+  it("returns a ChatError instance when throwing on validation failure", async () => {
     const adapter = mockChatAdapter;
     const request = {
-      sessionId: 'test-session',
-      userMessage: '',
+      sessionId: "test-session",
+      userMessage: "",
       agentState: mockAgentState(),
       environmentState: mockEnvState(),
       recentMessages: mockRecentMessages(),
     };
     try {
       await adapter.send(request);
-      expect.fail('should have thrown');
+      expect.fail("should have thrown");
     } catch (err) {
       expect(err).toBeInstanceOf(ChatError);
-      expect((err as ChatError).name).toBe('ChatError');
+      expect((err as ChatError).name).toBe("ChatError");
     }
   });
 });
