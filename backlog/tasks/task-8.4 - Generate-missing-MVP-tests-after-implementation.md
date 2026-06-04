@@ -1,10 +1,10 @@
 ---
 id: TASK-8.4
 title: Generate missing MVP tests after implementation
-status: Open
+status: In Progress
 assignee: []
 created_date: '2026-06-02 23:46'
-updated_date: '2026-06-03 05:53'
+updated_date: '2026-06-04 14:52'
 labels: []
 dependencies:
   - TASK-4.3
@@ -43,3 +43,20 @@ Do not add shallow tests that only assert components mount. Prefer behavior-leve
 - [ ] #2 Unit/component tests cover state, selectors, adapters, controls, chat, persistence, and viewport prop synchronization.
 - [ ] #3 make test or the documented unit/component test command passes.
 <!-- AC:END -->
+
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+Implementation complete: Added 55 new tests (215 total, was 160). New test file: web/src/components/controls/ControlPanel.test.tsx (49 tests covering environment controls rendering, draft state, apply/reset flows, mutation records, system messages, object toggles). Added 4 tests to mutationLog.test.ts (custom idGenerator, deterministic output). Added 2 tests to sessionReducer.test.ts (agent_full_change deep merge). All 215 tests pass.
+<!-- SECTION:NOTES:END -->
+
+## Comments
+<!-- COMMENTS:BEGIN -->
+<!-- COMMENT:BEGIN -->
+index: 1
+author: oompah
+created: 2026-06-04 14:46
+
+Agent dispatched (profile: default)
+<!-- COMMENT:END -->
+<!-- COMMENTS:END -->

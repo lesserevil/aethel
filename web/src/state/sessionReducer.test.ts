@@ -146,4 +146,43 @@ describe("SessionReducer", () => {
     // Should be same reference or equal object
     expect(nextState).toEqual(initialState);
   });
+
+  test("SET_AGENT_FULL_CHANGE updates all agent fields in one dispatch (deep merge)", () => {
+    const action = {
+      type: "session/agent_full_change",
+      payload: {
+        displayName: "Full Change Agent",
+        personaPreset: "creative",
+        tone: "casual",
+        behavior: { curiosity: 0.1 },
+        appearance: { accentColor: "#000000" },
+      },
+    };
+    const nextState = reducer(initialState, action);
+    // Identity fields updated
+    expect(nextState.agent.displayName).toBe("Full Change Agent");
+    expect(nextState.agent.personaPreset).toBe("creative");
+    expect(nextState.agent.tone).toBe("casual");
+    // Behavior deep-merged: only curiosity changed
+    expect(nextState.agent.behavior.curiosity).toBe(0.1);
+    expect(nextState.agent.behavior.formality).toBe(0.5); // unchanged
+    expect(nextState.agent.behavior.skepticism).toBe(0.3); // unchanged
+    // Appearance deep-merged: only accentColor changed
+    expect(nextState.agent.appearance.accentColor).toBe("#000000");
+    expect(nextState.agent.appearance.avatarPreset).toBe("humanoid"); // unchanged
+    expect(nextState.agent.appearance.idlePose).toBe("standing"); // unchanged
+    // Agent id must not change
+    expect(nextState.agent.id).toBe(initialState.agent.id);
+  });
+
+  test("SET_AGENT_FULL_CHANGE with empty payload leaves agent unchanged", () => {
+    const action = {
+      type: "session/agent_full_change",
+      payload: {},
+    };
+    const nextState = reducer(initialState, action);
+    expect(nextState.agent.displayName).toBe("Aethel Agent");
+    expect(nextState.agent.behavior.curiosity).toBe(0.7);
+    expect(nextState.agent.appearance.avatarPreset).toBe("humanoid");
+  });
 });

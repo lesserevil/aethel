@@ -25,4 +25,48 @@ describe("MutationLog Helper", () => {
     const record = createMutationRecord({ ...baseParams, timestamp: ts });
     expect(record.timestamp).toBe(ts);
   });
+
+  test("uses custom idGenerator when provided", () => {
+    const record = createMutationRecord({
+      ...baseParams,
+      idGenerator: () => "deterministic-id-001",
+    });
+    expect(record.id).toBe("deterministic-id-001");
+  });
+
+  test("idGenerator is called exactly once per record", () => {
+    let callCount = 0;
+    createMutationRecord({
+      ...baseParams,
+      idGenerator: () => {
+        callCount++;
+        return `id-${callCount}`;
+      },
+    });
+    expect(callCount).toBe(1);
+  });
+
+  test("default ID starts with mr-<timestamp>- prefix", () => {
+    const ts = 9999999;
+    const r = createMutationRecord({ ...baseParams, timestamp: ts });
+    expect(r.id).toMatch(/^mr-9999999-/);
+  });
+
+  test("with custom idGenerator and timestamp the record is fully deterministic", () => {
+    const ts = 1000000000;
+    const r1 = createMutationRecord({
+      ...baseParams,
+      timestamp: ts,
+      idGenerator: () => "fixed-id",
+    });
+    const r2 = createMutationRecord({
+      ...baseParams,
+      timestamp: ts,
+      idGenerator: () => "fixed-id",
+    });
+    expect(r1.id).toBe("fixed-id");
+    expect(r2.id).toBe("fixed-id");
+    expect(r1.timestamp).toBe(ts);
+    expect(r2.timestamp).toBe(ts);
+  });
 });
