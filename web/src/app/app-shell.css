@@ -34,10 +34,14 @@
 }
 
 .app-shell__viewport-panel {
-  background-color: var(--color-surface);
+  background-color: var(--color-bg);
   border-right: 1px solid var(--color-border);
-  padding: var(--spacing-4);
+  /* No padding — the 3D canvas fills the entire work surface */
+  padding: 0;
   overflow: hidden;
+  /* Ensure children (canvas) fill the panel */
+  display: flex;
+  flex-direction: column;
 }
 
 .app-shell__chat-panel {

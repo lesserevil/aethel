@@ -1,25 +1,24 @@
-import { describe, it, expect } from 'vitest';
-import { mockChatAdapter } from './chatAdapter';
-import { ChatError } from './chatAdapter';
+import { describe, it, expect } from "vitest";
+import { mockChatAdapter } from "./chatAdapter";
 
 function mockAgentState() {
   return {
-    id: 'agent-001',
-    displayName: 'TestAgent',
-    personaPreset: 'helpful',
-    tone: 'friendly',
+    id: "agent-001",
+    displayName: "TestAgent",
+    personaPreset: "helpful",
+    tone: "friendly",
     behavior: { curiosity: 0.5, formality: 0.3, skepticism: 0.1 },
-    appearance: { avatarPreset: 'robot', accentColor: '#fff', idlePose: 'standing' },
+    appearance: { avatarPreset: "robot", accentColor: "#fff", idlePose: "standing" },
   };
 }
 
 function mockEnvState() {
   return {
-    preset: 'office',
-    timeOfDay: 'afternoon',
-    lighting: 'bright',
-    ambience: 'quiet',
-    weather: 'clear',
+    preset: "office",
+    timeOfDay: "afternoon",
+    lighting: "bright",
+    ambience: "quiet",
+    weather: "clear",
     objects: [],
   };
 }
@@ -27,80 +26,80 @@ function mockEnvState() {
 function mockRecentMessages() {
   return [
     {
-      id: 'msg-1',
-      content: 'Hello',
+      id: "msg-1",
+      content: "Hello",
       timestamp: 12345,
-      sender: 'user',
+      sender: "user",
       metadata: undefined,
     },
   ];
 }
 
-describe('mockChatAdapter', () => {
-  it('throws ChatError when required fields are missing', async () => {
+describe("mockChatAdapter", () => {
+  it("throws ChatError when required fields are missing", async () => {
     const adapter = mockChatAdapter;
     const request = {
-      sessionId: 'test-session',
-      userMessage: 'Hello',
+      sessionId: "test-session",
+      userMessage: "Hello",
       agentState: mockAgentState(),
       environmentState: mockEnvState(),
       recentMessages: mockRecentMessages(),
     };
     // Remove a required field to trigger validation error
-    const badRequest = { ...request, sessionId: '' };
-    await expect(adapter.send(badRequest)).rejects.toThrow('sessionId is required');
+    const badRequest = { ...request, sessionId: "" };
+    await expect(adapter.send(badRequest)).rejects.toThrow("sessionId is required");
   });
 
-  it('returns a response referencing agent displayName and environment preset', async () => {
+  it("returns a response referencing agent displayName and environment preset", async () => {
     const adapter = mockChatAdapter;
     const request = {
-      sessionId: 'test-session',
-      userMessage: 'What is your name?',
+      sessionId: "test-session",
+      userMessage: "What is your name?",
       agentState: mockAgentState(),
       environmentState: mockEnvState(),
       recentMessages: mockRecentMessages(),
     };
     const response = await adapter.send(request);
-    expect(response.response).toContain('TestAgent');
-    expect(response.response).toContain('helpful');
-    expect(response.response).toContain('office');
+    expect(response.response).toContain("TestAgent");
+    expect(response.response).toContain("helpful");
+    expect(response.response).toContain("office");
   });
 
-  it('includes snippet of recent user message in response', async () => {
+  it("includes snippet of recent user message in response", async () => {
     const adapter = mockChatAdapter;
     const recentMessages = [
       {
-        id: 'msg-2',
-        content: 'Tell me about the lighting',
+        id: "msg-2",
+        content: "Tell me about the lighting",
         timestamp: 12345,
-        sender: 'user',
+        sender: "user",
         metadata: undefined,
       },
     ];
     const request = {
-      sessionId: 'test-session',
-      userMessage: 'Tell me about the scene',
+      sessionId: "test-session",
+      userMessage: "Tell me about the scene",
       agentState: mockAgentState(),
       environmentState: mockEnvState(),
       recentMessages,
     };
     const response = await adapter.send(request);
-    expect(response.response).toContain('Tell me about the lighting');
+    expect(response.response).toContain("Tell me about the lighting");
   });
 
-  it('supports AbortSignal cancellation', async () => {
+  it("supports AbortSignal cancellation", async () => {
     const adapter = mockChatAdapter;
     const controller = new AbortController();
     controller.abort();
     const request = {
-      sessionId: 'test-session',
-      userMessage: 'test',
+      sessionId: "test-session",
+      userMessage: "test",
       agentState: mockAgentState(),
       environmentState: mockEnvState(),
       recentMessages: mockRecentMessages(),
     };
     await expect(adapter.send(request, controller.signal)).rejects.toThrow(
-      'Request aborted'
+      "Request aborted",
     );
   });
 });

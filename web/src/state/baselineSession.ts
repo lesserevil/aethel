@@ -1,4 +1,4 @@
-import { SessionState } from "./sessionTypes";
+import type { SessionState } from "./sessionTypes";
 
 /**
  * Baseline session fixture for MVP
