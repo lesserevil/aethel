@@ -4,7 +4,7 @@ title: Implement session reducer actions selectors and mutation log
 status: Done
 assignee: []
 created_date: '2026-06-02 22:11'
-updated_date: '2026-06-05 02:45'
+updated_date: '2026-06-05 02:48'
 labels: []
 dependencies:
   - TASK-4.1
@@ -44,6 +44,8 @@ Do not erase chat history during baseline reset unless a separate new-session ac
 
 <!-- SECTION:NOTES:BEGIN -->
 Verification: 270 tests passing across all state module files (sessionReducer, sessionSelectors, mutationLog, baselineSession, SessionProvider). TypeScript clean. fmt-check passing. All acceptance criteria satisfied: reducer handles all action types with immutable transitions; selectors return stable references without mutation; full flow serialization tests pass; reset preserves chat history; provider-level tests confirm context dispatch and hook behavior.
+
+Merge conflict resolution: Rebased onto origin/dev. The TypeScript fix commit (017b835) was already in dev via PR #16 and correctly skipped. Remaining 2 bookkeeping commits landed cleanly. 273 tests pass, build clean, lint 0 errors. Force-pushed with --force-with-lease.
 <!-- SECTION:NOTES:END -->
 
 ## Final Summary
