@@ -42,8 +42,18 @@ acceptance criterion in everyday terms.
 
 ## Contents
 
-_No plans yet — create `plans/<feature>-plan.md` when starting
-design work._
+- [`aethel_design.md`](aethel_design.md) - Long-range NVIDIA-powered
+  Aethel architecture and technology review.
+- [`aethel_mvp_plan.md`](aethel_mvp_plan.md) - Current browser MVP
+  implementation plan.
+- [`office-asset-foundation-plan.md`](office-asset-foundation-plan.md) -
+  Free GLB/glTF office asset selection and web MVP integration.
+- [`usd-scene-pipeline-plan.md`](usd-scene-pipeline-plan.md) - Canonical
+  OpenUSD scene pipeline and web export path.
+- [`office-physics-simulation-plan.md`](office-physics-simulation-plan.md) -
+  Collider, physics metadata, and Newton/PhysX evaluation path.
+- [`backlog-template-plan.md`](backlog-template-plan.md) - Completed
+  Backlog.md template migration plan.
 
 ### Not subject to the sync rule
 
