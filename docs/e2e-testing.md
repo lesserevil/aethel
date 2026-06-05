@@ -69,6 +69,7 @@ cd web && bunx playwright test tests/e2e/layout.spec.ts
 | `viewport.spec.ts` | 3D canvas presence, renderer-ready signal, nonblank pixel check, agent name label |
 | `controls.spec.ts` | Agent identity/appearance/persona mutations, environment preset, reset flow |
 | `chat.spec.ts` | Message send/receive, context-aware responses, Enter/Shift+Enter keyboard handling |
+| `office-assets.spec.ts` | Office GLB HTTP 200 responses, no external asset hosts, all ten objects enabled |
 
 ## Acceptance criteria verified
 
@@ -84,6 +85,10 @@ cd web && bunx playwright test tests/e2e/layout.spec.ts
 | Chat response uses agent context | `chat.spec.ts` — displayName in response |
 | Chat response uses environment context | `chat.spec.ts` — preset in response |
 | Context updates after mutation | `chat.spec.ts` — after rename / after env change |
+| Office GLBs return HTTP 200 | `office-assets.spec.ts` — all /assets/office/*.glb requests |
+| No external asset requests | `office-assets.spec.ts` — external-host check |
+| Office preset active by default | `office-assets.spec.ts` — data-environment-preset attribute |
+| All ten office objects enabled | `office-assets.spec.ts` — data-enabled-objects attribute |
 
 ## Notes on design
 

@@ -136,7 +136,7 @@ test.describe("Chat responses include current session context", () => {
     await expect(agentMessages.first()).toContainText("Aethel Agent");
   });
 
-  test("agent response includes the default environment preset (laboratory)", async ({
+  test("agent response includes the default environment preset (office)", async ({
     page,
   }) => {
     await page.goto("/");
@@ -144,9 +144,10 @@ test.describe("Chat responses include current session context", () => {
 
     await sendChatMessage(page, "Where are we?");
 
+    // The baseline session uses "office" as of TASK-16.4 (updated from "laboratory").
     const agentMessages = page.locator('[data-testid="chat-message-agent"]');
     await expect(agentMessages.first()).toBeVisible({ timeout: RESPONSE_TIMEOUT });
-    await expect(agentMessages.first()).toContainText("laboratory");
+    await expect(agentMessages.first()).toContainText("office");
   });
 
   test("after changing agent name, next response references the new name", async ({

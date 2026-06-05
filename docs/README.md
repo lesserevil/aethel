@@ -12,6 +12,14 @@ or how it **might work in the future**, see [`../plans/`](../plans/).
 - [language-and-tooling.md](language-and-tooling.md) - implementation
   language and tooling decision for the MVP and future NVIDIA
   integration work.
+- [office-assets.md](office-assets.md) - where GLB runtime assets live,
+  how provenance is tracked, how to add a new office prop, and why the
+  MVP uses GLB directly.
+- [office-asset-sources.md](office-asset-sources.md) - provenance table
+  for every selected asset: source pack, publisher, license, and runtime
+  filename.
+- [e2e-testing.md](e2e-testing.md) - Playwright e2e test setup and test
+  file descriptions.
 
 ## Keeping docs in sync with code
 

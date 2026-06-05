@@ -130,16 +130,17 @@ test.describe("Environment control mutations", () => {
     await page.goto("/");
     await waitForAppReady(page);
 
-    // The environment ControlPanel uses data-testid="select-environment-preset"
+    // The baseline session uses "office" as of TASK-16.4, so select a different
+    // preset ("studio") to trigger an actual change and enable the Apply button.
     const envPresetSelect = page.locator('[data-testid="select-environment-preset"]');
-    await envPresetSelect.selectOption("office");
+    await envPresetSelect.selectOption("studio");
 
     const applyEnvBtn = page.locator('[data-testid="btn-apply-environment"]');
     await applyEnvBtn.click();
 
     // Chat messages should contain a system message about the environment change.
     const chatMessages = page.locator('[data-testid="chat-messages"]');
-    await expect(chatMessages).toContainText("office", { timeout: 5_000 });
+    await expect(chatMessages).toContainText("studio", { timeout: 5_000 });
   });
 
   test("Reset Scene button restores baseline while preserving chat history", async ({
