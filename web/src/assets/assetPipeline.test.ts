@@ -204,14 +204,20 @@ describe("asset pipeline — web export helper scripts", () => {
   });
 
   it("blender_export_glb.py has a Python docstring describing its purpose", () => {
-    const content = readFileSync(repoPath("scripts/assets/blender_export_glb.py"), "utf-8");
+    const content = readFileSync(
+      repoPath("scripts/assets/blender_export_glb.py"),
+      "utf-8",
+    );
     expect(content).toContain("blender");
     expect(content.toLowerCase()).toContain("usd");
     expect(content.toLowerCase()).toContain("glb");
   });
 
   it("blender_export_glb.py uses bpy for Blender integration", () => {
-    const content = readFileSync(repoPath("scripts/assets/blender_export_glb.py"), "utf-8");
+    const content = readFileSync(
+      repoPath("scripts/assets/blender_export_glb.py"),
+      "utf-8",
+    );
     expect(content).toContain("import bpy");
   });
 
@@ -226,46 +232,70 @@ describe("asset pipeline — web export helper scripts", () => {
   });
 
   it("assets-export-web.sh references blender_export_glb.py", () => {
-    const content = readFileSync(repoPath("scripts/assets/assets-export-web.sh"), "utf-8");
+    const content = readFileSync(
+      repoPath("scripts/assets/assets-export-web.sh"),
+      "utf-8",
+    );
     expect(content).toContain("blender_export_glb.py");
   });
 
   it("assets-export-web.sh references build-export-map.py", () => {
-    const content = readFileSync(repoPath("scripts/assets/assets-export-web.sh"), "utf-8");
+    const content = readFileSync(
+      repoPath("scripts/assets/assets-export-web.sh"),
+      "utf-8",
+    );
     expect(content).toContain("build-export-map.py");
   });
 
   it("assets-export-web.sh documents the two-step export+sync pipeline", () => {
-    const content = readFileSync(repoPath("scripts/assets/assets-export-web.sh"), "utf-8");
+    const content = readFileSync(
+      repoPath("scripts/assets/assets-export-web.sh"),
+      "utf-8",
+    );
     expect(content.toLowerCase()).toContain("sync");
     expect(content.toLowerCase()).toContain("export");
     expect(content).toContain("web/public/assets/office");
   });
 
   it("assets-export-web.sh uses content-based sync (cmp -s) to avoid timestamp churn", () => {
-    const content = readFileSync(repoPath("scripts/assets/assets-export-web.sh"), "utf-8");
+    const content = readFileSync(
+      repoPath("scripts/assets/assets-export-web.sh"),
+      "utf-8",
+    );
     expect(content).toContain("cmp -s");
   });
 
   it("assets-export-web.sh uses non-interactive copy flags (-f)", () => {
-    const content = readFileSync(repoPath("scripts/assets/assets-export-web.sh"), "utf-8");
+    const content = readFileSync(
+      repoPath("scripts/assets/assets-export-web.sh"),
+      "utf-8",
+    );
     expect(content).toContain("cp -f");
   });
 
   it("assets-export-web.sh supports --dry-run flag", () => {
-    const content = readFileSync(repoPath("scripts/assets/assets-export-web.sh"), "utf-8");
+    const content = readFileSync(
+      repoPath("scripts/assets/assets-export-web.sh"),
+      "utf-8",
+    );
     expect(content).toContain("--dry-run");
     expect(content).toContain("DRY_RUN");
   });
 
   it("assets-export-web.sh emits a clear error when Blender is missing", () => {
-    const content = readFileSync(repoPath("scripts/assets/assets-export-web.sh"), "utf-8");
+    const content = readFileSync(
+      repoPath("scripts/assets/assets-export-web.sh"),
+      "utf-8",
+    );
     expect(content).toContain("Blender is required");
     expect(content).toContain("blender.org/download");
   });
 
   it("assets-export-web.sh uses WEB_PUBLIC_OFFICE_DIR from common.sh", () => {
-    const content = readFileSync(repoPath("scripts/assets/assets-export-web.sh"), "utf-8");
+    const content = readFileSync(
+      repoPath("scripts/assets/assets-export-web.sh"),
+      "utf-8",
+    );
     expect(content).toContain("WEB_PUBLIC_OFFICE_DIR");
   });
 

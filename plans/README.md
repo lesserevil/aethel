@@ -52,6 +52,8 @@ acceptance criterion in everyday terms.
   OpenUSD scene pipeline and web export path.
 - [`office-physics-simulation-plan.md`](office-physics-simulation-plan.md) -
   Collider, physics metadata, and Newton/PhysX evaluation path.
+- [`nvidia-nemotron-chat-plan.md`](nvidia-nemotron-chat-plan.md) -
+  NVIDIA-hosted Nemotron chat adapter integration path.
 - [`backlog-template-plan.md`](backlog-template-plan.md) - Completed
   Backlog.md template migration plan.
 

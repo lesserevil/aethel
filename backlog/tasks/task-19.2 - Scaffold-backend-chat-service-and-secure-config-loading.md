@@ -1,0 +1,42 @@
+---
+id: TASK-19.2
+title: Scaffold backend chat service and secure config loading
+status: Backlog
+assignee: []
+created_date: '2026-06-05 13:41'
+labels: []
+dependencies: []
+documentation:
+  - plans/nvidia-nemotron-chat-plan.md
+modified_files:
+  - api
+  - Makefile
+  - docs/nemotron-chat.md
+parent_task_id: TASK-19
+priority: high
+ordinal: 52000
+---
+
+## Description
+
+<!-- SECTION:DESCRIPTION:BEGIN -->
+Plan: plans/nvidia-nemotron-chat-plan.md § Runtime Architecture and Configuration.
+
+WHAT TO DO
+Create the first backend service boundary for model-backed chat, preferably under api/ using Python and FastAPI unless a narrower implementation decision is documented in this task. Add an /api/health endpoint and a placeholder /api/chat route that validates the expected request shape without calling NVIDIA yet. Add configuration loading that can read NVIDIA_API_KEY from the environment or a machine inference-api.nvidia.com entry in ~/.netrc, but never prints the secret. Add Makefile targets needed to run or test the backend, such as run-api and test-api, and document the exact commands in docs/nemotron-chat.md.
+
+WHY
+NVIDIA credentials cannot live in browser TypeScript. A backend boundary is required so Aethel can call real model providers while keeping the frontend ChatAdapter contract stable.
+
+HOW TO VERIFY
+Run make help and confirm the new backend targets appear. Run the backend tests, including config-loading tests that use fake netrc data and assert the key is masked or omitted in errors. Run make fmt-check, make build, make test, and make lint if the new targets are included in those gates.
+
+EDGE CASES AND PITFALLS
+Do not require a real NVIDIA key for unit tests. Do not add the key to Vite env vars. If make run changes to start both frontend and backend, update README.md in the same task; otherwise keep make run behavior unchanged and document run-api separately.
+<!-- SECTION:DESCRIPTION:END -->
+
+## Acceptance Criteria
+<!-- AC:BEGIN -->
+- [ ] #1 A backend /api/health and placeholder /api/chat service exists with tested secret-safe config loading.
+- [ ] #2 Makefile and docs expose non-interactive backend run/test commands without requiring a live NVIDIA key.
+<!-- AC:END -->
