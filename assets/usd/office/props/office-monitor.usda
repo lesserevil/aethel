@@ -1,5 +1,6 @@
 #usda 1.0
 (
+    defaultPrim = "OfficeMonitorRoot"
     doc = """Office prop: Monitor
     
     USD Physics metadata for a static desktop monitor.
@@ -21,6 +22,11 @@ def Xform "OfficeMonitorRoot" (
         float3 physicsDimensions = (0.5, 0.4, 0.2)
         string semanticLabel = "desktop monitor displaying a screen"
         string assetId = "office-monitor"
+        string sourceId = "kenney-furniture-kit"
+        string sourceUrl = "https://poly.pizza/bundle/Furniture-Kit-NoG1sEUD1z"
+        string licenseId = "cc0-1.0"
+        string licenseUrl = "https://creativecommons.org/publicdomain/zero/1.0/"
+        string usdPrimPath = "/World/Office/OfficeMonitorRoot"
         string category = "device"
         bool agentSafe = false
         string[] affordances = ["displayable"]

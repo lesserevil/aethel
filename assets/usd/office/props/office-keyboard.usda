@@ -1,5 +1,6 @@
 #usda 1.0
 (
+    defaultPrim = "OfficeKeyboardRoot"
     doc = """Office prop: Keyboard
     
     USD Physics metadata for a dynamic full-size computer keyboard.
@@ -21,6 +22,11 @@ def Xform "OfficeKeyboardRoot" (
         float3 physicsDimensions = (0.45, 0.03, 0.15)
         string semanticLabel = "full-size computer keyboard for text input"
         string assetId = "office-keyboard"
+        string sourceId = "kenney-furniture-kit"
+        string sourceUrl = "https://poly.pizza/bundle/Furniture-Kit-NoG1sEUD1z"
+        string licenseId = "cc0-1.0"
+        string licenseUrl = "https://creativecommons.org/publicdomain/zero/1.0/"
+        string usdPrimPath = "/World/Office/OfficeKeyboardRoot"
         string category = "device"
         bool agentSafe = true
         string[] affordances = ["input-device", "pickup"]

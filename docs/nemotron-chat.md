@@ -225,8 +225,9 @@ VITE_CHAT_PROVIDER=api
 make run          # starts the Vite dev server on port 5173
 ```
 
-Open `http://localhost:5173` — chat messages now reach
-`http://localhost:8000/api/chat` and are answered by the Nemotron model.
+Open `http://localhost:5173` — chat messages are posted to `/api/chat`
+on the Vite dev server, then proxied to
+`http://127.0.0.1:8000/api/chat` and answered by the Nemotron model.
 
 The frontend mock adapter continues to work whenever `VITE_CHAT_PROVIDER`
 is unset or `mock` — no NVIDIA key is required in that mode.

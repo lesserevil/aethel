@@ -147,7 +147,9 @@ make run          # Vite dev server on port 5173
 ```
 
 Open `http://localhost:5173` and chat.  Responses come from the
-Nemotron model via the backend.
+Nemotron model via the backend. During local development, Vite proxies
+browser requests from `/api/*` on port 5173 to the FastAPI backend on
+`http://127.0.0.1:8000`.
 
 For full API reference, troubleshooting, and advanced environment
 variables see [docs/nemotron-chat.md](docs/nemotron-chat.md).

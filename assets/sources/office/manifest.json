@@ -31,7 +31,7 @@
       "licenseId": "cc0-1.0",
       "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
       "originalFormat": "glb",
-      "usdPrimPath": "/World/Office/Furniture/Desk",
+      "usdPrimPath": "/World/Office/OfficeDeskRoot",
       "webExportPath": "assets/exports/web/office/office-desk.glb"
     },
     {
@@ -42,7 +42,7 @@
       "licenseId": "cc0-1.0",
       "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
       "originalFormat": "glb",
-      "usdPrimPath": "/World/Office/Furniture/DeskChair",
+      "usdPrimPath": "/World/Office/OfficeChairRoot",
       "webExportPath": "assets/exports/web/office/office-chair.glb"
     },
     {
@@ -53,7 +53,7 @@
       "licenseId": "cc0-1.0",
       "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
       "originalFormat": "glb",
-      "usdPrimPath": "/World/Office/Devices/Laptop",
+      "usdPrimPath": "/World/Office/OfficeLaptopRoot",
       "webExportPath": "assets/exports/web/office/office-laptop.glb"
     },
     {
@@ -64,7 +64,7 @@
       "licenseId": "cc0-1.0",
       "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
       "originalFormat": "glb",
-      "usdPrimPath": "/World/Office/Devices/Keyboard",
+      "usdPrimPath": "/World/Office/OfficeKeyboardRoot",
       "webExportPath": "assets/exports/web/office/office-keyboard.glb"
     },
     {
@@ -75,7 +75,7 @@
       "licenseId": "cc0-1.0",
       "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
       "originalFormat": "glb",
-      "usdPrimPath": "/World/Office/Devices/MonitorWide",
+      "usdPrimPath": "/World/Office/OfficeMonitorRoot",
       "webExportPath": "assets/exports/web/office/office-monitor.glb"
     },
     {
@@ -86,8 +86,8 @@
       "licenseId": "cc0-1.0",
       "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
       "originalFormat": "glb",
-      "usdPrimPath": "/World/Office/Containers/TrashCan",
-      "webExportPath": "assets/exports/web/office/office-trashcan.glb"
+      "usdPrimPath": "/World/Office/OfficeTrashCanRoot",
+      "webExportPath": "assets/exports/web/office/office-trash-can.glb"
     },
     {
       "id": "lampDesk",
@@ -97,8 +97,8 @@
       "licenseId": "cc0-1.0",
       "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
       "originalFormat": "glb",
-      "usdPrimPath": "/World/Office/Furniture/LampDesk",
-      "webExportPath": "assets/exports/web/office/office-lamp.glb"
+      "usdPrimPath": "/World/Office/OfficeDeskLampRoot",
+      "webExportPath": "assets/exports/web/office/office-desk-lamp.glb"
     },
     {
       "id": "mug",
@@ -108,8 +108,8 @@
       "licenseId": "cc0-1.0",
       "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
       "originalFormat": "glb",
-      "usdPrimPath": "/World/Office/Clutter/Mug",
-      "webExportPath": "assets/exports/web/office/office-mug.glb"
+      "usdPrimPath": "/World/Office/OfficeCoffeeCupRoot",
+      "webExportPath": "assets/exports/web/office/office-coffee-cup.glb"
     },
     {
       "id": "book",
@@ -119,8 +119,8 @@
       "licenseId": "cc0-1.0",
       "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
       "originalFormat": "glb",
-      "usdPrimPath": "/World/Office/Clutter/Book",
-      "webExportPath": "assets/exports/web/office/office-book.glb"
+      "usdPrimPath": "/World/Office/OfficeBookStackRoot",
+      "webExportPath": "assets/exports/web/office/office-book-stack.glb"
     },
     {
       "id": "notebook",
@@ -130,7 +130,7 @@
       "licenseId": "cc0-1.0",
       "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
       "originalFormat": "glb",
-      "usdPrimPath": "/World/Office/Clutter/Notebook",
+      "usdPrimPath": "/World/Office/OfficeNotebookRoot",
       "webExportPath": "assets/exports/web/office/office-notebook.glb"
     }
   ]

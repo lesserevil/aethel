@@ -1,5 +1,6 @@
 #usda 1.0
 (
+    defaultPrim = "OfficeDeskLampRoot"
     doc = """Office prop: Desk Lamp
     
     USD Physics metadata for a static adjustable desk lamp.
@@ -26,6 +27,11 @@ def Xform "OfficeDeskLampRoot" (
         float3 physicsDimensions = (0.15, 0.5, 0.15)
         string semanticLabel = "adjustable desk lamp providing directional light"
         string assetId = "office-desk-lamp"
+        string sourceId = "kenney-furniture-kit"
+        string sourceUrl = "https://poly.pizza/bundle/Furniture-Kit-NoG1sEUD1z"
+        string licenseId = "cc0-1.0"
+        string licenseUrl = "https://creativecommons.org/publicdomain/zero/1.0/"
+        string usdPrimPath = "/World/Office/OfficeDeskLampRoot"
         string category = "furniture"
         bool agentSafe = false
         string[] affordances = ["light-source"]

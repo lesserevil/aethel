@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """validate-usd-stage — Structural validator for the Aethel office USD stage.
 
-Checks that assets/usd/office/office.usda has the required prim hierarchy,
-stage-level metadata, lights, camera, and prop references.  Does NOT require
+Checks that assets/usd/office/office.usda has the required prim structure,
+stage-level metadata, lights, camera, and prop payloads.  Does NOT require
 usd-core or any NVIDIA tooling — uses plain-text regex/string parsing so it
 runs in any Python 3.8+ environment.
 
@@ -39,17 +39,23 @@ from typing import NamedTuple
 # Required structural markers
 # ---------------------------------------------------------------------------
 
-# Required prim paths — we verify these appear as "def <Type> <name>" in the
+# Required prim paths — we verify these appear as "def <name>" or
+# "def <Type> <name>" in the
 # USDA text of the root stage (not necessarily all in one file; child prims
 # inside Xform scopes count).  We search for the *name* token after `def ...`.
 REQUIRED_PRIM_NAMES: list[str] = [
     "World",
     "Office",
-    "Architecture",
-    "Furniture",
-    "Devices",
-    "Containers",
-    "Clutter",
+    "OfficeDeskRoot",
+    "OfficeChairRoot",
+    "OfficeDeskLampRoot",
+    "OfficeMonitorRoot",
+    "OfficeLaptopRoot",
+    "OfficeKeyboardRoot",
+    "OfficeTrashCanRoot",
+    "OfficeBookStackRoot",
+    "OfficeCoffeeCupRoot",
+    "OfficeNotebookRoot",
     "Lights",
     "Cameras",
 ]
@@ -62,19 +68,19 @@ REQUIRED_STAGE_METADATA: dict[str, str] = {
     "upAxis": '"Y"',
 }
 
-# Required prop references — each must appear as a `prepend references` or
-# `references` value pointing at the corresponding prop file.
+# Required prop payloads — each must appear as a `prepend payload` or payload
+# value pointing at the corresponding prop file.
 REQUIRED_PROP_REFS: list[str] = [
-    "props/desk.usda",
-    "props/desk_chair.usda",
-    "props/laptop.usda",
-    "props/keyboard.usda",
-    "props/monitor_wide.usda",
-    "props/trash_can.usda",
-    "props/lamp_desk.usda",
-    "props/mug.usda",
-    "props/book.usda",
-    "props/notebook.usda",
+    "props/office-desk.usda",
+    "props/office-chair.usda",
+    "props/office-laptop.usda",
+    "props/office-keyboard.usda",
+    "props/office-monitor.usda",
+    "props/office-trash-can.usda",
+    "props/office-desk-lamp.usda",
+    "props/office-coffee-cup.usda",
+    "props/office-book-stack.usda",
+    "props/office-notebook.usda",
 ]
 
 # Required light prim names.
@@ -131,8 +137,10 @@ def _check_stage_metadata(text: str) -> list[Failure]:
 
 def _check_prim_names(text: str) -> list[Failure]:
     """Verify that required prim name tokens appear in the file."""
-    # Pattern: 'def <TypeToken> "<Name>"'
-    defined_names: set[str] = set(re.findall(r'\bdef\s+\w+\s+"(\w+)"', text))
+    # Pattern: 'def "<Name>"' or 'def <TypeToken> "<Name>"'
+    defined_names: set[str] = set(
+        re.findall(r'\bdef(?:\s+\w+)?\s+"(\w+)"', text)
+    )
     failures: list[Failure] = []
     for name in REQUIRED_PRIM_NAMES:
         if name not in defined_names:
@@ -155,7 +163,9 @@ def _check_prop_refs(text: str) -> list[Failure]:
 
 def _check_lights(text: str) -> list[Failure]:
     """Verify that required light prims are present."""
-    defined_names: set[str] = set(re.findall(r'\bdef\s+\w+\s+"(\w+)"', text))
+    defined_names: set[str] = set(
+        re.findall(r'\bdef(?:\s+\w+)?\s+"(\w+)"', text)
+    )
     failures: list[Failure] = []
     for name in REQUIRED_LIGHT_NAMES:
         if name not in defined_names:

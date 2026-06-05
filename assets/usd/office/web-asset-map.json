@@ -6,52 +6,52 @@
     {
       "webId": "office-desk",
       "sourceManifestId": "desk",
-      "usdPrimPath": "/World/Office/Furniture/Desk"
+      "usdPrimPath": "/World/Office/OfficeDeskRoot"
     },
     {
       "webId": "office-chair",
       "sourceManifestId": "deskChair",
-      "usdPrimPath": "/World/Office/Furniture/DeskChair"
+      "usdPrimPath": "/World/Office/OfficeChairRoot"
     },
     {
       "webId": "office-monitor",
       "sourceManifestId": "monitorWide",
-      "usdPrimPath": "/World/Office/Devices/MonitorWide"
+      "usdPrimPath": "/World/Office/OfficeMonitorRoot"
     },
     {
       "webId": "office-laptop",
       "sourceManifestId": "laptop",
-      "usdPrimPath": "/World/Office/Devices/Laptop"
+      "usdPrimPath": "/World/Office/OfficeLaptopRoot"
     },
     {
       "webId": "office-keyboard",
       "sourceManifestId": "keyboard",
-      "usdPrimPath": "/World/Office/Devices/Keyboard"
+      "usdPrimPath": "/World/Office/OfficeKeyboardRoot"
     },
     {
       "webId": "office-trash-can",
       "sourceManifestId": "trashCan",
-      "usdPrimPath": "/World/Office/Containers/TrashCan"
+      "usdPrimPath": "/World/Office/OfficeTrashCanRoot"
     },
     {
       "webId": "office-desk-lamp",
       "sourceManifestId": "lampDesk",
-      "usdPrimPath": "/World/Office/Furniture/LampDesk"
+      "usdPrimPath": "/World/Office/OfficeDeskLampRoot"
     },
     {
       "webId": "office-book-stack",
       "sourceManifestId": "book",
-      "usdPrimPath": "/World/Office/Clutter/Book"
+      "usdPrimPath": "/World/Office/OfficeBookStackRoot"
     },
     {
       "webId": "office-coffee-cup",
       "sourceManifestId": "mug",
-      "usdPrimPath": "/World/Office/Clutter/Mug"
+      "usdPrimPath": "/World/Office/OfficeCoffeeCupRoot"
     },
     {
       "webId": "office-notebook",
       "sourceManifestId": "notebook",
-      "usdPrimPath": "/World/Office/Clutter/Notebook"
+      "usdPrimPath": "/World/Office/OfficeNotebookRoot"
     }
   ]
 }

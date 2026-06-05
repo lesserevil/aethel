@@ -224,8 +224,8 @@ describe("web-asset-map.json — USD stage coverage", () => {
       // Extract the leaf prim name from the path
       const leafName = entry.usdPrimPath.split("/").pop() ?? "";
       expect(leafName.length).toBeGreaterThan(0);
-      // Pattern: def <Token> "<LeafName>"
-      const pattern = new RegExp(`\\bdef\\s+\\w+\\s+"${leafName}"`);
+      // Pattern: def "<LeafName>" or def <Token> "<LeafName>"
+      const pattern = new RegExp(`\\bdef(?:\\s+\\w+)?\\s+"${leafName}"`);
       expect(stageText).toMatch(pattern);
     },
   );

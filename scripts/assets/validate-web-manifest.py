@@ -262,8 +262,8 @@ def check_prim_paths_in_stage(map_data: dict, stage_text: str) -> list[Failure]:
         # Extract the leaf prim name from the path (last segment)
         leaf_name = prim_path.rsplit("/", 1)[-1]
 
-        # Check for 'def <Token> "<LeafName>"' in the stage text
-        pattern = rf'\bdef\s+\w+\s+"{re.escape(leaf_name)}"'
+        # Check for 'def "<LeafName>"' or 'def <Token> "<LeafName>"' in the stage text.
+        pattern = rf'\bdef(?:\s+\w+)?\s+"{re.escape(leaf_name)}"'
         if not re.search(pattern, stage_text):
             failures.append(
                 Failure(

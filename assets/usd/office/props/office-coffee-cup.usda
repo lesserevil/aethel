@@ -1,5 +1,6 @@
 #usda 1.0
 (
+    defaultPrim = "OfficeCoffeeCupRoot"
     doc = """Office prop: Coffee Cup
     
     USD Physics metadata for a dynamic ceramic coffee cup (clutter/accessory).
@@ -21,6 +22,11 @@ def Xform "OfficeCoffeeCupRoot" (
         float3 physicsDimensions = (0.08, 0.1, 0.08)
         string semanticLabel = "ceramic coffee cup on the desk"
         string assetId = "office-coffee-cup"
+        string sourceId = "eclair-home-desk-props"
+        string sourceUrl = "https://eclair-assets.itch.io/everyday-home-desk-props-glb-pack-30-free-cc0-3d-models"
+        string licenseId = "cc0-1.0"
+        string licenseUrl = "https://creativecommons.org/publicdomain/zero/1.0/"
+        string usdPrimPath = "/World/Office/OfficeCoffeeCupRoot"
         string category = "clutter"
         bool agentSafe = true
         string[] affordances = ["containable", "pickup"]

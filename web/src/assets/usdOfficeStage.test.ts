@@ -15,9 +15,8 @@
 // WHAT IS CHECKED
 //   - office.usda and all required prop files exist
 //   - office.usda has the correct stage-level metadata (defaultPrim, upAxis, metersPerUnit)
-//   - office.usda defines every required /World scope (Office, Architecture,
-//     Furniture, Devices, Containers, Clutter, Lights, Cameras)
-//   - office.usda contains prepend references to every prop file
+//   - office.usda defines every required /World/Office root prop prim
+//   - office.usda contains payloads to every prop file
 //   - office.usda defines a Camera prim named OfficeCamera
 //   - office.usda defines light prims AmbientDome and KeyLight
 //   - each prop USDA has the correct defaultPrim, metersPerUnit, and upAxis
@@ -47,7 +46,7 @@ const VALIDATE_SCRIPT = repoPath("scripts/assets/validate-usd-stage.py");
 // and the prim name that will be the defaultPrim.
 
 interface PropSpec {
-  /** Manifest assetId */
+  /** Runtime/web assetId embedded in prop customData */
   id: string;
   /** File name under assets/usd/office/props/ */
   file: string;
@@ -63,82 +62,82 @@ interface PropSpec {
 
 const PROP_SPECS: PropSpec[] = [
   {
-    id: "desk",
-    file: "desk.usda",
-    defaultPrim: "Desk",
-    usdPrimPath: "/World/Office/Furniture/Desk",
+    id: "office-desk",
+    file: "office-desk.usda",
+    defaultPrim: "OfficeDeskRoot",
+    usdPrimPath: "/World/Office/OfficeDeskRoot",
     sourceId: "kenney-furniture-kit",
     licenseId: "cc0-1.0",
   },
   {
-    id: "deskChair",
-    file: "desk_chair.usda",
-    defaultPrim: "DeskChair",
-    usdPrimPath: "/World/Office/Furniture/DeskChair",
+    id: "office-chair",
+    file: "office-chair.usda",
+    defaultPrim: "OfficeChairRoot",
+    usdPrimPath: "/World/Office/OfficeChairRoot",
     sourceId: "kenney-furniture-kit",
     licenseId: "cc0-1.0",
   },
   {
-    id: "laptop",
-    file: "laptop.usda",
-    defaultPrim: "Laptop",
-    usdPrimPath: "/World/Office/Devices/Laptop",
+    id: "office-laptop",
+    file: "office-laptop.usda",
+    defaultPrim: "OfficeLaptopRoot",
+    usdPrimPath: "/World/Office/OfficeLaptopRoot",
     sourceId: "kenney-furniture-kit",
     licenseId: "cc0-1.0",
   },
   {
-    id: "keyboard",
-    file: "keyboard.usda",
-    defaultPrim: "Keyboard",
-    usdPrimPath: "/World/Office/Devices/Keyboard",
+    id: "office-keyboard",
+    file: "office-keyboard.usda",
+    defaultPrim: "OfficeKeyboardRoot",
+    usdPrimPath: "/World/Office/OfficeKeyboardRoot",
     sourceId: "kenney-furniture-kit",
     licenseId: "cc0-1.0",
   },
   {
-    id: "monitorWide",
-    file: "monitor_wide.usda",
-    defaultPrim: "MonitorWide",
-    usdPrimPath: "/World/Office/Devices/MonitorWide",
+    id: "office-monitor",
+    file: "office-monitor.usda",
+    defaultPrim: "OfficeMonitorRoot",
+    usdPrimPath: "/World/Office/OfficeMonitorRoot",
     sourceId: "kenney-furniture-kit",
     licenseId: "cc0-1.0",
   },
   {
-    id: "trashCan",
-    file: "trash_can.usda",
-    defaultPrim: "TrashCan",
-    usdPrimPath: "/World/Office/Containers/TrashCan",
+    id: "office-trash-can",
+    file: "office-trash-can.usda",
+    defaultPrim: "OfficeTrashCanRoot",
+    usdPrimPath: "/World/Office/OfficeTrashCanRoot",
     sourceId: "kenney-furniture-kit",
     licenseId: "cc0-1.0",
   },
   {
-    id: "lampDesk",
-    file: "lamp_desk.usda",
-    defaultPrim: "LampDesk",
-    usdPrimPath: "/World/Office/Furniture/LampDesk",
+    id: "office-desk-lamp",
+    file: "office-desk-lamp.usda",
+    defaultPrim: "OfficeDeskLampRoot",
+    usdPrimPath: "/World/Office/OfficeDeskLampRoot",
     sourceId: "kenney-furniture-kit",
     licenseId: "cc0-1.0",
   },
   {
-    id: "mug",
-    file: "mug.usda",
-    defaultPrim: "Mug",
-    usdPrimPath: "/World/Office/Clutter/Mug",
+    id: "office-coffee-cup",
+    file: "office-coffee-cup.usda",
+    defaultPrim: "OfficeCoffeeCupRoot",
+    usdPrimPath: "/World/Office/OfficeCoffeeCupRoot",
     sourceId: "eclair-home-desk-props",
     licenseId: "cc0-1.0",
   },
   {
-    id: "book",
-    file: "book.usda",
-    defaultPrim: "Book",
-    usdPrimPath: "/World/Office/Clutter/Book",
+    id: "office-book-stack",
+    file: "office-book-stack.usda",
+    defaultPrim: "OfficeBookStackRoot",
+    usdPrimPath: "/World/Office/OfficeBookStackRoot",
     sourceId: "eclair-home-desk-props",
     licenseId: "cc0-1.0",
   },
   {
-    id: "notebook",
-    file: "notebook.usda",
-    defaultPrim: "Notebook",
-    usdPrimPath: "/World/Office/Clutter/Notebook",
+    id: "office-notebook",
+    file: "office-notebook.usda",
+    defaultPrim: "OfficeNotebookRoot",
+    usdPrimPath: "/World/Office/OfficeNotebookRoot",
     sourceId: "eclair-home-desk-props",
     licenseId: "cc0-1.0",
   },
@@ -152,10 +151,10 @@ function readUsda(path: string): string {
   return readFileSync(path, "utf-8");
 }
 
-/** Extract all prim names defined with `def <Type> "Name"` in a USDA text. */
+/** Extract all prim names defined with `def "Name"` or `def <Type> "Name"`. */
 function definedPrimNames(usda: string): Set<string> {
   const names = new Set<string>();
-  for (const m of usda.matchAll(/\bdef\s+\w+\s+"(\w+)"/g)) {
+  for (const m of usda.matchAll(/\bdef(?:\s+\w+)?\s+"(\w+)"/g)) {
     names.add(m[1]);
   }
   return names;
@@ -230,11 +229,16 @@ describe("USD office stage — required prim hierarchy", () => {
   const REQUIRED_PRIMS = [
     "World",
     "Office",
-    "Architecture",
-    "Furniture",
-    "Devices",
-    "Containers",
-    "Clutter",
+    "OfficeDeskRoot",
+    "OfficeChairRoot",
+    "OfficeDeskLampRoot",
+    "OfficeMonitorRoot",
+    "OfficeLaptopRoot",
+    "OfficeKeyboardRoot",
+    "OfficeTrashCanRoot",
+    "OfficeBookStackRoot",
+    "OfficeCoffeeCupRoot",
+    "OfficeNotebookRoot",
     "Lights",
     "Cameras",
   ] as const;
@@ -293,10 +297,10 @@ describe("USD office stage — camera", () => {
 
 // ── Stage: prop references ────────────────────────────────────────────────────
 
-describe("USD office stage — prop references", () => {
+describe("USD office stage — prop payloads", () => {
   const stage = readUsda(STAGE_PATH);
 
-  it.each(PROP_SPECS)("stage contains prepend references to props/$file", ({ file }) => {
+  it.each(PROP_SPECS)("stage contains payload to props/$file", ({ file }) => {
     expect(stage).toContain(`props/${file}`);
   });
 });
