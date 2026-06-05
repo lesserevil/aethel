@@ -45,6 +45,8 @@ class EnvironmentState(BaseModel):
     # objects is intentionally left as a free-form list for the scaffold;
     # a later task will add typed SceneObjectState entries.
     objects: list = Field(default_factory=list)
+    # selectedObject is the currently focused scene object, if any.
+    selectedObject: Optional[str] = None
 
 
 class ChatMessageMetadata(BaseModel):

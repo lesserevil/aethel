@@ -1,9 +1,10 @@
 ---
 id: TASK-19.3
 title: Implement Nemotron client and Aethel prompt builder
-status: Backlog
+status: In Progress
 assignee: []
 created_date: '2026-06-05 13:41'
+updated_date: '2026-06-05 14:27'
 labels: []
 dependencies:
   - TASK-19.2
@@ -39,3 +40,20 @@ Do not log prompts with secrets or authorization headers. Do not expose chain-of
 - [ ] #1 Backend Nemotron client maps Aethel chat requests to NVIDIA chat completions and returns the existing ChatResponse shape.
 - [ ] #2 Mocked tests cover context inclusion, success, provider errors, rate limits, malformed responses, and timeouts.
 <!-- AC:END -->
+
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+UNDERSTANDING: Implementing NVIDIA Nemotron chat client and Aethel prompt builder. Confirmed hosted model id: nvidia/nvidia/nemotron-3-nano-omni-30b-a3b-reasoning. Creating api/nvidia_client.py (async httpx, error types, chat_template_kwargs reasoning off by default, typed multimodal extension point), api/prompt_builder.py (system+history+user from ChatRequest), updating api/main.py (real client when AETHEL_CHAT_PROVIDER=nvidia), adding test_nvidia_client.py + test_prompt_builder.py.
+<!-- SECTION:NOTES:END -->
+
+## Comments
+<!-- COMMENTS:BEGIN -->
+<!-- COMMENT:BEGIN -->
+index: 1
+author: oompah
+created: 2026-06-05 14:24
+
+Agent dispatched (profile: default)
+<!-- COMMENT:END -->
+<!-- COMMENTS:END -->

@@ -128,7 +128,8 @@ Sends a chat request to the backend.
     "lighting": "bright",
     "ambience": "quiet",
     "weather": "clear",
-    "objects": []
+    "objects": [],
+    "selectedObject": null
   },
   "recentMessages": [
     { "id": "msg-1", "content": "Hello", "timestamp": 1717600000000, "sender": "user" }
@@ -147,18 +148,29 @@ Sends a chat request to the backend.
 
 **Error responses:**
 
-| Status | Condition                                         |
-|--------|---------------------------------------------------|
-| 422    | Request body fails Pydantic validation            |
-| 503    | NVIDIA API key not configured                     |
-| 500    | Unhandled server error (internals are not leaked) |
+| Status | Condition                                                                    |
+|--------|------------------------------------------------------------------------------|
+| 422    | Request body fails Pydantic validation                                       |
+| 503    | `AETHEL_CHAT_PROVIDER=nvidia` but NVIDIA API key is not configured           |
+| 429    | NVIDIA API rate limit exceeded (pass-through, retry after back-off)          |
+| 502    | NVIDIA API authentication failure or malformed/unexpected response           |
+| 504    | NVIDIA API request timed out                                                 |
+| 500    | Unhandled server error (internals are not leaked)                            |
 
 ## Current Status
 
-The `/api/chat` endpoint validates the full request shape but returns a
-stub response.  The live NVIDIA model client is added in **TASK-19.3**.
-Use `AETHEL_CHAT_PROVIDER=mock` (the default) to keep the in-browser
-mock adapter active until the live client is ready.
+The `/api/chat` endpoint routes to the **NVIDIA Nemotron client**
+(`api/nvidia_client.py`) when `AETHEL_CHAT_PROVIDER=nvidia`, or returns a
+deterministic stub when `AETHEL_CHAT_PROVIDER=mock` (the default).
+
+To enable live model responses:
+
+1. Configure the NVIDIA API key (see [Credential Configuration](#credential-configuration)).
+2. Set `AETHEL_CHAT_PROVIDER=nvidia` in your environment.
+3. Start the backend: `make run-api`.
+
+The frontend mock adapter still works when `AETHEL_CHAT_PROVIDER` is not
+set or is set to `mock` — no NVIDIA key is required in that mode.
 
 ## Testing Credential Loading
 

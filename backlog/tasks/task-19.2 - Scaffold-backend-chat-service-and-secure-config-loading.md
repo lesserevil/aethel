@@ -1,10 +1,10 @@
 ---
 id: TASK-19.2
 title: Scaffold backend chat service and secure config loading
-status: In Progress
+status: Done
 assignee: []
 created_date: '2026-06-05 13:41'
-updated_date: '2026-06-05 14:23'
+updated_date: '2026-06-05 14:24'
 labels: []
 dependencies: []
 documentation:
@@ -49,6 +49,12 @@ UNDERSTANDING: Creating FastAPI backend under api/ with /api/health + placeholde
 
 IMPLEMENTATION: Created api/ (FastAPI backend) with: config.py (secure NVIDIA_API_KEY loading from env or ~/.netrc, never logs secret), models.py (Pydantic models mirroring TS ChatRequest/ChatResponse), main.py (/api/health + placeholder /api/chat with full request validation), requirements.txt, requirements-dev.txt. Tests (34 total): api/tests/test_config.py covers all credential paths + secret masking assertions; api/tests/test_routes.py covers endpoint behavior, HTTP status codes, and key non-exposure. Makefile: added run-api (uvicorn) and test-api (pytest) targets. Added docs/nemotron-chat.md with full setup, env vars, API reference, and troubleshooting.
 <!-- SECTION:NOTES:END -->
+
+## Final Summary
+
+<!-- SECTION:FINAL_SUMMARY:BEGIN -->
+Delivered FastAPI backend service under api/ with: GET /api/health (liveness + key presence flag), POST /api/chat (full Pydantic request validation, stub response, 503 when key absent). Secure config loading in api/config.py reads NVIDIA_API_KEY from env or ~/.netrc (inference-api.nvidia.com machine entry) and never logs the secret — redacted_key_hint() returns sk-******* style output only. 34 passing tests (no real NVIDIA key required): 16 config tests covering all resolution paths + secret-masking assertions, 18 route tests covering status codes, validation, and key non-exposure. Makefile run-api and test-api targets added; make run and existing frontend gates unchanged. docs/nemotron-chat.md documents prerequisites, credential setup, env vars, endpoint reference, and troubleshooting.
+<!-- SECTION:FINAL_SUMMARY:END -->
 
 ## Comments
 <!-- COMMENTS:BEGIN -->
