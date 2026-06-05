@@ -4,7 +4,7 @@ title: Bind 3D viewport visuals to session state
 status: Done
 assignee: []
 created_date: '2026-06-02 22:12'
-updated_date: '2026-06-05 03:20'
+updated_date: '2026-06-05 03:23'
 labels: []
 dependencies:
   - TASK-5.1
@@ -45,6 +45,8 @@ Do not create a parallel renderer-only state model. Avoid expensive full scene r
 
 <!-- SECTION:NOTES:BEGIN -->
 COMPLETION: All 3 acceptance criteria satisfied and verified. (1) Agent appearance: AgentAvatar reads avatarPreset/idlePose/accentColor from session state; viewport exposes data-avatar-preset, data-idle-pose, data-accent-color attributes; name label shows displayName styled with accentColor. (2) Environment: SceneEnvironment.deriveSceneLighting() maps timeOfDay+lighting+preset to light parameters; viewport exposes data-environment-preset, data-time-of-day, data-lighting, data-enabled-objects. (3) No direct state mutation: AppShell.handleViewEvent routes onViewEvent callbacks to dispatch only. All 281 tests pass (make test). Build clean (make build). Lint clean 0 errors (make lint).
+
+MERGE CONFLICT RESOLVED: Rebased onto origin/dev. Git auto-detected that 65856cd was a cherry-pick of 7976f5e (already merged via PR #38) and skipped it. Remaining 4 task-file-only commits applied cleanly. All 281 tests pass post-rebase. Force-pushed successfully.
 <!-- SECTION:NOTES:END -->
 
 ## Final Summary
