@@ -29,7 +29,7 @@ export const baselineSession: SessionState = {
     },
   },
   environment: {
-    preset: "laboratory",
+    preset: "office",
     timeOfDay: "day",
     lighting: "bright",
     ambience: "peaceful",

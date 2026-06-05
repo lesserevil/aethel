@@ -307,7 +307,7 @@ describe("SessionReducer", () => {
     const resetState = reducer(modified, resetSession());
     // Agent and environment reset to baseline
     expect(resetState.agent.displayName).toBe("Aethel Agent");
-    expect(resetState.environment.preset).toBe("laboratory");
+    expect(resetState.environment.preset).toBe("office");
     // Chat messages preserved
     expect(resetState.chat.messages).toHaveLength(1);
     expect(resetState.chat.messages[0]).toEqual(msg);

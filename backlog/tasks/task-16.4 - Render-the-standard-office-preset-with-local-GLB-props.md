@@ -1,9 +1,10 @@
 ---
 id: TASK-16.4
 title: Render the standard office preset with local GLB props
-status: Backlog
+status: In Progress
 assignee: []
 created_date: '2026-06-05 01:52'
+updated_date: '2026-06-05 04:50'
 labels: []
 dependencies:
   - TASK-16.3
@@ -41,3 +42,20 @@ Keep committed asset sizes reasonable. If the selected GLB files are too large f
 - [ ] #1 The default office preset renders local GLB props for the required desk, chair, laptop, keyboard, monitor/screen, trash can, and clutter set.
 - [ ] #2 Existing controls, reset behavior, mutation logging, and chat context continue to pass their tests.
 <!-- AC:END -->
+
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+Understanding: The task requires: (1) Add web/public/assets/office/ with minimal GLB placeholders, (2) Update SceneObjects.tsx to use OfficeAsset when assetId is present, (3) Change baselineSession preset to 'office', (4) Add SceneObjects.test.tsx, (5) Update baselineSession.test.ts. Minimal GLB stubs used since actual Kenney/Eclair files cannot be downloaded.
+<!-- SECTION:NOTES:END -->
+
+## Comments
+<!-- COMMENTS:BEGIN -->
+<!-- COMMENT:BEGIN -->
+index: 1
+author: oompah
+created: 2026-06-05 04:48
+
+Agent dispatched (profile: default)
+<!-- COMMENT:END -->
+<!-- COMMENTS:END -->

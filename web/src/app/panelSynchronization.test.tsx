@@ -369,7 +369,7 @@ describe("Panel synchronization — environment/object change", () => {
   it("after applying an environment change, the viewport still renders without error", () => {
     const { envSelect, applyBtn } = setup();
 
-    // Change to outdoor — this differs from the default "laboratory"
+    // Change to outdoor — this differs from the default "office"
     fireEvent.change(envSelect, { target: { value: "outdoor" } });
     fireEvent.click(applyBtn);
 
@@ -470,7 +470,7 @@ describe("Panel synchronization — environment/object change", () => {
     fireEvent.change(envSelect, { target: { value: "outdoor" } });
 
     // Environment state should NOT change until Apply is clicked
-    expect(capturedState.environment.preset).toBe("laboratory");
+    expect(capturedState.environment.preset).toBe("office");
   });
 
   it("toggling an object checkbox and applying dispatches object toggle and a system chat message", () => {

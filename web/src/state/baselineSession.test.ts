@@ -30,7 +30,7 @@ describe("Baseline Session", () => {
 
   test("has environment defaults", () => {
     expect(session.environment).toBeDefined();
-    expect(session.environment.preset).toBe("laboratory");
+    expect(session.environment.preset).toBe("office");
     expect(session.environment.timeOfDay).toBe("day");
     expect(session.environment.lighting).toBe("bright");
     expect(session.environment.ambience).toBe("peaceful");
@@ -123,5 +123,46 @@ describe("Baseline Session", () => {
     expect(sessionWithChat.chat.messages.length).toBeGreaterThan(0);
     expect(sessionWithChat.chat.messages[0].content).toContain("Hello!");
     expect(sessionWithChat.chat.messages[1].content).toContain("Hi there!");
+  });
+
+  // ── MVP asset ID coverage ──────────────────────────────────────────────────
+  // These tests assert that the standard office preset references all required
+  // manifest asset IDs so the viewport renderer can load the correct GLBs.
+
+  test("standard office preset includes desk via office-desk assetId", () => {
+    const assetIds = session.environment.objects.map((o) => o.assetId);
+    expect(assetIds).toContain("office-desk");
+  });
+
+  test("standard office preset includes chair via office-chair assetId", () => {
+    const assetIds = session.environment.objects.map((o) => o.assetId);
+    expect(assetIds).toContain("office-chair");
+  });
+
+  test("standard office preset includes laptop via office-laptop assetId", () => {
+    const assetIds = session.environment.objects.map((o) => o.assetId);
+    expect(assetIds).toContain("office-laptop");
+  });
+
+  test("standard office preset includes keyboard via office-keyboard assetId", () => {
+    const assetIds = session.environment.objects.map((o) => o.assetId);
+    expect(assetIds).toContain("office-keyboard");
+  });
+
+  test("standard office preset includes monitor via office-monitor assetId", () => {
+    const assetIds = session.environment.objects.map((o) => o.assetId);
+    expect(assetIds).toContain("office-monitor");
+  });
+
+  test("standard office preset includes trash can via office-trash-can assetId", () => {
+    const assetIds = session.environment.objects.map((o) => o.assetId);
+    expect(assetIds).toContain("office-trash-can");
+  });
+
+  test("standard office preset includes at least three clutter props", () => {
+    const clutterIds = ["office-book-stack", "office-coffee-cup", "office-notebook"];
+    const assetIds = session.environment.objects.map((o) => o.assetId);
+    const clutterCount = clutterIds.filter((id) => assetIds.includes(id)).length;
+    expect(clutterCount).toBeGreaterThanOrEqual(3);
   });
 });

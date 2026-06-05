@@ -296,7 +296,7 @@ describe("EnvironmentControlPanel — Apply flow", () => {
   it("environment_preset_change payload includes the changed preset value", async () => {
     const { dispatchSpy } = renderWithSpy();
     fireEvent.change(screen.getByTestId("select-environment-preset"), {
-      target: { value: "office" },
+      target: { value: "outdoor" },
     });
     fireEvent.click(screen.getByTestId("btn-apply-environment"));
 
@@ -305,7 +305,7 @@ describe("EnvironmentControlPanel — Apply flow", () => {
         ([a]: [{ type: string }]) => a.type === "session/environment_preset_change",
       );
       expect(envCall).toBeDefined();
-      expect(envCall![0].payload.preset).toBe("office");
+      expect(envCall![0].payload.preset).toBe("outdoor");
     });
   });
 

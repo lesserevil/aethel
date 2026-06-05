@@ -1,10 +1,10 @@
 ---
 id: TASK-16.3
 title: Implement GLB office asset loader boundary with fallbacks
-status: In Progress
+status: Done
 assignee: []
 created_date: '2026-06-05 01:52'
-updated_date: '2026-06-05 04:43'
+updated_date: '2026-06-05 04:48'
 labels: []
 dependencies:
   - TASK-16.2
@@ -46,7 +46,15 @@ Do not let a missing GLB crash the whole canvas. Do not fetch assets from Poly P
 
 <!-- SECTION:NOTES:BEGIN -->
 Understanding: Implementing OfficeAsset.tsx - a React Three Fiber scene boundary component that loads GLB files from the manifest (local /assets/office/ URLs only) via useGLTF with Suspense + ErrorBoundary, renders a deterministic procedural fallback box while loading or on error. Tests mock useGLTF so no real WebGL/GLB parsing needed. Following existing patterns: pure functions extracted and tested independently (deriveFallbackProps), component tests mock @react-three/drei and @react-three/fiber. Will cover 3 states: loading (Suspense fallback), success (primitive rendered), error (ErrorBoundary fallback).
+
+Implementation: Created web/src/components/viewport/scene/OfficeAsset.tsx and OfficeAsset.test.tsx. The component exports: deriveFallbackProps() pure function (category-specific muted color + manifest dimensions); AssetErrorBoundary class component (isolates load errors from canvas); GLBContent inner component (calls useGLTF - can suspend); OfficeAsset public boundary component (wraps in Suspense + ErrorBoundary with stable fallback box). Tests cover: loading state via never-resolving Promise mock, success state with mocked scene.clone(), error state via thrown Error caught by ErrorBoundary, URL safety (only /assets/office/ paths, no external hosts). All 32 new tests pass; total 479/479 passing.
 <!-- SECTION:NOTES:END -->
+
+## Final Summary
+
+<!-- SECTION:FINAL_SUMMARY:BEGIN -->
+Delivered web/src/components/viewport/scene/OfficeAsset.tsx (GLB loader boundary component) and OfficeAsset.test.tsx (32 tests). Component uses React Suspense + class-based ErrorBoundary to isolate GLB loading from the canvas - a missing or failed asset renders a deterministic wireframe box fallback (dimensions from manifest entry, stable bounding volume). Exports deriveFallbackProps() pure function. Tests mock @react-three/fiber and @react-three/drei/useGLTF to cover all three states without real WebGL: loading (Suspense fallback visible, no primitive), success (primitive rendered, scene.clone() called, local URL verified), error (ErrorBoundary catches thrown Error, fallback shown). URL safety tests confirm no Poly Pizza/itch.io external hosts. All 479 tests pass (19 test files).
+<!-- SECTION:FINAL_SUMMARY:END -->
 
 ## Comments
 <!-- COMMENTS:BEGIN -->
