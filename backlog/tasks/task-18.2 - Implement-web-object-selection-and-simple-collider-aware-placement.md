@@ -61,14 +61,3 @@ Verification: All 629 tests pass (21 test files). Build succeeds (tsc + vite). L
 <!-- SECTION:FINAL_SUMMARY:BEGIN -->
 Implemented web object selection and collider-aware placement for Tier 2 of the office physics plan. Deliverables: (1) physics/placementHelpers.ts - pure AABB collision helpers (buildAABB, aabbsOverlap, resolveObjectDimensions, isWorkSurface, isPickupObject, validatePlacement, snapToWorkSurface) with 44 unit tests. (2) OfficeAsset.tsx - click/hover event handling with ThreeEvent stopPropagation, SelectionOutline wireframe for selected state. (3) SceneObjects.tsx - forwards isSelected/objectId/onViewEvent to OfficeAsset so all manifested assets support selection. (4) session/object_move reducer action (moveObject) for state-safe position updates. (5) AethelViewport Canvas onClick fixed to onPointerMissed preventing double-fire on mesh clicks. (6) AppShell two-step snap placement: select pickup object, click work surface, AABB placement validated, object moved in state, mutation logged, chat system message appended. (7) selectChatRequestContext extended with selectedObjectId and resolved selectedObject for chat context awareness. All 629 tests pass, build and lint clean.
 <!-- SECTION:FINAL_SUMMARY:END -->
-
-## Comments
-<!-- COMMENTS:BEGIN -->
-<!-- COMMENT:BEGIN -->
-index: 1
-author: oompah
-created: 2026-06-05 05:27
-
-Agent dispatched (profile: default)
-<!-- COMMENT:END -->
-<!-- COMMENTS:END -->

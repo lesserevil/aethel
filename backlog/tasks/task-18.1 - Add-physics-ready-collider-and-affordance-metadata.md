@@ -7,12 +7,12 @@ created_date: '2026-06-05 01:53'
 updated_date: '2026-06-05 05:26'
 labels: []
 dependencies:
-- TASK-16.2
+  - TASK-16.2
 documentation:
-- plans/office-physics-simulation-plan.md
+  - plans/office-physics-simulation-plan.md
 modified_files:
-- web/src/assets/officeAssetManifest.ts
-- web/src/state/sessionTypes.ts
+  - web/src/assets/officeAssetManifest.ts
+  - web/src/state/sessionTypes.ts
 parent_task_id: TASK-18
 priority: medium
 ordinal: 45000
