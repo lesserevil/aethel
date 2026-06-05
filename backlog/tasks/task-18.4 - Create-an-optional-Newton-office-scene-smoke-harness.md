@@ -1,10 +1,10 @@
 ---
 id: TASK-18.4
 title: Create an optional Newton office-scene smoke harness
-status: Backlog
+status: In Progress
 assignee: []
 created_date: '2026-06-05 01:53'
-updated_date: '2026-06-05 02:04'
+updated_date: '2026-06-05 06:29'
 labels: []
 dependencies:
   - TASK-18.3
@@ -42,3 +42,20 @@ Do not add Newton to the default web dependency set. Do not make make run, make 
 - [ ] #2 Docs state tested CPU/GPU behavior and confirm Newton is not a default MVP dependency.
 - [ ] #3 If the Newton smoke harness needs GPU-backed execution, docs distinguish optional GPU evaluation from the default GPU-optional MVP path.
 <!-- AC:END -->
+
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+UNDERSTANDING (2026-06-05): Not a duplicate. Only TASK-18.4 covers Newton smoke harness. Will implement: scripts/physics/newton_smoke_harness.py, scripts/physics/test_newton_smoke_harness.py, docs/office-physics.md.
+<!-- SECTION:NOTES:END -->
+
+## Comments
+<!-- COMMENTS:BEGIN -->
+<!-- COMMENT:BEGIN -->
+index: 1
+author: oompah
+created: 2026-06-05 06:27
+
+Agent dispatched (profile: default)
+<!-- COMMENT:END -->
+<!-- COMMENTS:END -->

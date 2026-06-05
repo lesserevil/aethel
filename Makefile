@@ -7,7 +7,8 @@
 .DEFAULT_GOAL := help
 
 .PHONY: help init run fmt fmt-check build test test-e2e lint clean \
-        assets-build assets-validate assets-validate-test assets-export-web
+        assets-build assets-validate assets-validate-test assets-export-web \
+        physics-harness-dry-run physics-harness physics-harness-test
 
 BACKLOG_SOURCE ?= github:lesserevil/Backlog.md
 BACKLOG_CLI ?= bun x --bun $(BACKLOG_SOURCE)
@@ -110,3 +111,24 @@ assets-validate-test: ## Run unit tests for the USD Physics metadata validator.
 
 assets-export-web: ## Export canonical USD assets to web GLB files (requires Blender).
 	scripts/assets/assets-export-web.sh
+
+# ─── Newton physics evaluation harness (optional) ──────────────────────────
+# Newton and NVIDIA Warp are OPTIONAL dependencies.  These targets do not
+# require a GPU.  The smoke harness exits with code 2 (SKIP) when Newton is
+# not installed; that is not an error.
+# See docs/office-physics.md for installation instructions.
+
+physics-harness-dry-run: ## Run Newton smoke harness in dry-run mode (no Newton/GPU needed).
+	python3 scripts/physics/newton_smoke_harness.py --dry-run
+
+physics-harness: ## Run Newton smoke harness with Newton (skips if Newton not installed).
+	python3 scripts/physics/newton_smoke_harness.py; \
+	exit_code=$$?; \
+	if [ $$exit_code -eq 2 ]; then \
+		echo "[make] Newton not installed — harness skipped (exit 2 is not a failure)."; \
+		exit 0; \
+	fi; \
+	exit $$exit_code
+
+physics-harness-test: ## Run unit and integration tests for the Newton smoke harness (no GPU needed).
+	python3 -m pytest scripts/physics/test_newton_smoke_harness.py -v
