@@ -1,9 +1,10 @@
 ---
 id: TASK-16.1
 title: Select and license-audit the first free office asset set
-status: Backlog
+status: In Progress
 assignee: []
 created_date: '2026-06-05 01:52'
+updated_date: '2026-06-05 02:44'
 labels: []
 dependencies: []
 documentation:
@@ -38,3 +39,34 @@ Do not select paid assets, attribution-required assets, or assets whose license 
 - [ ] #1 docs/office-asset-sources.md lists the selected standard office asset set with source and license URLs.
 - [ ] #2 Every selected asset is CC0/public domain or explicitly rejected before runtime integration begins.
 <!-- AC:END -->
+
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+Understanding: No duplicate found - TASK-16.1 is the only license-audit task for office assets. Previous duplicate investigator agents dispatched but did not complete the work. Task is documentation-only: create docs/office-asset-sources.md. Sources: Kenney Furniture Kit (CC0, Poly Pizza) for primary furniture, Eclair Everyday Home & Desk Props GLB Pack (CC0) for clutter props.
+<!-- SECTION:NOTES:END -->
+
+## Comments
+<!-- COMMENTS:BEGIN -->
+<!-- COMMENT:BEGIN -->
+index: 1
+author: oompah
+created: 2026-06-05 02:39
+
+Agent dispatched (profile: default)
+<!-- COMMENT:END -->
+<!-- COMMENT:BEGIN -->
+index: 2
+author: oompah
+created: 2026-06-05 02:39
+
+Focus: Duplicate Investigator
+<!-- COMMENT:END -->
+<!-- COMMENT:BEGIN -->
+index: 3
+author: oompah
+created: 2026-06-05 02:42
+
+Agent dispatched (profile: default)
+<!-- COMMENT:END -->
+<!-- COMMENTS:END -->
