@@ -1,0 +1,49 @@
+#usda 1.0
+(
+    doc = """Office prop: Trash Can
+    
+    USD Physics metadata for a dynamic cylindrical office waste bin.
+    Body type: dynamic (light container — fully simulated by physics engine).
+    Collision shape: cylinder approximation (separate from render mesh).
+    Render mesh: loaded at runtime from /assets/office/office-trash-can.glb.
+    
+    Custom metadata fields are documented in assets/usd/PHYSICS_METADATA.md.
+    """
+    metersPerUnit = 1.0
+    upAxis = "Y"
+)
+
+def Xform "OfficeTrashCanRoot" (
+    prepend apiSchemas = ["PhysicsCollisionAPI", "PhysicsRigidBodyAPI"]
+    customData = {
+        string physicsBodyType = "dynamic"
+        string physicsColliderType = "cylinder"
+        float3 physicsDimensions = (0.3, 0.45, 0.3)
+        string semanticLabel = "cylindrical office waste bin"
+        string assetId = "office-trash-can"
+        string category = "container"
+        bool agentSafe = true
+        string[] affordances = ["waste-container", "pickup"]
+        float physicsMassKg = 1.5
+        float physicsFriction = 0.4
+    }
+)
+{
+    # Cylinder collision primitive — separate from the render mesh.
+    # Diameter: 0.3m → radius = 0.15m. Height: 0.45m.
+    # A cylinder is more accurate than a box for a round trash can.
+    def Cylinder "ColliderCylinder" (
+        prepend apiSchemas = ["PhysicsCollisionAPI"]
+        doc = "Cylinder collider for office-trash-can: radius=0.15m height=0.45m"
+    )
+    {
+        double height = 0.45
+        double radius = 0.15
+    }
+
+    def Xform "RenderMeshPlaceholder" (
+        doc = "Render geometry loaded from office-trash-can.glb — NOT used as collision mesh"
+    )
+    {
+    }
+}

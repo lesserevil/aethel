@@ -7,7 +7,7 @@
 .DEFAULT_GOAL := help
 
 .PHONY: help init run fmt fmt-check build test test-e2e lint clean \
-        assets-build assets-validate assets-export-web
+        assets-build assets-validate assets-validate-test assets-export-web
 
 BACKLOG_SOURCE ?= github:lesserevil/Backlog.md
 BACKLOG_CLI ?= bun x --bun $(BACKLOG_SOURCE)
@@ -101,8 +101,12 @@ clean: ## Remove build artifacts.
 assets-build: ## Convert source GLB/glTF assets to canonical USD (requires Blender).
 	scripts/assets/assets-build.sh
 
-assets-validate: ## Validate USD stage structure and web manifest mapping (usd-core optional).
+assets-validate: ## Validate USD stage structure, web manifest mapping, and physics metadata (usd-core optional).
 	scripts/assets/assets-validate.sh
+	python3 scripts/assets/validate_usd.py
+
+assets-validate-test: ## Run unit tests for the USD Physics metadata validator.
+	python3 -m pytest scripts/assets/test_validate_usd.py -v
 
 assets-export-web: ## Export canonical USD assets to web GLB files (requires Blender).
 	scripts/assets/assets-export-web.sh

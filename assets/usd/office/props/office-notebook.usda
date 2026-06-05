@@ -1,0 +1,49 @@
+#usda 1.0
+(
+    doc = """Office prop: Notebook
+    
+    USD Physics metadata for a dynamic lined paper notebook (clutter/accessory).
+    Body type: dynamic (small clutter — fully simulated by physics engine).
+    Collision shape: box approximation (separate from render mesh).
+    Render mesh: loaded at runtime from /assets/office/office-notebook.glb.
+    
+    Custom metadata fields are documented in assets/usd/PHYSICS_METADATA.md.
+    """
+    metersPerUnit = 1.0
+    upAxis = "Y"
+)
+
+def Xform "OfficeNotebookRoot" (
+    prepend apiSchemas = ["PhysicsCollisionAPI", "PhysicsRigidBodyAPI"]
+    customData = {
+        string physicsBodyType = "dynamic"
+        string physicsColliderType = "box"
+        float3 physicsDimensions = (0.2, 0.01, 0.15)
+        string semanticLabel = "lined paper notebook for notes and sketches"
+        string assetId = "office-notebook"
+        string category = "clutter"
+        bool agentSafe = true
+        string[] affordances = ["pickup"]
+        float physicsMassKg = 0.2
+        float physicsFriction = 0.5
+    }
+)
+{
+    # Box collision primitive — separate from the render mesh.
+    # Scale: 0.2m x 0.01m x 0.15m (width x height x depth).
+    # The thin profile (0.01m height) accurately represents a closed notebook.
+    def Cube "ColliderBox" (
+        prepend apiSchemas = ["PhysicsCollisionAPI"]
+        doc = "Box collider for office-notebook: width=0.2m height=0.01m depth=0.15m"
+    )
+    {
+        double3 xformOp:scale = (0.2, 0.01, 0.15)
+        uniform token[] xformOpOrder = ["xformOp:scale"]
+    }
+
+    def Xform "RenderMeshPlaceholder" (
+        doc = "Render geometry loaded from office-notebook.glb — NOT used as collision mesh"
+    )
+    {
+    }
+}
