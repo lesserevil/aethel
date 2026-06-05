@@ -1,0 +1,137 @@
+{
+  "$schema": "./manifest.schema.json",
+  "version": "1",
+  "description": "USD pipeline source catalog for the Aethel office scene. Every entry traces a USD prim and web GLB export back to its original free asset source. Derived from docs/office-asset-sources.md — do not edit license data here without updating that document, and keep both in sync.",
+  "sources": {
+    "kenney-furniture-kit": {
+      "name": "Kenney Furniture Kit",
+      "publisher": "Kenney.nl",
+      "url": "https://poly.pizza/bundle/Furniture-Kit-NoG1sEUD1z",
+      "publisherUrl": "https://kenney.nl/assets/furniture-kit"
+    },
+    "eclair-home-desk-props": {
+      "name": "Eclair Everyday Home & Desk Props GLB Pack",
+      "publisher": "Eclair",
+      "url": "https://eclair-assets.itch.io/everyday-home-desk-props-glb-pack-30-free-cc0-3d-models"
+    }
+  },
+  "licenses": {
+    "cc0-1.0": {
+      "spdxId": "CC0-1.0",
+      "name": "CC0 1.0 Universal",
+      "url": "https://creativecommons.org/publicdomain/zero/1.0/"
+    }
+  },
+  "assets": [
+    {
+      "id": "desk",
+      "label": "Desk",
+      "sourceId": "kenney-furniture-kit",
+      "sourceUrl": "https://poly.pizza/bundle/Furniture-Kit-NoG1sEUD1z",
+      "licenseId": "cc0-1.0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "originalFormat": "glb",
+      "usdPrimPath": "/World/Office/Furniture/Desk",
+      "webExportPath": "assets/exports/web/office/office-desk.glb"
+    },
+    {
+      "id": "deskChair",
+      "label": "Office Chair",
+      "sourceId": "kenney-furniture-kit",
+      "sourceUrl": "https://poly.pizza/bundle/Furniture-Kit-NoG1sEUD1z",
+      "licenseId": "cc0-1.0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "originalFormat": "glb",
+      "usdPrimPath": "/World/Office/Furniture/DeskChair",
+      "webExportPath": "assets/exports/web/office/office-chair.glb"
+    },
+    {
+      "id": "laptop",
+      "label": "Laptop",
+      "sourceId": "kenney-furniture-kit",
+      "sourceUrl": "https://poly.pizza/bundle/Furniture-Kit-NoG1sEUD1z",
+      "licenseId": "cc0-1.0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "originalFormat": "glb",
+      "usdPrimPath": "/World/Office/Devices/Laptop",
+      "webExportPath": "assets/exports/web/office/office-laptop.glb"
+    },
+    {
+      "id": "keyboard",
+      "label": "Keyboard",
+      "sourceId": "kenney-furniture-kit",
+      "sourceUrl": "https://poly.pizza/bundle/Furniture-Kit-NoG1sEUD1z",
+      "licenseId": "cc0-1.0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "originalFormat": "glb",
+      "usdPrimPath": "/World/Office/Devices/Keyboard",
+      "webExportPath": "assets/exports/web/office/office-keyboard.glb"
+    },
+    {
+      "id": "monitorWide",
+      "label": "Monitor / Screen",
+      "sourceId": "kenney-furniture-kit",
+      "sourceUrl": "https://poly.pizza/bundle/Furniture-Kit-NoG1sEUD1z",
+      "licenseId": "cc0-1.0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "originalFormat": "glb",
+      "usdPrimPath": "/World/Office/Devices/MonitorWide",
+      "webExportPath": "assets/exports/web/office/office-monitor.glb"
+    },
+    {
+      "id": "trashCan",
+      "label": "Trash Can",
+      "sourceId": "kenney-furniture-kit",
+      "sourceUrl": "https://poly.pizza/bundle/Furniture-Kit-NoG1sEUD1z",
+      "licenseId": "cc0-1.0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "originalFormat": "glb",
+      "usdPrimPath": "/World/Office/Containers/TrashCan",
+      "webExportPath": "assets/exports/web/office/office-trashcan.glb"
+    },
+    {
+      "id": "lampDesk",
+      "label": "Desk Lamp",
+      "sourceId": "kenney-furniture-kit",
+      "sourceUrl": "https://poly.pizza/bundle/Furniture-Kit-NoG1sEUD1z",
+      "licenseId": "cc0-1.0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "originalFormat": "glb",
+      "usdPrimPath": "/World/Office/Furniture/LampDesk",
+      "webExportPath": "assets/exports/web/office/office-lamp.glb"
+    },
+    {
+      "id": "mug",
+      "label": "Coffee Mug",
+      "sourceId": "eclair-home-desk-props",
+      "sourceUrl": "https://eclair-assets.itch.io/everyday-home-desk-props-glb-pack-30-free-cc0-3d-models",
+      "licenseId": "cc0-1.0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "originalFormat": "glb",
+      "usdPrimPath": "/World/Office/Clutter/Mug",
+      "webExportPath": "assets/exports/web/office/office-mug.glb"
+    },
+    {
+      "id": "book",
+      "label": "Book",
+      "sourceId": "eclair-home-desk-props",
+      "sourceUrl": "https://eclair-assets.itch.io/everyday-home-desk-props-glb-pack-30-free-cc0-3d-models",
+      "licenseId": "cc0-1.0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "originalFormat": "glb",
+      "usdPrimPath": "/World/Office/Clutter/Book",
+      "webExportPath": "assets/exports/web/office/office-book.glb"
+    },
+    {
+      "id": "notebook",
+      "label": "Spiral Notebook",
+      "sourceId": "eclair-home-desk-props",
+      "sourceUrl": "https://eclair-assets.itch.io/everyday-home-desk-props-glb-pack-30-free-cc0-3d-models",
+      "licenseId": "cc0-1.0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "originalFormat": "glb",
+      "usdPrimPath": "/World/Office/Clutter/Notebook",
+      "webExportPath": "assets/exports/web/office/office-notebook.glb"
+    }
+  ]
+}

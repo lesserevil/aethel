@@ -1,9 +1,10 @@
 ---
 id: TASK-17.1
 title: Create the office asset source and USD artifact layout
-status: Backlog
+status: In Progress
 assignee: []
 created_date: '2026-06-05 01:53'
+updated_date: '2026-06-05 05:24'
 labels: []
 dependencies:
   - TASK-16.1
@@ -40,3 +41,20 @@ Do not commit large raw asset archives. Do not duplicate conflicting license dat
 - [ ] #1 assets/sources/office/manifest.json tracks source, license, USD path, and web export path for each selected office asset.
 - [ ] #2 The assets/ directory layout exists without committing large raw downloads.
 <!-- AC:END -->
+
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+Understanding: Confirmed not a duplicate. Creating assets/ USD pipeline directory structure with source manifest derived from docs/office-asset-sources.md (10 CC0 assets). Adding vitest test for drift detection. Existing officeAssetManifest.ts is the web runtime manifest; this task creates the USD pipeline source catalog.
+<!-- SECTION:NOTES:END -->
+
+## Comments
+<!-- COMMENTS:BEGIN -->
+<!-- COMMENT:BEGIN -->
+index: 1
+author: oompah
+created: 2026-06-05 05:20
+
+Agent dispatched (profile: default)
+<!-- COMMENT:END -->
+<!-- COMMENTS:END -->

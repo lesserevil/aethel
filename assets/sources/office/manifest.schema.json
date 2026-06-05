@@ -1,0 +1,113 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "assets/sources/office/manifest.schema.json",
+  "title": "Office Asset Source Manifest",
+  "description": "Schema for the USD pipeline source catalog that maps office props to their original sources, licenses, USD prim paths, and web export paths.",
+  "type": "object",
+  "required": ["version", "sources", "licenses", "assets"],
+  "additionalProperties": false,
+  "properties": {
+    "$schema": { "type": "string" },
+    "version": {
+      "type": "string",
+      "description": "Manifest format version. Increment when the schema changes in a breaking way."
+    },
+    "description": { "type": "string" },
+    "sources": {
+      "type": "object",
+      "description": "Lookup table of asset source packs. Keys are stable source IDs.",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["name", "publisher", "url"],
+        "additionalProperties": false,
+        "properties": {
+          "name": { "type": "string", "minLength": 1 },
+          "publisher": { "type": "string", "minLength": 1 },
+          "url": { "type": "string", "format": "uri" },
+          "publisherUrl": { "type": "string", "format": "uri" }
+        }
+      }
+    },
+    "licenses": {
+      "type": "object",
+      "description": "Lookup table of licenses. Keys are stable license IDs.",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["spdxId", "name", "url"],
+        "additionalProperties": false,
+        "properties": {
+          "spdxId": { "type": "string", "minLength": 1 },
+          "name": { "type": "string", "minLength": 1 },
+          "url": { "type": "string", "format": "uri" }
+        }
+      }
+    },
+    "assets": {
+      "type": "array",
+      "description": "Ordered list of office assets in the USD pipeline catalog.",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "label",
+          "sourceId",
+          "sourceUrl",
+          "licenseId",
+          "licenseUrl",
+          "originalFormat",
+          "usdPrimPath",
+          "webExportPath"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Stable identifier matching the asset ID in docs/office-asset-sources.md."
+          },
+          "label": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Human-readable name for the asset."
+          },
+          "sourceId": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Key into the top-level sources object."
+          },
+          "sourceUrl": {
+            "type": "string",
+            "format": "uri",
+            "description": "Direct URL to the source page or pack download."
+          },
+          "licenseId": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Key into the top-level licenses object."
+          },
+          "licenseUrl": {
+            "type": "string",
+            "format": "uri",
+            "description": "Direct URL to the license text."
+          },
+          "originalFormat": {
+            "type": "string",
+            "enum": ["glb", "gltf", "fbx", "obj", "usd", "usda", "usdc"],
+            "description": "File format of the downloaded source asset."
+          },
+          "usdPrimPath": {
+            "type": "string",
+            "pattern": "^/World/Office/",
+            "description": "Target USD prim path in the canonical office stage."
+          },
+          "webExportPath": {
+            "type": "string",
+            "pattern": "^assets/exports/web/office/",
+            "description": "Repo-relative path where the USD pipeline exports the web GLB."
+          }
+        }
+      }
+    }
+  }
+}
