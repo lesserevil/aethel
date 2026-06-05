@@ -120,6 +120,9 @@ function ProceduralObject({
  * Delegates to `OfficeAsset` when the object references a manifest entry via
  * `assetId`; falls back to `ProceduralObject` for objects without an assetId
  * or when the assetId does not resolve to a known manifest entry.
+ *
+ * Both paths receive `isSelected` and `onViewEvent` so selection highlighting
+ * and click events work regardless of the rendering path.
  */
 function SceneObject({
   obj,
@@ -156,6 +159,9 @@ function SceneObject({
         position={position}
         rotation={rotation}
         scale={scale}
+        objectId={obj.id}
+        isSelected={isSelected}
+        onViewEvent={onViewEvent}
       />
     );
   }

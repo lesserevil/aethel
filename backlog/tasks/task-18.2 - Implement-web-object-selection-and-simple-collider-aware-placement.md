@@ -1,9 +1,10 @@
 ---
 id: TASK-18.2
 title: Implement web object selection and simple collider-aware placement
-status: Backlog
+status: In Progress
 assignee: []
 created_date: '2026-06-05 01:53'
+updated_date: '2026-06-05 05:42'
 labels: []
 dependencies:
   - TASK-16.4
@@ -42,3 +43,24 @@ Do not introduce a heavyweight physics engine for this task. Do not mutate Three
 - [ ] #1 Users can select/highlight office objects and perform one simple collider-aware interaction in the web MVP.
 - [ ] #2 The interaction records a session mutation and preserves chat/control synchronization.
 <!-- AC:END -->
+
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+Understanding milestone: Implementing object selection and collider-aware placement for Tier 2. OfficeAsset click handling, AABB placement helpers, object_move reducer, two-step snap interaction, mutation recording, chat context update. Approach: pure AABB math, no physics engine.
+
+Discovery: OfficeAsset had no click/hover handlers - selection only worked for ProceduralObject. AethelViewport used Canvas onClick for background-click which would double-fire (also fires on mesh clicks via DOM). sessionSelectors.selectChatRequestContext did not include selectedObjectId. No placement helpers module existed. sessionReducer had no object_move action.
+
+Implementation: (1) Created web/src/physics/placementHelpers.ts with AABB construction, overlap testing, work-surface/pickup affordance checks, snap position calculation, and validatePlacement/snapToWorkSurface entry points (pure functions, no physics engine). (2) Created 44 unit tests in placementHelpers.test.ts covering known positions. (3) Updated OfficeAsset.tsx to accept isSelected/onViewEvent/objectId props, added SelectionOutline wireframe overlay, added R3F ThreeEvent click/hover handlers with stopPropagation. (4) Updated SceneObjects.tsx to pass all new props to OfficeAsset. (5) Added session/object_move action+reducer (moveObject action creator). (6) Fixed AethelViewport Canvas onClick → onPointerMissed to prevent double-fire on mesh clicks. (7) Extended selectChatRequestContext to include selectedObjectId and resolved selectedObject metadata. (8) Updated AppShell handleViewEvent with two-step snap interaction: if pickup selected + work surface clicked → snapToWorkSurface → moveObject + appendMutation + appendChatMessage. Updated test mocks to support onPointerMissed. Added tests for isSelected forwarding, moveObject reducer, AppShell placement interaction.
+<!-- SECTION:NOTES:END -->
+
+## Comments
+<!-- COMMENTS:BEGIN -->
+<!-- COMMENT:BEGIN -->
+index: 1
+author: oompah
+created: 2026-06-05 05:27
+
+Agent dispatched (profile: default)
+<!-- COMMENT:END -->
+<!-- COMMENTS:END -->

@@ -24,16 +24,25 @@ vi.mock("@react-three/fiber", () => {
   return {
     Canvas: ({
       children,
+      onPointerMissed,
       onClick,
       ...rest
     }: {
       children: React.ReactNode;
+      onPointerMissed?: React.MouseEventHandler;
       onClick?: React.MouseEventHandler;
       [key: string]: unknown;
     }) =>
       React.createElement(
         "div",
-        { "data-testid": "r3f-canvas", onClick, ...rest },
+        {
+          "data-testid": "r3f-canvas",
+          // Map onPointerMissed (R3F background-click event) to onClick on the
+          // mock div so unit tests can trigger background-click by calling
+          // canvas.click(). Falls back to onClick for legacy compatibility.
+          onClick: onPointerMissed ?? onClick,
+          ...rest,
+        },
         children,
       ),
     useFrame: vi.fn(),

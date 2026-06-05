@@ -11,6 +11,15 @@
 // The fallback dimensions come from the manifest entry's `dimensions` field so
 // the bounding volume is identical in every state and scene framing stays stable.
 //
+// Selection state:
+// - When `isSelected` is true, a wireframe AABB outline is rendered around
+//   the asset using the manifest dimensions. This avoids needing direct access
+//   to the GLB's internal materials, which are opaque to the parent component.
+//
+// Interaction:
+// - Click and hover events are forwarded via `onViewEvent` when provided.
+//   The outer group is clickable and calls `onViewEvent({ type: "object-click" })`.
+//
 // Design constraint: the `url` prop must always come from the manifest (which
 // enforces /assets/office/ paths). This component NEVER constructs or requests
 // external URLs at runtime.
@@ -20,8 +29,10 @@
 import "@react-three/fiber";
 import { Suspense, Component } from "react";
 import type { ReactNode } from "react";
+import type { ThreeEvent } from "@react-three/fiber";
 import { useGLTF } from "@react-three/drei";
 import type { OfficeAssetEntry } from "../../../assets/officeAssetManifest";
+import type { ViewEvent } from "../types";
 
 // ── Error boundary ─────────────────────────────────────────────────────────
 
@@ -122,6 +133,37 @@ function GLBContent({ url }: { url: string }) {
   return <primitive object={scene.clone()} />;
 }
 
+// ── Selection highlight ─────────────────────────────────────────────────────
+
+/**
+ * Wireframe AABB outline rendered when the asset is selected.
+ *
+ * Uses the manifest's bounding dimensions so the selection box always wraps
+ * the same volume as the procedural fallback box, making the selection
+ * visually consistent regardless of the loaded GLB geometry.
+ *
+ * The outline is positioned at the center of the bounding volume on X/Z
+ * and at the centroid Y = height / 2 (since the group origin is at the
+ * bottom of the asset).
+ */
+function SelectionOutline({ entry }: { entry: OfficeAssetEntry }) {
+  const { width, height, depth } = entry.dimensions;
+  // Add a small outward margin so the outline visually wraps the asset
+  const margin = 0.02;
+  const w = width + margin * 2;
+  const h = height + margin * 2;
+  const d = depth + margin * 2;
+  return (
+    <mesh
+      position={[0, height / 2, 0]}
+      userData={{ testid: `office-asset-selection-outline-${entry.id}` }}
+    >
+      <boxGeometry args={[w, h, d]} />
+      <meshBasicMaterial color="#ffffff" wireframe opacity={0.8} transparent />
+    </mesh>
+  );
+}
+
 // ── Public props ────────────────────────────────────────────────────────────
 
 export interface OfficeAssetProps {
@@ -145,6 +187,22 @@ export interface OfficeAssetProps {
    * Defaults to the manifest's defaultTransform.scale.
    */
   scale?: [number, number, number];
+  /**
+   * Scene object ID (from SceneObjectState.id, NOT the manifest entry ID).
+   * Required when `onViewEvent` is provided so the emitted event carries the
+   * correct scene object identifier for session state updates.
+   */
+  objectId?: string;
+  /**
+   * Whether this object is currently selected in the viewport.
+   * When true, a wireframe selection outline is rendered around the asset.
+   */
+  isSelected?: boolean;
+  /**
+   * Callback for view events emitted by this asset (click, hover, blur).
+   * Events carry the scene object `objectId`, not the manifest entry ID.
+   */
+  onViewEvent?: (event: ViewEvent) => void;
 }
 
 // ── OfficeAsset boundary component ─────────────────────────────────────────
@@ -160,11 +218,33 @@ export interface OfficeAssetProps {
  * manifest's defaultTransform when provided; absent props fall back to the
  * manifest defaults so placement is always deterministic.
  *
+ * When `isSelected` is true, a wireframe bounding box is rendered around the
+ * asset to indicate the selection state without modifying GLB materials.
+ *
+ * When `onViewEvent` is provided, clicking the group emits an "object-click"
+ * event and hovering emits "object-hover" / "object-blur". The emitted
+ * `objectId` is the scene object ID (`objectId` prop), NOT the manifest ID.
+ *
  * Usage:
  *   <OfficeAsset entry={getAssetById("office-desk")!} />
- *   <OfficeAsset entry={entry} position={[1, 0, -2]} rotation={[0, Math.PI/4, 0]} />
+ *   <OfficeAsset
+ *     entry={entry}
+ *     objectId="obj-001"
+ *     position={[1, 0, -2]}
+ *     rotation={[0, Math.PI/4, 0]}
+ *     isSelected={true}
+ *     onViewEvent={handleViewEvent}
+ *   />
  */
-export function OfficeAsset({ entry, position, rotation, scale }: OfficeAssetProps) {
+export function OfficeAsset({
+  entry,
+  position,
+  rotation,
+  scale,
+  objectId,
+  isSelected = false,
+  onViewEvent,
+}: OfficeAssetProps) {
   const t = entry.defaultTransform;
   const DEG_TO_RAD = Math.PI / 180;
 
@@ -182,18 +262,51 @@ export function OfficeAsset({ entry, position, rotation, scale }: OfficeAssetPro
 
   const fallback = <AssetFallback entry={entry} />;
 
+  // R3F ThreeEvent handlers — stop propagation so the canvas onPointerMissed
+  // handler is not triggered when an object is clicked.
+  const handleClick = (e: ThreeEvent<MouseEvent>) => {
+    e.stopPropagation();
+    if (!onViewEvent) return;
+    onViewEvent({
+      type: "object-click",
+      objectId: objectId ?? entry.id,
+      position: { x: pos[0], y: pos[1], z: pos[2] },
+    });
+  };
+
+  const handlePointerOver = (e: ThreeEvent<PointerEvent>) => {
+    e.stopPropagation();
+    if (!onViewEvent) return;
+    onViewEvent({ type: "object-hover", objectId: objectId ?? entry.id });
+  };
+
+  const handlePointerOut = (e: ThreeEvent<PointerEvent>) => {
+    e.stopPropagation();
+    if (!onViewEvent) return;
+    onViewEvent({ type: "object-blur", objectId: objectId ?? entry.id });
+  };
+
   return (
     <group
       position={pos}
       rotation={rot}
       scale={scl}
-      userData={{ assetId: entry.id, testid: `office-asset-${entry.id}` }}
+      onClick={onViewEvent ? handleClick : undefined}
+      onPointerOver={onViewEvent ? handlePointerOver : undefined}
+      onPointerOut={onViewEvent ? handlePointerOut : undefined}
+      userData={{
+        assetId: entry.id,
+        objectId: objectId ?? entry.id,
+        testid: `office-asset-${entry.id}`,
+      }}
     >
       <AssetErrorBoundary fallback={fallback}>
         <Suspense fallback={fallback}>
           <GLBContent url={entry.url} />
         </Suspense>
       </AssetErrorBoundary>
+      {/* Selection wireframe outline — only rendered when selected */}
+      {isSelected && <SelectionOutline entry={entry} />}
     </group>
   );
 }

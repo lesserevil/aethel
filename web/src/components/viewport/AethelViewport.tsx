@@ -150,7 +150,10 @@ export function AethelViewport({
         }}
         shadows
         gl={{ antialias: true }}
-        onClick={handleBackgroundClick}
+        // Use onPointerMissed instead of onClick for background deselection.
+        // R3F fires onPointerMissed only when the pointer hits no scene object,
+        // preventing a double-fire (object-click + background-click) on mesh clicks.
+        onPointerMissed={handleBackgroundClick}
         style={{ width: "100%", height: "100%" }}
       >
         <SceneContent

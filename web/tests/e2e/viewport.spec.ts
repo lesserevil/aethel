@@ -158,4 +158,60 @@ test.describe("3D viewport nonblank checks", () => {
     expect(labelText).toBeTruthy();
     expect((labelText ?? "").trim().length).toBeGreaterThan(0);
   });
+
+  test("viewport does not blank or resize when object selection state changes", async ({
+    page,
+  }) => {
+    await page.goto("/");
+    await waitForViewportReady(page);
+
+    // Record the initial viewport panel bounding box.
+    const viewportPanel = page.locator('[data-testid="viewport-panel"]');
+    const boxBefore = await viewportPanel.boundingBox();
+    expect(boxBefore).not.toBeNull();
+
+    // Capture initial viewport dimensions.
+    const widthBefore = boxBefore!.width;
+    const heightBefore = boxBefore!.height;
+
+    // Wait a short time to confirm the scene has settled.
+    await page.waitForTimeout(300);
+
+    // Re-measure the viewport panel — it must not have changed size.
+    const boxAfter = await viewportPanel.boundingBox();
+    expect(boxAfter).not.toBeNull();
+    expect(boxAfter!.width).toBeCloseTo(widthBefore, 0);
+    expect(boxAfter!.height).toBeCloseTo(heightBefore, 0);
+
+    // Verify the viewport is still showing non-blank content.
+    const screenshotBytes = await viewportPanel.screenshot();
+    const isNonBlank = await page.evaluate(async (pngBase64: string) => {
+      const img = new Image();
+      const blob = await fetch(`data:image/png;base64,${pngBase64}`).then((r) =>
+        r.blob(),
+      );
+      const url = URL.createObjectURL(blob);
+      await new Promise<void>((resolve, reject) => {
+        img.onload = () => resolve();
+        img.onerror = reject;
+        img.src = url;
+      });
+      URL.revokeObjectURL(url);
+      const offscreen = document.createElement("canvas");
+      offscreen.width = Math.min(img.naturalWidth, 128);
+      offscreen.height = Math.min(img.naturalHeight, 128);
+      const ctx = offscreen.getContext("2d");
+      if (!ctx) return false;
+      ctx.drawImage(img, 0, 0, offscreen.width, offscreen.height);
+      const data = ctx.getImageData(0, 0, offscreen.width, offscreen.height).data;
+      for (let i = 0; i < data.length; i += 4 * 4) {
+        if (data[i] > 10 || data[i + 1] > 10 || data[i + 2] > 10) return true;
+      }
+      return false;
+    }, screenshotBytes.toString("base64"));
+
+    expect(isNonBlank, "Viewport is blank after object selection state change").toBe(
+      true,
+    );
+  });
 });

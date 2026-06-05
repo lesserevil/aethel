@@ -14,6 +14,7 @@ export const SET_AGENT_APPEARANCE_CHANGE = "session/agent_appearance_change" as 
 export const SET_AGENT_FULL_CHANGE = "session/agent_full_change" as const;
 export const SET_ENVIRONMENT_PRESET_CHANGE = "session/environment_preset_change" as const;
 export const SET_OBJECT_TOGGLE = "session/object_toggle" as const;
+export const MOVE_OBJECT = "session/object_move" as const;
 export const APPEND_CHAT_MESSAGE = "session/chat_append" as const;
 export const UPDATE_CHAT_MESSAGE = "session/chat_update" as const;
 export const APPEND_MUTATION = "session/mutation_append" as const;
@@ -31,6 +32,7 @@ export type SessionAction =
   | ReturnType<typeof setAgentFull>
   | ReturnType<typeof setEnvironmentPreset>
   | ReturnType<typeof toggleObjectEnabled>
+  | ReturnType<typeof moveObject>
   | ReturnType<typeof appendChatMessage>
   | ReturnType<typeof updateChatMessage>
   | ReturnType<typeof appendMutation>
@@ -78,6 +80,21 @@ export const setEnvironmentPreset = (
 export const toggleObjectEnabled = (id: string, enabled: boolean) => ({
   type: SET_OBJECT_TOGGLE,
   payload: { id, enabled },
+});
+
+/**
+ * Update the world-space position of a specific scene object.
+ *
+ * This action is dispatched after a successful collider-aware placement
+ * validation. Do NOT mutate Three.js scene objects directly — always go
+ * through this action so the renderer reads the updated position from state.
+ */
+export const moveObject = (
+  id: string,
+  position: { x: number; y: number; z: number },
+) => ({
+  type: MOVE_OBJECT,
+  payload: { id, position },
 });
 
 export const appendChatMessage = (message: ChatMessage) => ({

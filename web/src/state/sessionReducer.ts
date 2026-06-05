@@ -1,6 +1,6 @@
 import { SessionState, AgentState } from "./sessionTypes";
 import { baselineSession } from "./baselineSession";
-import { SessionAction } from "./sessionActions";
+import { SessionAction, MOVE_OBJECT } from "./sessionActions";
 
 /**
  * Pure reducer for session state.
@@ -77,6 +77,21 @@ export const reducer = (
           ...state.environment,
           objects: state.environment.objects.map((obj) =>
             obj.id === id ? { ...obj, enabled } : obj,
+          ),
+        },
+      };
+    }
+
+    case MOVE_OBJECT: {
+      // Update the world-space position of a single scene object.
+      // Do NOT mutate Three.js objects directly — the renderer reads this.
+      const { id, position } = action.payload;
+      return {
+        ...state,
+        environment: {
+          ...state.environment,
+          objects: state.environment.objects.map((obj) =>
+            obj.id === id ? { ...obj, position } : obj,
           ),
         },
       };

@@ -42,10 +42,32 @@ export const selectRendererProps = (state: SessionState): RendererProps => ({
 /**
  * Builds the context payload included in every chat adapter request.
  * Limits recent messages to the last `maxMessages` to avoid large payloads.
+ *
+ * Includes `selectedObjectId` and a resolved `selectedObject` (label +
+ * affordances) so the chat adapter is aware of what the user has selected
+ * in the 3D viewport.
  */
-export const selectChatRequestContext = (state: SessionState, maxMessages = 20) => ({
-  sessionId: state.sessionId,
-  agent: state.agent,
-  environment: state.environment,
-  recentMessages: state.chat.messages.slice(-maxMessages),
-});
+export const selectChatRequestContext = (state: SessionState, maxMessages = 20) => {
+  const selectedObjectId = state.ui.selectedObjectId;
+  const selectedObject = selectedObjectId
+    ? state.environment.objects.find((o) => o.id === selectedObjectId)
+    : undefined;
+
+  return {
+    sessionId: state.sessionId,
+    agent: state.agent,
+    environment: state.environment,
+    recentMessages: state.chat.messages.slice(-maxMessages),
+    // Viewport selection context — helps the agent refer to the selected prop
+    selectedObjectId,
+    selectedObject: selectedObject
+      ? {
+          id: selectedObject.id,
+          label: selectedObject.label,
+          type: selectedObject.type,
+          affordances: selectedObject.affordances,
+          assetId: selectedObject.assetId,
+        }
+      : undefined,
+  };
+};
