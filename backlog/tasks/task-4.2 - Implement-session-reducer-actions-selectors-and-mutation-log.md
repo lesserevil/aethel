@@ -1,10 +1,10 @@
 ---
 id: TASK-4.2
 title: Implement session reducer actions selectors and mutation log
-status: In Progress
+status: Done
 assignee: []
 created_date: '2026-06-02 22:11'
-updated_date: '2026-06-05 02:44'
+updated_date: '2026-06-05 02:45'
 labels: []
 dependencies:
   - TASK-4.1
@@ -40,13 +40,17 @@ Do not erase chat history during baseline reset unless a separate new-session ac
 - [x] #3 Unit tests cover representative full state flows and reset behavior.
 <!-- AC:END -->
 
-
-
 ## Implementation Notes
 
 <!-- SECTION:NOTES:BEGIN -->
 Verification: 270 tests passing across all state module files (sessionReducer, sessionSelectors, mutationLog, baselineSession, SessionProvider). TypeScript clean. fmt-check passing. All acceptance criteria satisfied: reducer handles all action types with immutable transitions; selectors return stable references without mutation; full flow serialization tests pass; reset preserves chat history; provider-level tests confirm context dispatch and hook behavior.
 <!-- SECTION:NOTES:END -->
+
+## Final Summary
+
+<!-- SECTION:FINAL_SUMMARY:BEGIN -->
+Implemented complete session state layer under web/src/state/ using React useReducer + context. Delivered: sessionTypes.ts (all shared types including BehaviorState, MutationSource/Target/Status), sessionActions.ts (13 typed action creators), sessionReducer.ts (pure immutable reducer for all action types), sessionSelectors.ts (selectChatContext, selectRendererProps, selectChatRequestContext), mutationLog.ts (createMutationRecord with injectable ID/timestamp), baselineSession.ts (baseline + chat-seeded fixtures), SessionProvider.tsx (SessionProvider, useSessionState, useSessionDispatch, useChatContext, useRendererProps hooks). All 270 tests pass. TypeScript clean. Formatting passes. All 3 acceptance criteria satisfied.
+<!-- SECTION:FINAL_SUMMARY:END -->
 
 ## Comments
 <!-- COMMENTS:BEGIN -->
