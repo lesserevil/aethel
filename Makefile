@@ -101,7 +101,7 @@ clean: ## Remove build artifacts.
 assets-build: ## Convert source GLB/glTF assets to canonical USD (requires Blender).
 	scripts/assets/assets-build.sh
 
-assets-validate: ## Validate USD assets in assets/usd/office/ (requires usd-core).
+assets-validate: ## Validate USD stage structure and web manifest mapping (usd-core optional).
 	scripts/assets/assets-validate.sh
 
 assets-export-web: ## Export canonical USD assets to web GLB files (requires Blender).

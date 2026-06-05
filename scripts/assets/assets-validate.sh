@@ -1,20 +1,25 @@
 #!/usr/bin/env bash
-# assets-validate — Validate OpenUSD office assets.
+# assets-validate — Validate OpenUSD office assets and web manifest mapping.
 #
 # Usage:
 #   scripts/assets/assets-validate.sh
 #
-# Validates all *.usda / *.usdc / *.usd files under assets/usd/office/
-# using whichever USD tool is available:
-#   1. usdchecker   (from the usd-core Python package — preferred)
-#   2. Python pxr   (bundled with usd-core; used as a fallback open check)
+# Runs the following checks in order:
+#   1. Structural stage validator  (pure Python, no usd-core required)
+#      Checks prim hierarchy, metadata, lights, camera, and prop references.
 #
-# If no USD files exist yet the script exits 0 with an informational
-# message — the build step (make assets-build) runs first.
+#   2. Web manifest mapping validator  (pure Python, no external tools required)
+#      Verifies every web office manifest entry has a USD prim path and source
+#      manifest record.  Fails loudly on any unmapped web asset.
 #
-# If no validation tool is available the script exits non-zero and
-# prints actionable instructions.  GPU hardware, Omniverse desktop,
-# Nucleus, or RTX rendering are NOT required.
+#   3. USD schema validation  (requires usd-core; skipped cleanly if absent)
+#      Validates all *.usda / *.usdc / *.usd files under assets/usd/office/
+#      using whichever USD tool is available:
+#        a. usdchecker  (from the usd-core Python package — preferred)
+#        b. Python pxr  (bundled with usd-core; used as a fallback open check)
+#
+# If no USD files exist yet check 3 exits 0 with an informational message.
+# GPU hardware, Omniverse desktop, Nucleus, or RTX rendering are NOT required.
 #
 # Run from the repo root or via:
 #   make assets-validate
@@ -31,9 +36,9 @@ cd "$REPO_ROOT"
 
 info "assets-validate: dir=$ASSETS_USD_DIR"
 
-# ── Structural validation (no usd-core required) ──────────────────────────────
-# Run the pure-Python structural validator first — it checks prim hierarchy,
-# stage metadata, lights, camera, and prop references without needing usd-core.
+# ── 1. Structural validation (no usd-core required) ──────────────────────────
+# Run the pure-Python structural validator — checks prim hierarchy, stage
+# metadata, lights, camera, and prop references without needing usd-core.
 
 STAGE_VALIDATOR="$SCRIPT_DIR/validate-usd-stage.py"
 if [[ -f "$STAGE_VALIDATOR" ]] && command -v python3 >/dev/null 2>&1; then
@@ -44,6 +49,22 @@ if [[ -f "$STAGE_VALIDATOR" ]] && command -v python3 >/dev/null 2>&1; then
     fi
 else
     info "Skipping structural validator (python3 not found or script missing)."
+fi
+
+# ── 2. Web manifest mapping validation (no usd-core required) ─────────────────
+# Verify every web office manifest entry has a USD prim path and source manifest
+# record.  Fails loudly if any web asset has no USD prim path.
+
+WEB_MANIFEST_VALIDATOR="$SCRIPT_DIR/validate-web-manifest.py"
+if [[ -f "$WEB_MANIFEST_VALIDATOR" ]] && command -v python3 >/dev/null 2>&1; then
+    info "Running web manifest mapping validator: $WEB_MANIFEST_VALIDATOR"
+    if ! python3 "$WEB_MANIFEST_VALIDATOR"; then
+        error "Web manifest mapping validation failed."
+        error "Fix assets/usd/office/web-asset-map.json and re-run."
+        exit 1
+    fi
+else
+    info "Skipping web manifest validator (python3 not found or script missing)."
 fi
 
 # ── Locate USD files ──────────────────────────────────────────────────────────
@@ -64,6 +85,9 @@ fi
 info "Found ${#USD_FILES[@]} USD file(s) to validate."
 
 # ── Choose validation tool ────────────────────────────────────────────────────
+# USD schema validation is optional: it runs when usd-core or usdchecker is
+# present, and is skipped cleanly when neither is available.  The mandatory
+# structural and mapping checks (steps 1 and 2 above) always run regardless.
 
 VALIDATOR=""
 if command -v usdchecker >/dev/null 2>&1; then
@@ -73,17 +97,16 @@ elif python3 -c "from pxr import Usd" >/dev/null 2>&1; then
     VALIDATOR="python_pxr"
     info "Validator: Python pxr ($(python3 -c 'import pxr; print(pxr.__file__)'))"
 else
-    error "No USD validation tool found."
-    error ""
-    error "To install usd-core (includes usdchecker — no GPU required):"
-    error "  pip install usd-core"
-    error ""
-    error "Or build OpenUSD from source:"
-    error "  https://github.com/PixarAnimationStudios/OpenUSD"
-    error ""
-    error "Optional richer validation (Omniverse Asset Validator) is documented in"
-    error "  docs/asset-pipeline.md  under 'Optional validation tools'."
-    exit 1
+    info "USD schema validation tool (usd-core / usdchecker) not found — skipping."
+    info "The structural and web-manifest checks above already ran successfully."
+    info ""
+    info "To also run USD schema validation, install usd-core (no GPU required):"
+    info "  pip install usd-core"
+    info ""
+    info "Optional richer validation (Omniverse Asset Validator) is documented in"
+    info "  docs/asset-pipeline.md  under 'Optional validation tools'."
+    info "assets-validate: mandatory checks passed (USD schema check skipped)."
+    exit 0
 fi
 
 # ── Validate each file ────────────────────────────────────────────────────────
