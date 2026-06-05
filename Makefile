@@ -6,7 +6,7 @@
 
 .DEFAULT_GOAL := help
 
-.PHONY: help init run fmt fmt-check build test test-e2e lint clean \
+.PHONY: help init run run-api fmt fmt-check build test test-api test-e2e lint clean \
         assets-build assets-validate assets-validate-test assets-export-web \
         physics-harness-dry-run physics-harness physics-harness-test
 
@@ -17,6 +17,9 @@ BACKLOG_PROJECT_NAME ?= $(notdir $(CURDIR))
 
 # Web workspace directory
 WEB_DIR := web
+
+# Backend API directory
+API_DIR := api
 
 help: ## Show this help.
 	@awk 'BEGIN {FS = ":.*?## "; printf "Usage: make <target>\n\nTargets:\n"} \
@@ -63,6 +66,17 @@ init: ## Initialize repo: git init and Backlog.md from lesserevil.
 
 run: ## Start the MVP web app development server on all interfaces.
 	cd $(WEB_DIR) && bun run dev
+
+run-api: ## Start the backend chat API server (port 8000). Requires: pip install api/requirements.txt.
+	python3 -m uvicorn api.main:app --reload --port 8000
+
+# ─── Backend API ──────────────────────────────────────────────────
+# The backend chat service lives in api/ and uses Python + FastAPI.
+# Tests do not require a real NVIDIA key.
+# Install deps once: pip install -r api/requirements-dev.txt
+
+test-api: ## Run backend chat service unit tests (no NVIDIA key required).
+	python3 -m pytest api/tests/ -v
 
 # ─── Quality gates ────────────────────────────────────────────────
 # These targets delegate to the web/ workspace via bun scripts.
