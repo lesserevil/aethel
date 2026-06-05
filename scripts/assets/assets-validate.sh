@@ -31,6 +31,21 @@ cd "$REPO_ROOT"
 
 info "assets-validate: dir=$ASSETS_USD_DIR"
 
+# ── Structural validation (no usd-core required) ──────────────────────────────
+# Run the pure-Python structural validator first — it checks prim hierarchy,
+# stage metadata, lights, camera, and prop references without needing usd-core.
+
+STAGE_VALIDATOR="$SCRIPT_DIR/validate-usd-stage.py"
+if [[ -f "$STAGE_VALIDATOR" ]] && command -v python3 >/dev/null 2>&1; then
+    info "Running structural stage validator: $STAGE_VALIDATOR"
+    if ! python3 "$STAGE_VALIDATOR"; then
+        error "Structural validation failed.  Fix office.usda and re-run."
+        exit 1
+    fi
+else
+    info "Skipping structural validator (python3 not found or script missing)."
+fi
+
 # ── Locate USD files ──────────────────────────────────────────────────────────
 
 mapfile -d '' USD_FILES < <(

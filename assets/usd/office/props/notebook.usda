@@ -1,0 +1,45 @@
+#usda 1.0
+(
+    defaultPrim = "Notebook"
+    doc = """Aethel office prop: Spiral Notebook.
+
+Source   : Eclair Everyday Home & Desk Props GLB Pack (eclair-home-desk-props)
+Publisher: Eclair
+URL      : https://eclair-assets.itch.io/everyday-home-desk-props-glb-pack-30-free-cc0-3d-models
+License  : CC0 1.0 Universal (CC0-1.0)
+           https://creativecommons.org/publicdomain/zero/1.0/
+
+NOTE: This stub contains a placeholder Mesh.  Replace it with geometry
+converted from the source GLB via `make assets-build` once Blender and
+the source assets are available.  Do not commit the raw source archive.
+"""
+    metersPerUnit = 1
+    upAxis = "Y"
+)
+
+def Xform "Notebook" (
+    doc = "Spiral notebook clutter prop. Source: Eclair Everyday Home & Desk Props (CC0-1.0)."
+    customData = {
+        dictionary aethel = {
+            string assetId = "notebook"
+            string label = "Spiral Notebook"
+            string sourceId = "eclair-home-desk-props"
+            string sourceUrl = "https://eclair-assets.itch.io/everyday-home-desk-props-glb-pack-30-free-cc0-3d-models"
+            string licenseId = "cc0-1.0"
+            string licenseUrl = "https://creativecommons.org/publicdomain/zero/1.0/"
+            string originalFormat = "glb"
+            string usdPrimPath = "/World/Office/Clutter/Notebook"
+        }
+    }
+)
+{
+    def Mesh "Placeholder" (
+        doc = "Placeholder geometry — run make assets-build to replace."
+    )
+    {
+        int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+        int[] faceVertexIndices = [0, 1, 2, 3, 4, 5, 6, 7, 0, 4, 7, 3, 1, 5, 6, 2, 0, 1, 5, 4, 3, 2, 6, 7]
+        point3f[] points = [(-0.09, 0, -0.14), (0.09, 0, -0.14), (0.09, 0, 0.14), (-0.09, 0, 0.14),
+                            (-0.09, 0.015, -0.14), (0.09, 0.015, -0.14), (0.09, 0.015, 0.14), (-0.09, 0.015, 0.14)]
+    }
+}
