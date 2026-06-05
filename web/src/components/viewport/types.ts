@@ -6,7 +6,8 @@ export type ViewEventType =
   | "object-hover"
   | "object-blur"
   | "background-click"
-  | "camera-change";
+  | "camera-change"
+  | "object-move";
 
 export interface ViewEvent {
   type: ViewEventType;
@@ -14,4 +15,10 @@ export interface ViewEvent {
   objectId?: string;
   /** World-space position approximation, plain numbers only — no Vector3 */
   position?: { x: number; y: number; z: number };
+  /**
+   * Target world-space position for object-move events.
+   * Represents the validated snap position to move the object to.
+   * Only present for "object-move" events.
+   */
+  targetPosition?: { x: number; y: number; z: number };
 }

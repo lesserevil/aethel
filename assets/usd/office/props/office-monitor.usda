@@ -1,0 +1,46 @@
+#usda 1.0
+(
+    doc = """Office prop: Monitor
+    
+    USD Physics metadata for a static desktop monitor.
+    Body type: static (heavy device — does not move under physics forces).
+    Collision shape: box approximation (separate from render mesh).
+    Render mesh: loaded at runtime from /assets/office/office-monitor.glb.
+    
+    Custom metadata fields are documented in assets/usd/PHYSICS_METADATA.md.
+    """
+    metersPerUnit = 1.0
+    upAxis = "Y"
+)
+
+def Xform "OfficeMonitorRoot" (
+    prepend apiSchemas = ["PhysicsCollisionAPI"]
+    customData = {
+        string physicsBodyType = "static"
+        string physicsColliderType = "box"
+        float3 physicsDimensions = (0.5, 0.4, 0.2)
+        string semanticLabel = "desktop monitor displaying a screen"
+        string assetId = "office-monitor"
+        string category = "device"
+        bool agentSafe = false
+        string[] affordances = ["displayable"]
+    }
+)
+{
+    # Box collision primitive — separate from the render mesh.
+    # Scale: 0.5m x 0.4m x 0.2m (width x height x depth).
+    def Cube "ColliderBox" (
+        prepend apiSchemas = ["PhysicsCollisionAPI"]
+        doc = "Box collider for office-monitor: width=0.5m height=0.4m depth=0.2m"
+    )
+    {
+        double3 xformOp:scale = (0.5, 0.4, 0.2)
+        uniform token[] xformOpOrder = ["xformOp:scale"]
+    }
+
+    def Xform "RenderMeshPlaceholder" (
+        doc = "Render geometry loaded from office-monitor.glb — NOT used as collision mesh"
+    )
+    {
+    }
+}

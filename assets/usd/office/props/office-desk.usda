@@ -1,0 +1,52 @@
+#usda 1.0
+(
+    doc = """Office prop: Office Desk
+    
+    USD Physics metadata for a large static office desk.
+    Body type: static (heavy furniture — does not move under physics forces).
+    Collision shape: box approximation (separate from render mesh).
+    Render mesh: loaded at runtime from /assets/office/office-desk.glb.
+    
+    Custom metadata fields are documented in assets/usd/PHYSICS_METADATA.md.
+    Standard USD Physics API schemas are annotated for Isaac Sim / PhysX / Newton
+    compatibility; they require the USD Physics plugin to activate at runtime.
+    """
+    metersPerUnit = 1.0
+    upAxis = "Y"
+)
+
+def Xform "OfficeDeskRoot" (
+    prepend apiSchemas = ["PhysicsCollisionAPI"]
+    customData = {
+        string physicsBodyType = "static"
+        string physicsColliderType = "box"
+        float3 physicsDimensions = (1.4, 0.75, 0.7)
+        string semanticLabel = "large office desk with a flat work surface"
+        string assetId = "office-desk"
+        string category = "furniture"
+        bool agentSafe = false
+        string[] affordances = ["work-surface"]
+    }
+)
+{
+    # Box collision primitive — intentionally separate from the render mesh.
+    # Scale the unit cube to match the desk bounding box: 1.4m x 0.75m x 0.7m.
+    # Do NOT replace this with the high-detail render mesh from the GLB.
+    def Cube "ColliderBox" (
+        prepend apiSchemas = ["PhysicsCollisionAPI"]
+        doc = "Box collider for office-desk: width=1.4m height=0.75m depth=0.7m"
+    )
+    {
+        double3 xformOp:scale = (1.4, 0.75, 0.7)
+        uniform token[] xformOpOrder = ["xformOp:scale"]
+    }
+
+    # Render mesh placeholder.
+    # The actual geometry is loaded at runtime from /assets/office/office-desk.glb.
+    # This prim is intentionally empty — it marks where the render mesh is composed.
+    def Xform "RenderMeshPlaceholder" (
+        doc = "Render geometry loaded from office-desk.glb — NOT used as collision mesh"
+    )
+    {
+    }
+}

@@ -73,6 +73,7 @@ import type { OfficeAssetEntry } from "../../../assets/officeAssetManifest";
 const deskEntry: OfficeAssetEntry = {
   id: "office-desk",
   label: "Office Desk",
+  semanticLabel: "large office desk with a flat work surface",
   category: "furniture",
   url: "/assets/office/office-desk.glb",
   sourceName: "Kenney Furniture Kit",
@@ -85,7 +86,9 @@ const deskEntry: OfficeAssetEntry = {
     scale: { x: 1, y: 1, z: 1 },
   },
   dimensions: { width: 1.4, height: 0.75, depth: 0.7 },
-  colliderHint: "box",
+  bodyType: "static",
+  colliderType: "box",
+  agentSafe: false,
   affordances: ["work-surface"],
 };
 
@@ -93,33 +96,44 @@ const deviceEntry: OfficeAssetEntry = {
   ...deskEntry,
   id: "office-monitor",
   label: "Monitor",
+  semanticLabel: "desktop monitor displaying a screen",
   category: "device",
   url: "/assets/office/office-monitor.glb",
   dimensions: { width: 0.5, height: 0.4, depth: 0.2 },
-  colliderHint: "box",
-  affordances: [],
+  bodyType: "static",
+  colliderType: "box",
+  agentSafe: false,
+  affordances: ["displayable"],
 };
 
 const containerEntry: OfficeAssetEntry = {
   ...deskEntry,
   id: "office-trash-can",
   label: "Trash Can",
+  semanticLabel: "cylindrical office waste bin",
   category: "container",
   url: "/assets/office/office-trash-can.glb",
   dimensions: { width: 0.3, height: 0.45, depth: 0.3 },
-  colliderHint: "cylinder",
-  affordances: ["waste-container"],
+  bodyType: "dynamic",
+  colliderType: "cylinder",
+  massKg: 1.5,
+  agentSafe: true,
+  affordances: ["waste-container", "pickup"],
 };
 
 const clutterEntry: OfficeAssetEntry = {
   ...deskEntry,
   id: "office-coffee-cup",
   label: "Coffee Cup",
+  semanticLabel: "ceramic coffee cup on the desk",
   category: "clutter",
   url: "/assets/office/office-coffee-cup.glb",
   dimensions: { width: 0.08, height: 0.1, depth: 0.08 },
-  colliderHint: "cylinder",
-  affordances: [],
+  bodyType: "dynamic",
+  colliderType: "cylinder",
+  massKg: 0.3,
+  agentSafe: true,
+  affordances: ["containable", "pickup"],
 };
 
 // ── Helper: a mock scene object returned by useGLTF on success ───────────────

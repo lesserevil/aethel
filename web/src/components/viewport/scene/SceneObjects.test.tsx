@@ -288,3 +288,44 @@ describe("SceneObjects — selectedObjectId", () => {
     ).not.toThrow();
   });
 });
+
+// ── OfficeAsset props: isSelected + onViewEvent ───────────────────────────────
+
+describe("SceneObjects — OfficeAsset receives isSelected and onViewEvent", () => {
+  it("passes isSelected=true to OfficeAsset when selectedObjectId matches", () => {
+    render(<SceneObjects objects={[assetBackedObj]} selectedObjectId="obj-desk" />);
+    expect(mockOfficeAsset).toHaveBeenCalledOnce();
+    const call = mockOfficeAsset.mock.calls[0][0] as Record<string, unknown>;
+    expect(call.isSelected).toBe(true);
+  });
+
+  it("passes isSelected=false to OfficeAsset when selectedObjectId does not match", () => {
+    render(<SceneObjects objects={[assetBackedObj]} selectedObjectId="other-id" />);
+    expect(mockOfficeAsset).toHaveBeenCalledOnce();
+    const call = mockOfficeAsset.mock.calls[0][0] as Record<string, unknown>;
+    expect(call.isSelected).toBe(false);
+  });
+
+  it("passes isSelected=false to OfficeAsset when no selectedObjectId", () => {
+    render(<SceneObjects objects={[assetBackedObj]} />);
+    expect(mockOfficeAsset).toHaveBeenCalledOnce();
+    const call = mockOfficeAsset.mock.calls[0][0] as Record<string, unknown>;
+    expect(call.isSelected).toBe(false);
+  });
+
+  it("passes onViewEvent to OfficeAsset when provided", () => {
+    const onViewEvent = vi.fn();
+    render(<SceneObjects objects={[assetBackedObj]} onViewEvent={onViewEvent} />);
+    expect(mockOfficeAsset).toHaveBeenCalledOnce();
+    const call = mockOfficeAsset.mock.calls[0][0] as Record<string, unknown>;
+    expect(typeof call.onViewEvent).toBe("function");
+  });
+
+  it("passes objectId (scene object id, not manifest id) to OfficeAsset", () => {
+    render(<SceneObjects objects={[assetBackedObj]} />);
+    expect(mockOfficeAsset).toHaveBeenCalledOnce();
+    const call = mockOfficeAsset.mock.calls[0][0] as Record<string, unknown>;
+    // objectId should be the scene object ID ("obj-desk"), not manifest ID ("office-desk")
+    expect(call.objectId).toBe("obj-desk");
+  });
+});

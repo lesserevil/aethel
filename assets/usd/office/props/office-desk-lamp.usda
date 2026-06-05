@@ -1,0 +1,59 @@
+#usda 1.0
+(
+    doc = """Office prop: Desk Lamp
+    
+    USD Physics metadata for a static adjustable desk lamp.
+    Body type: static (fixed fixture — does not move under physics forces).
+    Collision shape: convexHull approximation (separate from render mesh).
+    Render mesh: loaded at runtime from /assets/office/office-desk-lamp.glb.
+    
+    convexHull is used instead of box because the lamp has an irregular
+    arm/shade shape that a box cannot represent without major gaps.
+    The convex hull is computed from the render mesh at USD load time by the
+    physics engine — no manual mesh authoring is required.
+    
+    Custom metadata fields are documented in assets/usd/PHYSICS_METADATA.md.
+    """
+    metersPerUnit = 1.0
+    upAxis = "Y"
+)
+
+def Xform "OfficeDeskLampRoot" (
+    prepend apiSchemas = ["PhysicsCollisionAPI"]
+    customData = {
+        string physicsBodyType = "static"
+        string physicsColliderType = "convexHull"
+        float3 physicsDimensions = (0.15, 0.5, 0.15)
+        string semanticLabel = "adjustable desk lamp providing directional light"
+        string assetId = "office-desk-lamp"
+        string category = "furniture"
+        bool agentSafe = false
+        string[] affordances = ["light-source"]
+    }
+)
+{
+    # ConvexHull collision approximation.
+    # The approximation is computed from the render mesh at runtime by the physics
+    # engine (Isaac Sim / PhysX / Newton). The token physics:approximation = "convexHull"
+    # signals this intent to the USD Physics plugin.
+    # Do NOT replace with a trimesh of the full render geometry.
+    def Mesh "ColliderConvexHull" (
+        prepend apiSchemas = ["PhysicsCollisionAPI"]
+        doc = "ConvexHull collider for office-desk-lamp — approximated from render mesh at runtime"
+    )
+    {
+        uniform token physics:approximation = "convexHull"
+        # Mesh points are intentionally omitted here.
+        # The physics engine derives the hull from the render mesh referenced by
+        # RenderMeshPlaceholder at USD composition time.
+        int[] faceVertexCounts = []
+        int[] faceVertexIndices = []
+        point3f[] points = []
+    }
+
+    def Xform "RenderMeshPlaceholder" (
+        doc = "Render geometry loaded from office-desk-lamp.glb — NOT used directly as collision mesh"
+    )
+    {
+    }
+}

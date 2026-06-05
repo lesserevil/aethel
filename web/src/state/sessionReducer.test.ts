@@ -6,6 +6,7 @@ import {
   setAgentFull,
   setEnvironmentPreset,
   toggleObjectEnabled,
+  moveObject,
   appendChatMessage,
   updateChatMessage,
   appendMutation,
@@ -144,6 +145,43 @@ describe("SessionReducer", () => {
     expect(enabled.environment.objects.find((o) => o.id === "obj-001")?.enabled).toBe(
       true,
     );
+  });
+
+  // ── Object move ───────────────────────────────────────────────────────────
+
+  test("MOVE_OBJECT updates the position of a specific scene object", () => {
+    const newPos = { x: 1.5, y: 0.75, z: -0.5 };
+    const nextState = reducer(initialState, moveObject("obj-001", newPos));
+    const moved = nextState.environment.objects.find((o) => o.id === "obj-001");
+    expect(moved?.position).toEqual(newPos);
+    // Other objects unaffected
+    const other = nextState.environment.objects.find((o) => o.id === "obj-002");
+    expect(other?.position).toEqual(
+      initialState.environment.objects.find((o) => o.id === "obj-002")?.position,
+    );
+  });
+
+  test("MOVE_OBJECT does not mutate the input state", () => {
+    const frozen = Object.freeze(JSON.parse(JSON.stringify(baselineSession)));
+    expect(() =>
+      reducer(frozen, moveObject("obj-001", { x: 1, y: 2, z: 3 })),
+    ).not.toThrow();
+  });
+
+  test("MOVE_OBJECT preserves all other object fields (enabled, label, assetId)", () => {
+    const nextState = reducer(initialState, moveObject("obj-001", { x: 5, y: 0, z: 5 }));
+    const moved = nextState.environment.objects.find((o) => o.id === "obj-001");
+    expect(moved?.enabled).toBe(true);
+    expect(moved?.label).toBe("Workstation");
+    expect(moved?.assetId).toBe("office-desk");
+  });
+
+  test("MOVE_OBJECT for an unknown ID leaves all objects unchanged", () => {
+    const nextState = reducer(
+      initialState,
+      moveObject("nonexistent-id", { x: 1, y: 2, z: 3 }),
+    );
+    expect(nextState.environment.objects).toEqual(initialState.environment.objects);
   });
 
   // ── Chat message append ───────────────────────────────────────────────────

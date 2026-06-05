@@ -1,9 +1,10 @@
 ---
 id: TASK-18.1
 title: Add physics-ready collider and affordance metadata
-status: Backlog
+status: Done
 assignee: []
 created_date: '2026-06-05 01:53'
+updated_date: '2026-06-05 05:26'
 labels: []
 dependencies:
   - TASK-16.2
@@ -37,6 +38,12 @@ Do not store runtime physics engine objects in session state. Do not treat high-
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 Interactive office assets define body type, collider type, dimensions, semantic labels, and affordances.
-- [ ] #2 Manifest/state tests cover the physics metadata without introducing runtime engine dependencies.
+- [x] #1 Interactive office assets define body type, collider type, dimensions, semantic labels, and affordances.
+- [x] #2 Manifest/state tests cover the physics metadata without introducing runtime engine dependencies.
 <!-- AC:END -->
+
+## Final Summary
+
+<!-- SECTION:FINAL_SUMMARY:BEGIN -->
+Added physics-ready metadata to all 10 office asset manifest entries. New types: BodyType ('static'|'kinematic'|'dynamic'), ColliderType (adds 'trimesh' to ColliderHint, backward-compatible alias preserved), Affordance extended with 'pickup'/'displayable'/'containable'. OfficeAssetEntry gains bodyType, colliderType, semanticLabel, agentSafe (required), massKg/friction/restitution (optional). Heavy furniture (desk, chair, lamp, monitor) is static/agentSafe=false; small devices and clutter (laptop, keyboard, trash can, books, cup, notebook) are dynamic/agentSafe=true with mass and friction values. 57 new physics-metadata tests added; all 573 tests pass, typecheck and lint clean. No runtime physics engine dependencies introduced.
+<!-- SECTION:FINAL_SUMMARY:END -->

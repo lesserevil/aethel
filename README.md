@@ -19,9 +19,18 @@ Current project sources of truth:
   NVIDIA-oriented Aethel design and technology direction.
 - [docs/language-and-tooling.md](docs/language-and-tooling.md) -
   implementation language and tooling decision.
+- [docs/office-physics.md](docs/office-physics.md) - optional Newton
+  evaluation harness: install steps, usage, tested CPU/GPU behavior,
+  and why Newton is not a default MVP dependency.
 - `backlog/` - Backlog.md task files for planned and completed work.
 
 ## MVP
+
+> **GPU not required.** `make run` starts the browser-based MVP on any
+> machine with Bun and Node. No Newton, PhysX, Omniverse Kit, Isaac Sim,
+> or server-side GPU is needed. See
+> [docs/office-physics.md](docs/office-physics.md) for the optional
+> Newton evaluation path.
 
 The MVP is a browser-based web app with three persistent regions:
 
@@ -113,6 +122,19 @@ workspace Bun scripts:
 - `make test-e2e` - Runs `bun run test:e2e` in the web/ directory
 - `make lint` - Runs `bun run typecheck && bun run lint` in the web/ directory
 - `make clean` - Removes build artifacts from the web/ directory
+
+**Optional: USD asset validation** (requires Python 3, no GPU):
+
+- `make assets-validate` - Validates USD Physics metadata for office prop USDA files
+- `make assets-validate-test` - Runs unit tests for the USD validator
+
+**Optional: Newton physics evaluation** (Newton and NVIDIA Warp are optional; no GPU required for dry-run):
+
+- `make physics-harness-dry-run` - Runs the Newton smoke harness in dry-run mode (analytic, no Newton or GPU needed)
+- `make physics-harness` - Runs the Newton smoke harness with Newton (skips cleanly if Newton is not installed)
+- `make physics-harness-test` - Runs unit and integration tests for the Newton harness (no GPU needed)
+
+See [docs/office-physics.md](docs/office-physics.md) for full Newton installation instructions and expected output.
 
 To install dependencies: `make init`
 
