@@ -1,9 +1,10 @@
 ---
 id: TASK-17.1
 title: Create the office asset source and USD artifact layout
-status: Backlog
+status: Done
 assignee: []
 created_date: '2026-06-05 01:53'
+updated_date: '2026-06-05 05:27'
 labels: []
 dependencies:
   - TASK-16.1
@@ -37,6 +38,29 @@ Do not commit large raw asset archives. Do not duplicate conflicting license dat
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 assets/sources/office/manifest.json tracks source, license, USD path, and web export path for each selected office asset.
-- [ ] #2 The assets/ directory layout exists without committing large raw downloads.
+- [x] #1 assets/sources/office/manifest.json tracks source, license, USD path, and web export path for each selected office asset.
+- [x] #2 The assets/ directory layout exists without committing large raw downloads.
 <!-- AC:END -->
+
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+Understanding: Confirmed not a duplicate. Creating assets/ USD pipeline directory structure with source manifest derived from docs/office-asset-sources.md (10 CC0 assets). Adding vitest test for drift detection. Existing officeAssetManifest.ts is the web runtime manifest; this task creates the USD pipeline source catalog.
+<!-- SECTION:NOTES:END -->
+
+## Final Summary
+
+<!-- SECTION:FINAL_SUMMARY:BEGIN -->
+Created the assets/ USD pipeline directory layout with all required files: assets/sources/office/manifest.json (10 CC0 office assets, each with source id, source URL, license id, license URL, original format, USD prim path, and web export path), assets/sources/office/manifest.schema.json (JSON schema for validation), assets/sources/office/README.md, assets/sources/office/licenses/.gitkeep, assets/usd/office/.gitkeep, assets/exports/web/office/.gitkeep. Added web/src/assets/officeSourceManifest.test.ts for drift detection — tests verify all 10 asset IDs from docs/office-asset-sources.md are present in the manifest and all required provenance fields are populated. All 626 tests pass, make fmt-check passes, make lint passes. No large raw assets committed.
+<!-- SECTION:FINAL_SUMMARY:END -->
+
+## Comments
+<!-- COMMENTS:BEGIN -->
+<!-- COMMENT:BEGIN -->
+index: 1
+author: oompah
+created: 2026-06-05 05:20
+
+Agent dispatched (profile: default)
+<!-- COMMENT:END -->
+<!-- COMMENTS:END -->

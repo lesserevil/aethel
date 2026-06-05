@@ -1,0 +1,57 @@
+{
+  "$schema": "../../sources/office/web-asset-map.schema.json",
+  "version": "1",
+  "description": "Maps every web office manifest entry (web/src/assets/officeAssetManifest.ts) to its USD prim path and source manifest record (assets/sources/office/manifest.json). Used by scripts/assets/validate-web-manifest.py to prevent the web scene from drifting away from the canonical USD stage and provenance data.",
+  "entries": [
+    {
+      "webId": "office-desk",
+      "sourceManifestId": "desk",
+      "usdPrimPath": "/World/Office/Furniture/Desk"
+    },
+    {
+      "webId": "office-chair",
+      "sourceManifestId": "deskChair",
+      "usdPrimPath": "/World/Office/Furniture/DeskChair"
+    },
+    {
+      "webId": "office-monitor",
+      "sourceManifestId": "monitorWide",
+      "usdPrimPath": "/World/Office/Devices/MonitorWide"
+    },
+    {
+      "webId": "office-laptop",
+      "sourceManifestId": "laptop",
+      "usdPrimPath": "/World/Office/Devices/Laptop"
+    },
+    {
+      "webId": "office-keyboard",
+      "sourceManifestId": "keyboard",
+      "usdPrimPath": "/World/Office/Devices/Keyboard"
+    },
+    {
+      "webId": "office-trash-can",
+      "sourceManifestId": "trashCan",
+      "usdPrimPath": "/World/Office/Containers/TrashCan"
+    },
+    {
+      "webId": "office-desk-lamp",
+      "sourceManifestId": "lampDesk",
+      "usdPrimPath": "/World/Office/Furniture/LampDesk"
+    },
+    {
+      "webId": "office-book-stack",
+      "sourceManifestId": "book",
+      "usdPrimPath": "/World/Office/Clutter/Book"
+    },
+    {
+      "webId": "office-coffee-cup",
+      "sourceManifestId": "mug",
+      "usdPrimPath": "/World/Office/Clutter/Mug"
+    },
+    {
+      "webId": "office-notebook",
+      "sourceManifestId": "notebook",
+      "usdPrimPath": "/World/Office/Clutter/Notebook"
+    }
+  ]
+}

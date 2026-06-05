@@ -1,0 +1,50 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "web-asset-map.schema.json",
+  "title": "Web Asset Map",
+  "description": "Schema for assets/usd/office/web-asset-map.json. Maps web office manifest entries to USD prim paths and source manifest records.",
+  "type": "object",
+  "required": ["version", "entries"],
+  "additionalProperties": false,
+  "properties": {
+    "$schema": { "type": "string" },
+    "version": {
+      "type": "string",
+      "description": "Schema version for forward compatibility."
+    },
+    "description": {
+      "type": "string"
+    },
+    "entries": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/definitions/WebAssetMapEntry"
+      }
+    }
+  },
+  "definitions": {
+    "WebAssetMapEntry": {
+      "type": "object",
+      "required": ["webId", "sourceManifestId", "usdPrimPath"],
+      "additionalProperties": false,
+      "properties": {
+        "webId": {
+          "type": "string",
+          "description": "The stable ID from web/src/assets/officeAssetManifest.ts.",
+          "minLength": 1
+        },
+        "sourceManifestId": {
+          "type": "string",
+          "description": "The asset ID in assets/sources/office/manifest.json.",
+          "minLength": 1
+        },
+        "usdPrimPath": {
+          "type": "string",
+          "description": "The canonical USD prim path in assets/usd/office/office.usda.",
+          "pattern": "^/World/"
+        }
+      }
+    }
+  }
+}

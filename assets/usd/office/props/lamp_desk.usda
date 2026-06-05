@@ -1,0 +1,45 @@
+#usda 1.0
+(
+    defaultPrim = "LampDesk"
+    doc = """Aethel office prop: Desk Lamp.
+
+Source   : Kenney Furniture Kit (kenney-furniture-kit)
+Publisher: Kenney.nl
+URL      : https://poly.pizza/bundle/Furniture-Kit-NoG1sEUD1z
+License  : CC0 1.0 Universal (CC0-1.0)
+           https://creativecommons.org/publicdomain/zero/1.0/
+
+NOTE: This stub contains a placeholder Mesh.  Replace it with geometry
+converted from the source GLB via `make assets-build` once Blender and
+the source assets are available.  Do not commit the raw source archive.
+"""
+    metersPerUnit = 1
+    upAxis = "Y"
+)
+
+def Xform "LampDesk" (
+    doc = "Desk lamp prop. Source: Kenney Furniture Kit (CC0-1.0)."
+    customData = {
+        dictionary aethel = {
+            string assetId = "lampDesk"
+            string label = "Desk Lamp"
+            string sourceId = "kenney-furniture-kit"
+            string sourceUrl = "https://poly.pizza/bundle/Furniture-Kit-NoG1sEUD1z"
+            string licenseId = "cc0-1.0"
+            string licenseUrl = "https://creativecommons.org/publicdomain/zero/1.0/"
+            string originalFormat = "glb"
+            string usdPrimPath = "/World/Office/Furniture/LampDesk"
+        }
+    }
+)
+{
+    def Mesh "Placeholder" (
+        doc = "Placeholder geometry — run make assets-build to replace."
+    )
+    {
+        int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+        int[] faceVertexIndices = [0, 1, 2, 3, 4, 5, 6, 7, 0, 4, 7, 3, 1, 5, 6, 2, 0, 1, 5, 4, 3, 2, 6, 7]
+        point3f[] points = [(-0.08, 0, -0.08), (0.08, 0, -0.08), (0.08, 0, 0.08), (-0.08, 0, 0.08),
+                            (-0.08, 0.45, -0.08), (0.08, 0.45, -0.08), (0.08, 0.45, 0.08), (-0.08, 0.45, 0.08)]
+    }
+}

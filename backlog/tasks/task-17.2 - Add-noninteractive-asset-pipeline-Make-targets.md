@@ -1,9 +1,10 @@
 ---
 id: TASK-17.2
 title: Add noninteractive asset pipeline Make targets
-status: Backlog
+status: Done
 assignee: []
 created_date: '2026-06-05 01:53'
+updated_date: '2026-06-05 05:36'
 labels: []
 dependencies:
   - TASK-17.1
@@ -41,3 +42,20 @@ Do not add docs for commands before the Make targets exist. Do not open Blender 
 - [ ] #1 make help lists assets-build, assets-validate, and assets-export-web.
 - [ ] #2 Asset scripts run non-interactively and report missing optional tools clearly.
 <!-- AC:END -->
+
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+Completion: Delivered all required deliverables. (1) Makefile: assets-build, assets-validate, assets-export-web targets — all appear in make help, all declared .PHONY. (2) scripts/assets/: common.sh (shared helpers), assets-build.sh, assets-validate.sh, assets-export-web.sh — all non-interactive, check for tools, print actionable missing-tool messages, operate on assets/sources/office and assets/usd/office. (3) docs/asset-pipeline.md: explains all three Make targets, optional Blender/usd-core install instructions, canonical USD vs web GLB distinction, troubleshooting. (4) 37 vitest tests covering script existence, executability, Makefile target presence, and docs content. All 663 project tests pass. make fmt-check passes. make assets-validate passes with clear informational message (no USD files exist yet). No GPU/Omniverse required.
+<!-- SECTION:NOTES:END -->
+
+## Comments
+<!-- COMMENTS:BEGIN -->
+<!-- COMMENT:BEGIN -->
+index: 1
+author: oompah
+created: 2026-06-05 05:27
+
+Agent dispatched (profile: default)
+<!-- COMMENT:END -->
+<!-- COMMENTS:END -->

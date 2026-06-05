@@ -119,15 +119,32 @@ but the Make targets are the public interface.
 
 ## Validation
 
-Validation should be layered:
+Validation is layered and implemented via `make assets-validate`:
 
-- `usdchecker` or `usd-core` checks for parse/schema correctness;
-- Omniverse Asset Validator where available for OpenUSD asset quality
-  checks;
-- SimReady Foundation validation when the asset has enough physics,
-  semantics, and hierarchy metadata to target a SimReady profile;
-- project tests that verify every web manifest asset maps back to a USD
-  prim and source manifest entry.
+1. **Structural stage validation** (`scripts/assets/validate-usd-stage.py`) —
+   pure Python, no usd-core required.  Checks prim hierarchy, stage metadata,
+   lights, camera, and prop references.
+
+2. **Web manifest mapping validation** (`scripts/assets/validate-web-manifest.py`) —
+   pure Python, no external tools required.  Verifies every web office manifest
+   entry (`web/src/assets/officeAssetManifest.ts`) has a USD prim path and source
+   manifest record.  Uses `assets/usd/office/web-asset-map.json` as the mapping
+   artifact.  Fails loudly on any unmapped web asset.
+
+3. **USD schema validation** (`usdchecker` / `usd-core`) — optional.  Runs when
+   `usd-core` is installed; skips cleanly when not available.
+
+4. **Omniverse Asset Validator** (`omni.asset_validator`) — optional.  Skips
+   cleanly when not installed.  Accessible via `--omniverse` flag on the
+   validate-web-manifest.py script.
+
+5. **SimReady Foundation validation** — future task when physics/semantic
+   metadata is sufficient to target a SimReady profile.
+
+The mapping artifact `assets/usd/office/web-asset-map.json` explicitly links
+each web manifest ID to a source manifest ID and USD prim path, preventing the
+web scene from drifting away from canonical USD provenance.  Its schema lives at
+`assets/sources/office/web-asset-map.schema.json`.
 
 Validation must run locally without requiring a full Omniverse desktop
 application. Optional richer validation may be documented separately if
