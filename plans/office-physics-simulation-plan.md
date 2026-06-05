@@ -16,6 +16,23 @@ browser renderer. Newton, PhysX, Isaac Sim, and RTX rendering become
 valuable after the project has OpenUSD assets with colliders, semantics,
 and behaviors worth simulating.
 
+## GPU Requirement Escalation Rule
+
+GPU support is optional for this plan until a future task explicitly
+changes that requirement. Any task that makes a GPU mandatory must update
+the user-facing docs before the implementation lands and must state:
+
+- whether the GPU is required on the browser/client side, server side,
+  or both;
+- what workflow now requires the GPU, such as RTX rendering, Omniverse
+  streaming, Newton simulation, Isaac Sim, or model inference;
+- whether the default `make run` MVP path still works without that GPU;
+- what CPU-only or browser-only fallback remains, if any.
+
+If no fallback remains, the task must call that out in its final summary
+and the handoff must explicitly mention that Aethel has crossed from
+GPU-optional to GPU-required for the affected side of the system.
+
 ## Simulation Tiers
 
 ### Tier 0: Static Web Colliders
@@ -180,4 +197,6 @@ Reviewed June 5, 2026:
       tested machine.
 - [ ] CRIT-5: The default MVP run path remains browser-only and
       GPU-optional; verified by `make run` and the existing MVP quality
-      gates.
+      gates. If any later task makes a GPU mandatory for either the
+      client or server, README/docs must state the affected side,
+      workflow, fallback status, and tested hardware requirement.

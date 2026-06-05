@@ -4,6 +4,7 @@ title: Create an optional Newton office-scene smoke harness
 status: Backlog
 assignee: []
 created_date: '2026-06-05 01:53'
+updated_date: '2026-06-05 02:04'
 labels: []
 dependencies:
   - TASK-18.3
@@ -39,4 +40,5 @@ Do not add Newton to the default web dependency set. Do not make make run, make 
 <!-- AC:BEGIN -->
 - [ ] #1 An optional Newton smoke harness exists and handles missing Newton/GPU dependencies cleanly.
 - [ ] #2 Docs state tested CPU/GPU behavior and confirm Newton is not a default MVP dependency.
+- [ ] #3 If the Newton smoke harness needs GPU-backed execution, docs distinguish optional GPU evaluation from the default GPU-optional MVP path.
 <!-- AC:END -->

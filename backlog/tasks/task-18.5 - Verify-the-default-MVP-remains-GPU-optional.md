@@ -4,6 +4,7 @@ title: Verify the default MVP remains GPU-optional
 status: Backlog
 assignee: []
 created_date: '2026-06-05 01:53'
+updated_date: '2026-06-05 02:04'
 labels: []
 dependencies:
   - TASK-18.2
@@ -40,4 +41,5 @@ Do not overpromise CPU-only Newton performance if the smoke harness was not test
 <!-- AC:BEGIN -->
 - [ ] #1 Default MVP setup/run docs state that GPU physics is not required for make run.
 - [ ] #2 Quality gates and a make run smoke check pass without Newton, PhysX, Omniverse Kit, or GPU requirements.
+- [ ] #3 If any future task makes a GPU mandatory for client-side or server-side workflows, README/docs explicitly state the affected side, required workflow, fallback status, and tested hardware requirement.
 <!-- AC:END -->

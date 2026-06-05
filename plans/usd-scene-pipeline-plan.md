@@ -133,6 +133,12 @@ Validation must run locally without requiring a full Omniverse desktop
 application. Optional richer validation may be documented separately if
 it requires NVIDIA-specific packages, Kit, or a GPU.
 
+If a future validation, conversion, or export task changes GPU support
+from optional to required, it must update the user docs and state whether
+the requirement applies to the client/browser workflow, the server/tooling
+workflow, or both. The default MVP `make run` path must remain documented
+separately from any GPU-backed asset pipeline.
+
 ## Web Export Contract
 
 The web MVP should never parse USD directly in the browser unless a later
