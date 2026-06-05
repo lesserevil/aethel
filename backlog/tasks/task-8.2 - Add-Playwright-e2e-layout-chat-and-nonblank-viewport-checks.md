@@ -1,35 +1,18 @@
 ---
 id: TASK-8.2
 title: Add Playwright e2e layout chat and nonblank viewport checks
-status: In Progress
+status: Done
 assignee: []
-created_date: 2026-06-02 22:12
-updated_date: 2026-06-05 02:48
-labels:
-- merge-conflict
+created_date: '2026-06-02 22:12'
+updated_date: '2026-06-05 02:52'
+labels: []
 dependencies:
-- TASK-8.1
-- TASK-3.2
+  - TASK-8.1
+  - TASK-3.2
 documentation:
-- plans/aethel_mvp_plan.md
+  - plans/aethel_mvp_plan.md
 parent_task_id: TASK-8
 ordinal: 25000
-oompah.task_costs:
-  total_input_tokens: 46
-  total_output_tokens: 6024
-  total_cost_usd: 0.0
-  by_model:
-    unknown:
-      input_tokens: 46
-      output_tokens: 6024
-      cost_usd: 0.0
-  runs:
-  - profile: default
-    model: unknown
-    input_tokens: 46
-    output_tokens: 6024
-    cost_usd: 0.0
-    recorded_at: '2026-06-05T02:47:11.725710+00:00'
 ---
 
 ## Description
@@ -64,6 +47,12 @@ UNDERSTANDING: Task requires adding Playwright e2e tests. Web app already has pl
 
 UNDERSTANDING: The e2e test infrastructure is already committed (commit a37d68c). Files include: web/tests/e2e/layout.spec.ts, viewport.spec.ts, chat.spec.ts, controls.spec.ts, plus playwright.config.ts, docs/e2e-testing.md, and Makefile test-e2e target. Verifying tests work and closing task.
 <!-- SECTION:NOTES:END -->
+
+## Final Summary
+
+<!-- SECTION:FINAL_SUMMARY:BEGIN -->
+Merge conflict resolved successfully. Rebased TASK-8.2 onto origin/dev. The branch had 2 commits above the common ancestor (964e63c): 310494b (TS fix) was already merged into dev as e46b9a7 and was automatically skipped by git rebase. The remaining commit 9ba2f00 (Prettier test-results exclusion) was cleanly rebased - the .prettierignore change was a no-op since origin/dev already had it. All quality gates pass: fmt-check, build, 273 unit tests, typecheck, lint. Force-pushed to origin/TASK-8.2 with --force-with-lease.
+<!-- SECTION:FINAL_SUMMARY:END -->
 
 ## Comments
 <!-- COMMENTS:BEGIN -->
