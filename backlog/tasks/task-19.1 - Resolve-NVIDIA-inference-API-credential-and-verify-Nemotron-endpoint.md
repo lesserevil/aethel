@@ -1,9 +1,10 @@
 ---
 id: TASK-19.1
 title: Resolve NVIDIA inference API credential and verify Nemotron endpoint
-status: Needs Human
+status: Done
 assignee: []
 created_date: '2026-06-05 13:41'
+updated_date: '2026-06-05 13:48'
 labels: []
 dependencies: []
 references:
@@ -36,6 +37,12 @@ The ~/.netrc entry may have login/password fields that are not obvious from sani
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 Authenticated model-list or model-info request succeeds against inference-api.nvidia.com without exposing the key.
-- [ ] #2 A minimal text request to the selected Nemotron model returns a text response.
+- [x] #1 Authenticated model-list or model-info request succeeds against inference-api.nvidia.com without exposing the key.
+- [x] #2 A minimal text request to the selected Nemotron model returns a text response.
 <!-- AC:END -->
+
+## Final Summary
+
+<!-- SECTION:FINAL_SUMMARY:BEGIN -->
+Credential verification completed without exposing the token. ~/.netrc now contains a valid sk- credential for inference-api.nvidia.com. Bearer-authenticated GET https://inference-api.nvidia.com/v1/models returned HTTP 200 with 193 models. Low-token POST https://inference-api.nvidia.com/v1/chat/completions returned HTTP 200 using hosted model id nvidia/nvidia/nemotron-3-nano-omni-30b-a3b-reasoning and produced a text response. Use that hosted model id for the NVIDIA API integration; keep nvidia/Nemotron-3-Nano-Omni-30B-A3B-Reasoning-NVFP4 only as the self-hosted/NVIDIA-docs example string.
+<!-- SECTION:FINAL_SUMMARY:END -->

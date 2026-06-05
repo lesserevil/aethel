@@ -22,7 +22,9 @@ Use:
 
 - NVIDIA API catalog route:
   `nvidia/nemotron-3-nano-omni-30b-a3b-reasoning`
-- OpenAI-compatible model string from NVIDIA examples:
+- Hosted model id verified through `inference-api.nvidia.com`:
+  `nvidia/nvidia/nemotron-3-nano-omni-30b-a3b-reasoning`
+- Self-hosted OpenAI-compatible model string from NVIDIA examples:
   `nvidia/Nemotron-3-Nano-Omni-30B-A3B-Reasoning-NVFP4`
 
 Why this model:
@@ -43,15 +45,19 @@ the default.
 ## Credential Status
 
 The requested `~/.netrc` lookup found a machine entry for
-`inference-api.nvidia.com`, but a live probe against
-`https://inference-api.nvidia.com/v1/models` failed with HTTP 401. The
-response said the endpoint expected a LiteLLM virtual key starting with
-`sk-`; the current credential did not match that shape.
+`inference-api.nvidia.com`. The first live probe failed with HTTP 401
+because the endpoint expected a LiteLLM virtual key starting with `sk-`.
+After the credential was replaced, a Bearer-authenticated request to
+`https://inference-api.nvidia.com/v1/models` returned HTTP 200 and a
+minimal text request to
+`https://inference-api.nvidia.com/v1/chat/completions` returned a text
+response from
+`nvidia/nvidia/nemotron-3-nano-omni-30b-a3b-reasoning`.
 
 No credential value should be committed, logged, copied into docs, or
 sent to the browser. A human or credential-management task must replace
-the NVIDIA netrc entry with a valid key before live endpoint acceptance
-can pass.
+the NVIDIA netrc entry with a valid key if the live smoke check ever
+regresses.
 
 ## Runtime Architecture
 
@@ -89,7 +95,7 @@ configured and explicitly selected. Suggested configuration:
 
 - `AETHEL_CHAT_PROVIDER=mock|nvidia`
 - `NVIDIA_API_BASE_URL=https://inference-api.nvidia.com/v1`
-- `NVIDIA_MODEL=nvidia/Nemotron-3-Nano-Omni-30B-A3B-Reasoning-NVFP4`
+- `NVIDIA_MODEL=nvidia/nvidia/nemotron-3-nano-omni-30b-a3b-reasoning`
 - `NVIDIA_API_KEY` as an override for `~/.netrc`
 
 Frontend configuration must not include the NVIDIA API key. It may
