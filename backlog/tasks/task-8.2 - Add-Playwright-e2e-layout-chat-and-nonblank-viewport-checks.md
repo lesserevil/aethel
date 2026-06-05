@@ -3,17 +3,33 @@ id: TASK-8.2
 title: Add Playwright e2e layout chat and nonblank viewport checks
 status: In Progress
 assignee: []
-created_date: '2026-06-02 22:12'
-updated_date: '2026-06-05 02:44'
-labels: []
+created_date: 2026-06-02 22:12
+updated_date: 2026-06-05 02:48
+labels:
+- merge-conflict
 dependencies:
-  - TASK-8.1
-  - TASK-3.2
+- TASK-8.1
+- TASK-3.2
 documentation:
-  - plans/aethel_mvp_plan.md
+- plans/aethel_mvp_plan.md
 parent_task_id: TASK-8
-priority: medium
 ordinal: 25000
+oompah.task_costs:
+  total_input_tokens: 46
+  total_output_tokens: 6024
+  total_cost_usd: 0.0
+  by_model:
+    unknown:
+      input_tokens: 46
+      output_tokens: 6024
+      cost_usd: 0.0
+  runs:
+  - profile: default
+    model: unknown
+    input_tokens: 46
+    output_tokens: 6024
+    cost_usd: 0.0
+    recorded_at: '2026-06-05T02:47:11.725710+00:00'
 ---
 
 ## Description
@@ -47,8 +63,6 @@ Do not only assert that a canvas element exists. Avoid flaky sleeps; wait for ex
 UNDERSTANDING: Task requires adding Playwright e2e tests. Web app already has playwright.config.ts configured with Chromium. Need to create web/tests/e2e/ directory with tests for: 3-column desktop layout, narrow viewport no-overlap, nonblank canvas pixel check, control mutation flow, chat with context. Will also add e2e script to package.json and Makefile.
 
 UNDERSTANDING: The e2e test infrastructure is already committed (commit a37d68c). Files include: web/tests/e2e/layout.spec.ts, viewport.spec.ts, chat.spec.ts, controls.spec.ts, plus playwright.config.ts, docs/e2e-testing.md, and Makefile test-e2e target. Verifying tests work and closing task.
-
-UNDERSTANDING (2026-06-05): E2e test infrastructure already committed in previous runs (commit 310494b). All 4 spec files exist (layout, viewport, chat, controls) with full coverage of AC #1-3. Unit tests (273) all pass. TypeScript and formatter clean. Chrome at /usr/bin/google-chrome. Now verifying the Playwright tests actually execute correctly.
 <!-- SECTION:NOTES:END -->
 
 ## Comments
@@ -162,5 +176,52 @@ author: oompah
 created: 2026-06-05 02:42
 
 Agent dispatched (profile: default)
+<!-- COMMENT:END -->
+<!-- COMMENT:BEGIN -->
+index: 16
+author: oompah
+created: 2026-06-05 02:43
+
+Focus: Integration Tests Session Specialist
+<!-- COMMENT:END -->
+<!-- COMMENT:BEGIN -->
+index: 17
+author: oompah
+created: 2026-06-05 02:47
+
+Agent completed successfully in 254s (6070 tokens)
+<!-- COMMENT:END -->
+<!-- COMMENT:BEGIN -->
+index: 18
+author: oompah
+created: 2026-06-05 02:47
+
+Run #1 [attempt=1, profile=default, role=fast -> Claude/default]
+- Turns: 76, Tool calls: 55
+- Tokens: 46 in / 6.0K out [6.1K total]
+- Cost: $0.0000
+- Exit: normal, Duration: 4m 14s
+- Log: TASK-8.2__20260605T024303Z.jsonl
+<!-- COMMENT:END -->
+<!-- COMMENT:BEGIN -->
+index: 19
+author: oompah
+created: 2026-06-05 02:47
+
+YOLO: Merge conflict detected on MR #36. Rebase onto dev and resolve conflicts.
+<!-- COMMENT:END -->
+<!-- COMMENT:BEGIN -->
+index: 20
+author: oompah
+created: 2026-06-05 02:48
+
+YOLO: Merge conflict detected on MR #36. Rebase onto dev and resolve conflicts.
+<!-- COMMENT:END -->
+<!-- COMMENT:BEGIN -->
+index: 21
+author: oompah
+created: 2026-06-05 02:48
+
+Agent dispatched (profile: standard)
 <!-- COMMENT:END -->
 <!-- COMMENTS:END -->
