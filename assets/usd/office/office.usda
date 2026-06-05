@@ -111,7 +111,7 @@ def Xform "World" (
             prepend payload = @./props/office-desk-lamp.usda@</OfficeDeskLampRoot>
         )
         {
-            double3 xformOp:translate = (0.5, 0.76, -0.2)
+            double3 xformOp:translate = (0.55, 0.76, -0.24)
             uniform token[] xformOpOrder = ["xformOp:translate"]
         }
 
@@ -133,7 +133,7 @@ def Xform "World" (
             prepend payload = @./props/office-laptop.usda@</OfficeLaptopRoot>
         )
         {
-            double3 xformOp:translate = (-0.3, 0.76, 0.05)
+            double3 xformOp:translate = (-0.43, 0.76, 0.1)
             uniform token[] xformOpOrder = ["xformOp:translate"]
         }
 
@@ -143,7 +143,7 @@ def Xform "World" (
             prepend payload = @./props/office-keyboard.usda@</OfficeKeyboardRoot>
         )
         {
-            double3 xformOp:translate = (0.0, 0.76, 0.15)
+            double3 xformOp:translate = (0.0, 0.76, 0.2)
             uniform token[] xformOpOrder = ["xformOp:translate"]
         }
 
@@ -155,7 +155,7 @@ def Xform "World" (
             prepend payload = @./props/office-trash-can.usda@</OfficeTrashCanRoot>
         )
         {
-            double3 xformOp:translate = (0.8, 0.0, 0.5)
+            double3 xformOp:translate = (1.05, 0.0, 0.55)
             uniform token[] xformOpOrder = ["xformOp:translate"]
         }
 
@@ -167,7 +167,7 @@ def Xform "World" (
             prepend payload = @./props/office-book-stack.usda@</OfficeBookStackRoot>
         )
         {
-            double3 xformOp:translate = (0.4, 0.76, -0.1)
+            double3 xformOp:translate = (0.42, 0.76, 0.02)
             uniform token[] xformOpOrder = ["xformOp:translate"]
         }
 
@@ -177,7 +177,7 @@ def Xform "World" (
             prepend payload = @./props/office-coffee-cup.usda@</OfficeCoffeeCupRoot>
         )
         {
-            double3 xformOp:translate = (-0.4, 0.76, 0.2)
+            double3 xformOp:translate = (-0.58, 0.76, -0.2)
             uniform token[] xformOpOrder = ["xformOp:translate"]
         }
 
@@ -187,7 +187,7 @@ def Xform "World" (
             prepend payload = @./props/office-notebook.usda@</OfficeNotebookRoot>
         )
         {
-            double3 xformOp:translate = (0.2, 0.76, 0.25)
+            double3 xformOp:translate = (0.48, 0.76, 0.2)
             uniform token[] xformOpOrder = ["xformOp:translate"]
         }
     }

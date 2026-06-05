@@ -185,7 +185,7 @@ export const OFFICE_ASSET_MANIFEST: OfficeAssetEntry[] = [
     licenseId: KENNEY_LICENSE_ID,
     licenseUrl: KENNEY_LICENSE_URL,
     defaultTransform: {
-      position: { x: -0.3, y: 0.76, z: 0.05 },
+      position: { x: -0.43, y: 0.76, z: 0.1 },
       rotation: noRotation,
       scale: defaultScale,
     },
@@ -208,7 +208,7 @@ export const OFFICE_ASSET_MANIFEST: OfficeAssetEntry[] = [
     licenseId: KENNEY_LICENSE_ID,
     licenseUrl: KENNEY_LICENSE_URL,
     defaultTransform: {
-      position: { x: 0, y: 0.76, z: 0.15 },
+      position: { x: 0, y: 0.76, z: 0.2 },
       rotation: noRotation,
       scale: defaultScale,
     },
@@ -231,7 +231,7 @@ export const OFFICE_ASSET_MANIFEST: OfficeAssetEntry[] = [
     licenseId: KENNEY_LICENSE_ID,
     licenseUrl: KENNEY_LICENSE_URL,
     defaultTransform: {
-      position: { x: 0.8, y: 0, z: 0.5 },
+      position: { x: 1.05, y: 0, z: 0.55 },
       rotation: noRotation,
       scale: defaultScale,
     },
@@ -254,7 +254,7 @@ export const OFFICE_ASSET_MANIFEST: OfficeAssetEntry[] = [
     licenseId: KENNEY_LICENSE_ID,
     licenseUrl: KENNEY_LICENSE_URL,
     defaultTransform: {
-      position: { x: 0.5, y: 0.76, z: -0.2 },
+      position: { x: 0.55, y: 0.76, z: -0.24 },
       rotation: noRotation,
       scale: defaultScale,
     },
@@ -275,7 +275,7 @@ export const OFFICE_ASSET_MANIFEST: OfficeAssetEntry[] = [
     licenseId: KENNEY_LICENSE_ID,
     licenseUrl: KENNEY_LICENSE_URL,
     defaultTransform: {
-      position: { x: 0.4, y: 0.76, z: -0.1 },
+      position: { x: 0.42, y: 0.76, z: 0.02 },
       rotation: noRotation,
       scale: defaultScale,
     },
@@ -298,7 +298,7 @@ export const OFFICE_ASSET_MANIFEST: OfficeAssetEntry[] = [
     licenseId: AETHEL_GENERATED_LICENSE_ID,
     licenseUrl: AETHEL_GENERATED_LICENSE_URL,
     defaultTransform: {
-      position: { x: -0.4, y: 0.76, z: 0.2 },
+      position: { x: -0.58, y: 0.76, z: -0.2 },
       rotation: noRotation,
       scale: defaultScale,
     },
@@ -322,7 +322,7 @@ export const OFFICE_ASSET_MANIFEST: OfficeAssetEntry[] = [
     licenseId: AETHEL_GENERATED_LICENSE_ID,
     licenseUrl: AETHEL_GENERATED_LICENSE_URL,
     defaultTransform: {
-      position: { x: 0.2, y: 0.76, z: 0.25 },
+      position: { x: 0.48, y: 0.76, z: 0.2 },
       rotation: noRotation,
       scale: defaultScale,
     },

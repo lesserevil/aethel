@@ -56,6 +56,13 @@ interactions in the MVP (object selection, highlight, simple collider-aware
 placement) are handled entirely client-side using manifest-backed box and
 cylinder bounding volumes — no physics engine is involved.
 
+The current browser scene is therefore **not a dynamic physics simulation**.
+Objects do not fall under gravity, push each other apart, stack, or settle at
+runtime. The MVP guarantees only static collider validation: default office
+transforms and placement operations are checked with lightweight AABB helpers
+so objects should not start in obvious interpenetration. Full contact
+resolution remains future work.
+
 Newton is relevant for later work:
 - Contact-rich simulation (agent grasping, drawer/door articulation).
 - Robot learning and differentiable physics.

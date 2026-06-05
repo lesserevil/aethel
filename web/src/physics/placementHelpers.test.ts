@@ -26,6 +26,7 @@ import {
 } from "./placementHelpers";
 import type { AABB } from "./placementHelpers";
 import type { SceneObjectState } from "../state/sessionTypes";
+import { baselineSession } from "../state/baselineSession";
 
 // ── Fixtures ──────────────────────────────────────────────────────────────────
 
@@ -393,6 +394,30 @@ describe("validatePlacement", () => {
     const deskTopY = 0.75; // desk base=0 + height=0.75
     const result = validatePlacement(coffeeCup, { x: 0, y: deskTopY, z: 0 }, [desk]);
     expect(result.valid).toBe(true);
+  });
+});
+
+// ── Baseline office layout regression ────────────────────────────────────────
+
+describe("baselineSession static office layout", () => {
+  it("has no enabled object overlaps under the static collider contract", () => {
+    const enabledObjects = baselineSession.environment.objects.filter(
+      (obj) => obj.enabled && obj.position,
+    );
+    const conflicts: string[] = [];
+
+    for (const obj of enabledObjects) {
+      const result = validatePlacement(
+        obj,
+        obj.position!,
+        enabledObjects.filter((other) => other.id !== obj.id),
+      );
+      if (!result.valid) {
+        conflicts.push(`${obj.label}: ${result.reason ?? "unknown conflict"}`);
+      }
+    }
+
+    expect(conflicts).toEqual([]);
   });
 });
 
