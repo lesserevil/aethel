@@ -21,17 +21,23 @@ describe("OFFICE_ASSET_MANIFEST completeness", () => {
     expect(OFFICE_ASSET_MANIFEST.length).toBeGreaterThan(0);
   });
 
-  test.each(OFFICE_ASSET_MANIFEST)("$id has a non-empty local URL under /assets/office/", (entry: OfficeAssetEntry) => {
-    expect(typeof entry.url).toBe("string");
-    expect(entry.url.length).toBeGreaterThan(0);
-    expect(entry.url).toMatch(/^\/assets\/office\/.+\.glb$/);
-  });
+  test.each(OFFICE_ASSET_MANIFEST)(
+    "$id has a non-empty local URL under /assets/office/",
+    (entry: OfficeAssetEntry) => {
+      expect(typeof entry.url).toBe("string");
+      expect(entry.url.length).toBeGreaterThan(0);
+      expect(entry.url).toMatch(/^\/assets\/office\/.+\.glb$/);
+    },
+  );
 
-  test.each(OFFICE_ASSET_MANIFEST)("$id has a non-empty source URL", (entry: OfficeAssetEntry) => {
-    expect(typeof entry.sourceUrl).toBe("string");
-    expect(entry.sourceUrl.length).toBeGreaterThan(0);
-    expect(entry.sourceUrl).toMatch(/^https?:\/\//);
-  });
+  test.each(OFFICE_ASSET_MANIFEST)(
+    "$id has a non-empty source URL",
+    (entry: OfficeAssetEntry) => {
+      expect(typeof entry.sourceUrl).toBe("string");
+      expect(entry.sourceUrl.length).toBeGreaterThan(0);
+      expect(entry.sourceUrl).toMatch(/^https?:\/\//);
+    },
+  );
 
   test.each(OFFICE_ASSET_MANIFEST)("$id has a source name", (entry: OfficeAssetEntry) => {
     expect(typeof entry.sourceName).toBe("string");
@@ -49,13 +55,19 @@ describe("OFFICE_ASSET_MANIFEST completeness", () => {
     expect(entry.licenseUrl).toMatch(/^https?:\/\//);
   });
 
-  test.each(OFFICE_ASSET_MANIFEST)("$id has a valid collider hint", (entry: OfficeAssetEntry) => {
-    expect(VALID_COLLIDER_HINTS).toContain(entry.colliderHint);
-  });
+  test.each(OFFICE_ASSET_MANIFEST)(
+    "$id has a valid collider hint",
+    (entry: OfficeAssetEntry) => {
+      expect(VALID_COLLIDER_HINTS).toContain(entry.colliderHint);
+    },
+  );
 
-  test.each(OFFICE_ASSET_MANIFEST)("$id has a valid category", (entry: OfficeAssetEntry) => {
-    expect(VALID_CATEGORIES).toContain(entry.category);
-  });
+  test.each(OFFICE_ASSET_MANIFEST)(
+    "$id has a valid category",
+    (entry: OfficeAssetEntry) => {
+      expect(VALID_CATEGORIES).toContain(entry.category);
+    },
+  );
 
   test.each(OFFICE_ASSET_MANIFEST)("$id has a label", (entry: OfficeAssetEntry) => {
     expect(typeof entry.label).toBe("string");
@@ -66,45 +78,63 @@ describe("OFFICE_ASSET_MANIFEST completeness", () => {
 // ── Transform completeness ────────────────────────────────────────────────────
 
 describe("OFFICE_ASSET_MANIFEST transform fields", () => {
-  test.each(OFFICE_ASSET_MANIFEST)("$id has a defaultTransform with position", (entry: OfficeAssetEntry) => {
-    expect(entry.defaultTransform).toBeDefined();
-    expect(typeof entry.defaultTransform.position.x).toBe("number");
-    expect(typeof entry.defaultTransform.position.y).toBe("number");
-    expect(typeof entry.defaultTransform.position.z).toBe("number");
-  });
+  test.each(OFFICE_ASSET_MANIFEST)(
+    "$id has a defaultTransform with position",
+    (entry: OfficeAssetEntry) => {
+      expect(entry.defaultTransform).toBeDefined();
+      expect(typeof entry.defaultTransform.position.x).toBe("number");
+      expect(typeof entry.defaultTransform.position.y).toBe("number");
+      expect(typeof entry.defaultTransform.position.z).toBe("number");
+    },
+  );
 
-  test.each(OFFICE_ASSET_MANIFEST)("$id has a defaultTransform with rotation", (entry: OfficeAssetEntry) => {
-    expect(entry.defaultTransform).toBeDefined();
-    expect(typeof entry.defaultTransform.rotation.x).toBe("number");
-    expect(typeof entry.defaultTransform.rotation.y).toBe("number");
-    expect(typeof entry.defaultTransform.rotation.z).toBe("number");
-  });
+  test.each(OFFICE_ASSET_MANIFEST)(
+    "$id has a defaultTransform with rotation",
+    (entry: OfficeAssetEntry) => {
+      expect(entry.defaultTransform).toBeDefined();
+      expect(typeof entry.defaultTransform.rotation.x).toBe("number");
+      expect(typeof entry.defaultTransform.rotation.y).toBe("number");
+      expect(typeof entry.defaultTransform.rotation.z).toBe("number");
+    },
+  );
 
-  test.each(OFFICE_ASSET_MANIFEST)("$id has a defaultTransform with scale", (entry: OfficeAssetEntry) => {
-    expect(entry.defaultTransform).toBeDefined();
-    expect(typeof entry.defaultTransform.scale.x).toBe("number");
-    expect(typeof entry.defaultTransform.scale.y).toBe("number");
-    expect(typeof entry.defaultTransform.scale.z).toBe("number");
-  });
+  test.each(OFFICE_ASSET_MANIFEST)(
+    "$id has a defaultTransform with scale",
+    (entry: OfficeAssetEntry) => {
+      expect(entry.defaultTransform).toBeDefined();
+      expect(typeof entry.defaultTransform.scale.x).toBe("number");
+      expect(typeof entry.defaultTransform.scale.y).toBe("number");
+      expect(typeof entry.defaultTransform.scale.z).toBe("number");
+    },
+  );
 });
 
 // ── Dimensions completeness ───────────────────────────────────────────────────
 
 describe("OFFICE_ASSET_MANIFEST dimension fields", () => {
-  test.each(OFFICE_ASSET_MANIFEST)("$id has positive width in meters", (entry: OfficeAssetEntry) => {
-    expect(entry.dimensions).toBeDefined();
-    expect(entry.dimensions.width).toBeGreaterThan(0);
-  });
+  test.each(OFFICE_ASSET_MANIFEST)(
+    "$id has positive width in meters",
+    (entry: OfficeAssetEntry) => {
+      expect(entry.dimensions).toBeDefined();
+      expect(entry.dimensions.width).toBeGreaterThan(0);
+    },
+  );
 
-  test.each(OFFICE_ASSET_MANIFEST)("$id has positive height in meters", (entry: OfficeAssetEntry) => {
-    expect(entry.dimensions).toBeDefined();
-    expect(entry.dimensions.height).toBeGreaterThan(0);
-  });
+  test.each(OFFICE_ASSET_MANIFEST)(
+    "$id has positive height in meters",
+    (entry: OfficeAssetEntry) => {
+      expect(entry.dimensions).toBeDefined();
+      expect(entry.dimensions.height).toBeGreaterThan(0);
+    },
+  );
 
-  test.each(OFFICE_ASSET_MANIFEST)("$id has positive depth in meters", (entry: OfficeAssetEntry) => {
-    expect(entry.dimensions).toBeDefined();
-    expect(entry.dimensions.depth).toBeGreaterThan(0);
-  });
+  test.each(OFFICE_ASSET_MANIFEST)(
+    "$id has positive depth in meters",
+    (entry: OfficeAssetEntry) => {
+      expect(entry.dimensions).toBeDefined();
+      expect(entry.dimensions.depth).toBeGreaterThan(0);
+    },
+  );
 });
 
 // ── Unique IDs ────────────────────────────────────────────────────────────────

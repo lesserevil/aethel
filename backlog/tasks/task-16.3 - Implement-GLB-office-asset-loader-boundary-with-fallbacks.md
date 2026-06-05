@@ -1,9 +1,10 @@
 ---
 id: TASK-16.3
 title: Implement GLB office asset loader boundary with fallbacks
-status: Backlog
+status: In Progress
 assignee: []
 created_date: '2026-06-05 01:52'
+updated_date: '2026-06-05 04:43'
 labels: []
 dependencies:
   - TASK-16.2
@@ -40,3 +41,20 @@ Do not let a missing GLB crash the whole canvas. Do not fetch assets from Poly P
 - [ ] #1 A local GLB loader boundary renders manifest-backed office assets with loading and error fallbacks.
 - [ ] #2 Component tests mock asset loading and prove the viewport can survive missing assets.
 <!-- AC:END -->
+
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+Understanding: Implementing OfficeAsset.tsx - a React Three Fiber scene boundary component that loads GLB files from the manifest (local /assets/office/ URLs only) via useGLTF with Suspense + ErrorBoundary, renders a deterministic procedural fallback box while loading or on error. Tests mock useGLTF so no real WebGL/GLB parsing needed. Following existing patterns: pure functions extracted and tested independently (deriveFallbackProps), component tests mock @react-three/drei and @react-three/fiber. Will cover 3 states: loading (Suspense fallback), success (primitive rendered), error (ErrorBoundary fallback).
+<!-- SECTION:NOTES:END -->
+
+## Comments
+<!-- COMMENTS:BEGIN -->
+<!-- COMMENT:BEGIN -->
+index: 1
+author: oompah
+created: 2026-06-05 04:39
+
+Agent dispatched (profile: default)
+<!-- COMMENT:END -->
+<!-- COMMENTS:END -->

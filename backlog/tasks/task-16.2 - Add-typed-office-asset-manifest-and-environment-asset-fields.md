@@ -1,10 +1,10 @@
 ---
 id: TASK-16.2
 title: Add typed office asset manifest and environment asset fields
-status: In Progress
+status: Done
 assignee: []
 created_date: '2026-06-05 01:52'
-updated_date: '2026-06-05 04:35'
+updated_date: '2026-06-05 04:38'
 labels: []
 dependencies:
   - TASK-16.1
@@ -39,8 +39,8 @@ Do not store Three.js objects, loaded GLTF nodes, DOM handles, or provider clien
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 A typed office asset manifest exists and every manifest item has source, license, transform, dimensions, and collider metadata.
-- [ ] #2 Environment state can reference manifest assets without storing renderer-specific objects.
+- [x] #1 A typed office asset manifest exists and every manifest item has source, license, transform, dimensions, and collider metadata.
+- [x] #2 Environment state can reference manifest assets without storing renderer-specific objects.
 <!-- AC:END -->
 
 ## Implementation Notes
@@ -50,6 +50,12 @@ Understanding (2026-06-05): Need to (1) create web/src/assets/officeAssetManifes
 
 Discovery (2026-06-05): Key files identified: web/src/state/sessionTypes.ts (SceneObjectState to extend), web/src/state/baselineSession.ts (3 objects to expand to full MVP set), web/src/state/baselineSession.test.ts and sessionReducer.test.ts (need updating). Need to create web/src/assets/ directory and officeAssetManifest.ts. The reducer test checks toHaveLength(3) which will need updating when baseline expands to 10 MVP objects.
 <!-- SECTION:NOTES:END -->
+
+## Final Summary
+
+<!-- SECTION:FINAL_SUMMARY:BEGIN -->
+Created web/src/assets/officeAssetManifest.ts with 10 typed CC0 office asset entries (desk, chair, monitor, laptop, keyboard, trash can, lamp, book stack, coffee cup, notebook). Each entry has stable id, local /assets/office/ URL, source name+URL, license id+URL, default transform, dimensions in meters, colliderHint, and optional affordances — all plain serializable JSON. Extended SceneObjectState in sessionTypes.ts with assetId, collider, and affordances fields; exported ColliderHint and Affordance types. Updated baselineSession.ts to expand from 3 procedural objects to 10 manifest-backed objects (obj-001 through obj-010). Added 90+ manifest completeness tests in officeAssetManifest.test.ts covering URL, license, transform, dimensions, collider, unique IDs, MVP coverage, and serialization. Updated baselineSession.test.ts and sessionReducer.test.ts for expanded baseline. All 447 tests pass, typecheck clean, lint clean.
+<!-- SECTION:FINAL_SUMMARY:END -->
 
 ## Comments
 <!-- COMMENTS:BEGIN -->
