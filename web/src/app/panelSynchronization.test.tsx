@@ -506,6 +506,21 @@ describe("Panel synchronization — environment/object change", () => {
     expect(systemMessages.length).toBeGreaterThanOrEqual(1);
   });
 
+  it("after applying time-of-day change, viewport data-time-of-day attribute reflects new value", () => {
+    render(<LiveSessionShell />);
+
+    const timeSelect = screen.getByTestId("select-time-of-day");
+    const applyBtn = screen.getByTestId("btn-apply-environment");
+
+    fireEvent.change(timeSelect, { target: { value: "evening" } });
+    fireEvent.click(applyBtn);
+
+    // The viewport wrapper div exposes timeOfDay from session state as a data attribute
+    // so tests can verify lighting state changes without querying Three.js objects.
+    const viewport = screen.getByTestId("aethel-viewport");
+    expect(viewport).toHaveAttribute("data-time-of-day", "evening");
+  });
+
   it("after applying time-of-day change, session environment.timeOfDay is updated and system message added", () => {
     let capturedState: SessionState = baselineSession;
     function CapturingShell() {

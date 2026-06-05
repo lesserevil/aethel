@@ -299,6 +299,54 @@ describe("AethelViewport", () => {
     );
   });
 
+  it("exposes time-of-day from environment state as data-time-of-day attribute", () => {
+    render(<AethelViewport agent={testAgent} environment={testEnvironment} />);
+    expect(screen.getByTestId("aethel-viewport")).toHaveAttribute(
+      "data-time-of-day",
+      testEnvironment.timeOfDay,
+    );
+  });
+
+  it("exposes lighting from environment state as data-lighting attribute", () => {
+    render(<AethelViewport agent={testAgent} environment={testEnvironment} />);
+    expect(screen.getByTestId("aethel-viewport")).toHaveAttribute(
+      "data-lighting",
+      testEnvironment.lighting,
+    );
+  });
+
+  it("reflects updated timeOfDay when environment prop changes", () => {
+    const { rerender } = render(
+      <AethelViewport agent={testAgent} environment={testEnvironment} />,
+    );
+    rerender(
+      <AethelViewport
+        agent={testAgent}
+        environment={{ ...testEnvironment, timeOfDay: "night" }}
+      />,
+    );
+    expect(screen.getByTestId("aethel-viewport")).toHaveAttribute(
+      "data-time-of-day",
+      "night",
+    );
+  });
+
+  it("reflects updated lighting when environment prop changes", () => {
+    const { rerender } = render(
+      <AethelViewport agent={testAgent} environment={testEnvironment} />,
+    );
+    rerender(
+      <AethelViewport
+        agent={testAgent}
+        environment={{ ...testEnvironment, lighting: "dramatic" }}
+      />,
+    );
+    expect(screen.getByTestId("aethel-viewport")).toHaveAttribute(
+      "data-lighting",
+      "dramatic",
+    );
+  });
+
   it("renders lights from SceneEnvironment (R3F canvas is present)", () => {
     // Lighting is Three.js-internal; we verify the full scene renders by
     // confirming the R3F canvas is in the tree without errors.
