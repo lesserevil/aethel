@@ -1,8 +1,9 @@
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 import { AgentControlPanel } from "./ControlPanel";
 import { ControlPanel as EnvironmentControlPanel } from "../components/controls/ControlPanel";
 import { AethelViewport } from "../components/viewport";
 import { ChatPanel } from "./ChatPanel";
+import { getChatAdapter } from "../services/chatAdapterFactory";
 import {
   useRendererProps,
   useSessionDispatch,
@@ -29,6 +30,11 @@ export function AppShell() {
   const rendererProps = useRendererProps();
   const state = useSessionState();
   const dispatch = useSessionDispatch();
+
+  // Select the chat adapter once on mount using the factory.
+  // VITE_CHAT_PROVIDER controls the selection (mock|api); no credentials are
+  // stored in Vite config. The memo prevents unnecessary re-renders.
+  const chatAdapter = useMemo(() => getChatAdapter(), []);
 
   // Forward viewport view events to session state through the dispatch boundary.
   // The renderer must NOT mutate state directly — only emit events here.
@@ -142,7 +148,7 @@ export function AppShell() {
         aria-label="Chat panel"
         data-testid="chat-panel"
       >
-        <ChatPanel />
+        <ChatPanel adapter={chatAdapter} />
       </aside>
     </div>
   );

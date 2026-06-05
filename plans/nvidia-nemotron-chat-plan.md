@@ -1,7 +1,8 @@
 # NVIDIA Nemotron Chat Integration Plan
 
-Status: Draft
+Status: Complete
 Created: June 5, 2026
+Completed: June 5, 2026
 
 ## Purpose
 
@@ -191,18 +192,35 @@ Reviewed June 5, 2026:
 
 ## Acceptance Criteria
 
-- [ ] CRIT-1: The selected NVIDIA model and exact request path are
+- [x] CRIT-1: The selected NVIDIA model and exact request path are
       verified with a valid credential, and the verification command does
-      not print or commit the secret.
-- [ ] CRIT-2: A backend `/api/chat` service can call the selected
+      not print or commit the secret.  Verified in TASK-19.1: Bearer-
+      authenticated POST to `https://inference-api.nvidia.com/v1/chat/completions`
+      using model id `nvidia/nvidia/nemotron-3-nano-omni-30b-a3b-reasoning`
+      returned HTTP 200 with a text response.  The opt-in smoke check
+      (`make smoke-nemotron`) uses a redacted key hint and never logs the
+      raw credential.
+- [x] CRIT-2: A backend `/api/chat` service can call the selected
       Nemotron model with current Aethel agent/environment context while
-      keeping NVIDIA credentials server-side only.
-- [ ] CRIT-3: The frontend can choose between the existing mock adapter
+      keeping NVIDIA credentials server-side only.  Implemented in
+      TASK-19.2 (FastAPI backend), TASK-19.3 (NvidiaClient + prompt
+      builder), and TASK-19.4 (provider selection).  Credentials are read
+      from env/netrc server-side; the frontend never sees them.
+- [x] CRIT-3: The frontend can choose between the existing mock adapter
       and the backend API adapter without changing the `ChatPanel`
-      contract or exposing model-provider secrets.
-- [ ] CRIT-4: Unit/component tests cover prompt construction, credential
+      contract or exposing model-provider secrets.  Implemented in
+      TASK-19.4: `VITE_CHAT_PROVIDER=api` switches the browser to POST
+      `/api/chat`; `mock` (default) uses the in-browser stub.  ChatPanel
+      contract is unchanged.
+- [x] CRIT-4: Unit/component tests cover prompt construction, credential
       loading, mocked NVIDIA failures/successes, frontend adapter
-      behavior, and chat error preservation.
-- [ ] CRIT-5: User docs describe how to configure credentials, run the
+      behavior, and chat error preservation.  Covered by `api/tests/`
+      (config, nvidia_client, prompt_builder, routes) and
+      `scripts/nemotron/test_nemotron_smoke_check.py` (smoke-check unit
+      tests).  Frontend adapter tests cover both mock and API paths.
+- [x] CRIT-5: User docs describe how to configure credentials, run the
       backend/model adapter, keep mock mode as fallback, and run the
-      opt-in live smoke check.
+      opt-in live smoke check.  Documented in `docs/nemotron-chat.md`
+      (credential config, env vars, mock-only mode, live Nemotron mode,
+      opt-in smoke check, unit tests) and `README.md` (Nemotron Chat
+      section).  Completed in TASK-19.5 and TASK-19.6.
