@@ -1,10 +1,10 @@
 ---
 id: TASK-16.1
 title: Select and license-audit the first free office asset set
-status: In Progress
+status: Done
 assignee: []
 created_date: '2026-06-05 01:52'
-updated_date: '2026-06-05 02:44'
+updated_date: '2026-06-05 02:47'
 labels: []
 dependencies: []
 documentation:
@@ -36,8 +36,8 @@ Do not select paid assets, attribution-required assets, or assets whose license 
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 docs/office-asset-sources.md lists the selected standard office asset set with source and license URLs.
-- [ ] #2 Every selected asset is CC0/public domain or explicitly rejected before runtime integration begins.
+- [x] #1 docs/office-asset-sources.md lists the selected standard office asset set with source and license URLs.
+- [x] #2 Every selected asset is CC0/public domain or explicitly rejected before runtime integration begins.
 <!-- AC:END -->
 
 ## Implementation Notes
@@ -45,6 +45,12 @@ Do not select paid assets, attribution-required assets, or assets whose license 
 <!-- SECTION:NOTES:BEGIN -->
 Understanding: No duplicate found - TASK-16.1 is the only license-audit task for office assets. Previous duplicate investigator agents dispatched but did not complete the work. Task is documentation-only: create docs/office-asset-sources.md. Sources: Kenney Furniture Kit (CC0, Poly Pizza) for primary furniture, Eclair Everyday Home & Desk Props GLB Pack (CC0) for clutter props.
 <!-- SECTION:NOTES:END -->
+
+## Final Summary
+
+<!-- SECTION:FINAL_SUMMARY:BEGIN -->
+Created docs/office-asset-sources.md documenting 10 CC0 assets for the first standard office scene. Primary source: Kenney Furniture Kit (Poly Pizza, CC0) covers desk, office chair, laptop, keyboard, monitor/screen, trash can, and desk lamp. Supplemental source: Eclair Everyday Home & Desk Props GLB Pack (itch.io, CC0) covers 3 clutter props (coffee mug, book, spiral notebook). Document includes asset IDs, source URLs, license URLs (all CC0 1.0), original formats (GLB), intended runtime filenames under web/public/assets/office/, conversion notes, and a rejected-sources table. Confirmed not a duplicate. make fmt-check passes.
+<!-- SECTION:FINAL_SUMMARY:END -->
 
 ## Comments
 <!-- COMMENTS:BEGIN -->
