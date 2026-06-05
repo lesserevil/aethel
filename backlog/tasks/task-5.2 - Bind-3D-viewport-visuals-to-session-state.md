@@ -1,7 +1,7 @@
 ---
 id: TASK-5.2
 title: Bind 3D viewport visuals to session state
-status: In Progress
+status: Done
 assignee: []
 created_date: '2026-06-02 22:12'
 updated_date: '2026-06-05 03:15'
@@ -41,8 +41,6 @@ Do not create a parallel renderer-only state model. Avoid expensive full scene r
 - [x] #3 Viewport emits selection/camera events without direct shared-state mutation.
 <!-- AC:END -->
 
-
-
 ## Implementation Notes
 
 <!-- SECTION:NOTES:BEGIN -->
@@ -54,6 +52,12 @@ UNDERSTANDING: All core bindings are already in place and all 273 tests pass. Fi
 
 COMPLETION: All 3 acceptance criteria satisfied. (1) Agent appearance: AgentAvatar reads avatarPreset/idlePose/accentColor; viewport exposes data-avatar-preset, data-idle-pose, data-accent-color attributes; name label shows displayName styled with accentColor. (2) Environment: SceneEnvironment.deriveSceneLighting() maps timeOfDay+lighting+preset to light parameters; viewport exposes data-environment-preset, data-time-of-day, data-lighting, data-enabled-objects. (3) No direct state mutation: AppShell.handleViewEvent routes onViewEvent callbacks to dispatch only. All 281 tests pass (make test). Build clean (make build). Lint clean (make lint).
 <!-- SECTION:NOTES:END -->
+
+## Final Summary
+
+<!-- SECTION:FINAL_SUMMARY:BEGIN -->
+Bound 3D viewport visuals to live session state. AppShell.tsx reads agent/environment/selectedObjectId from useRendererProps() (session selectors) and routes view events to dispatch via useSessionDispatch(). SceneEnvironment derives lighting parameters from EnvironmentState.timeOfDay/lighting/preset via deriveSceneLighting(). AgentAvatar reflects avatarPreset, idlePose, and accentColor. AethelViewport exposes data-avatar-preset, data-idle-pose, data-accent-color, data-environment-preset, data-time-of-day, data-lighting, and data-enabled-objects HTML attributes for test assertions. ViewEvents are emitted via onViewEvent without any direct state mutation inside the renderer. All 3 acceptance criteria satisfied. 281 tests pass.
+<!-- SECTION:FINAL_SUMMARY:END -->
 
 ## Comments
 <!-- COMMENTS:BEGIN -->
