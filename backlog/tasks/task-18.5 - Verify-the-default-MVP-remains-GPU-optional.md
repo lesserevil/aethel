@@ -1,10 +1,10 @@
 ---
 id: TASK-18.5
 title: Verify the default MVP remains GPU-optional
-status: Backlog
+status: In Progress
 assignee: []
 created_date: '2026-06-05 01:53'
-updated_date: '2026-06-05 02:04'
+updated_date: '2026-06-05 06:40'
 labels: []
 dependencies:
   - TASK-18.2
@@ -39,7 +39,32 @@ Do not overpromise CPU-only Newton performance if the smoke harness was not test
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 Default MVP setup/run docs state that GPU physics is not required for make run.
-- [ ] #2 Quality gates and a make run smoke check pass without Newton, PhysX, Omniverse Kit, or GPU requirements.
-- [ ] #3 If any future task makes a GPU mandatory for client-side or server-side workflows, README/docs explicitly state the affected side, required workflow, fallback status, and tested hardware requirement.
+- [x] #1 Default MVP setup/run docs state that GPU physics is not required for make run.
+- [x] #2 Quality gates and a make run smoke check pass without Newton, PhysX, Omniverse Kit, or GPU requirements.
+- [x] #3 If any future task makes a GPU mandatory for client-side or server-side workflows, README/docs explicitly state the affected side, required workflow, fallback status, and tested hardware requirement.
 <!-- AC:END -->
+
+
+
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+UNDERSTANDING (2026-06-05): Not a duplicate. TASK-18.5 is uniquely scoped to verification + documentation. Blocked-by tasks 18.2 and 18.4 are both Done. Approach: run quality gates, verify make run starts MVP without GPU/Newton/PhysX, audit README.md and docs/office-physics.md for doc drift, fix if needed, commit and push.
+
+DISCOVERY (2026-06-05): Quality gates all pass (629 tests, fmt-check, build, lint). README.md is missing: (a) the 5 new Makefile targets added in TASK-18.3/18.4 (assets-validate, assets-validate-test, physics-harness-dry-run, physics-harness, physics-harness-test), (b) explicit GPU-optional statement for make run, (c) reference to docs/office-physics.md. docs/office-physics.md already accurately states Newton is not required for the default MVP. Will update README.md to fix doc drift and add the GPU-optional make run statement.
+
+IMPLEMENTATION (2026-06-05): Updated README.md: (1) added docs/office-physics.md to sources-of-truth list; (2) added explicit GPU-not-required callout at the top of the MVP section; (3) added all 5 new make targets (assets-validate, assets-validate-test, physics-harness-dry-run, physics-harness, physics-harness-test) with GPU-optional notes to Development Notes. docs/office-physics.md already accurate — no changes needed. Marked plans/office-physics-simulation-plan.md CRIT-1 through CRIT-5 as satisfied and Status: Complete.
+
+VERIFICATION (2026-06-05): make fmt-check PASS. make build PASS (tsc + vite, no GPU). make test PASS 629/629 tests (21 files). make lint PASS (0 errors, 1 pre-existing warning). make physics-harness-dry-run PASS (analytic free-fall, no Newton). make physics-harness PASS (Newton not installed, exits 2 → make exits 0 as documented). make assets-validate PASS (10/10 props). Docs match observed behavior. No advertised commands require GPU.
+<!-- SECTION:NOTES:END -->
+
+## Comments
+<!-- COMMENTS:BEGIN -->
+<!-- COMMENT:BEGIN -->
+index: 1
+author: oompah
+created: 2026-06-05 06:35
+
+Agent dispatched (profile: default)
+<!-- COMMENT:END -->
+<!-- COMMENTS:END -->

@@ -1,6 +1,6 @@
 # Office Physics Simulation Plan
 
-Status: Draft
+Status: Complete
 Created: June 5, 2026
 
 ## Purpose
@@ -181,21 +181,21 @@ Reviewed June 5, 2026:
 
 ## Acceptance Criteria
 
-- [ ] CRIT-1: Manifest-backed office assets define collider type,
+- [x] CRIT-1: Manifest-backed office assets define collider type,
       dimensions, body type, and affordance metadata for every
       interactive prop; covered by manifest/unit tests.
-- [ ] CRIT-2: The web MVP can select/highlight office objects and enforce
+- [x] CRIT-2: The web MVP can select/highlight office objects and enforce
       simple collider-aware placement or overlap checks without requiring
       Newton, PhysX, Omniverse Kit, or a GPU.
-- [ ] CRIT-3: The canonical office USD assets include physics metadata
+- [x] CRIT-3: The canonical office USD assets include physics metadata
       for the first desk, chair, laptop, keyboard, monitor/screen, trash
       can, and three clutter/accessory props; verified by a USD
       validation script.
-- [ ] CRIT-4: A Newton evaluation harness exists with a deterministic
+- [x] CRIT-4: A Newton evaluation harness exists with a deterministic
       smoke simulation, clear optional dependency handling, and docs that
       state whether CPU-only and GPU-backed runs are available on the
       tested machine.
-- [ ] CRIT-5: The default MVP run path remains browser-only and
+- [x] CRIT-5: The default MVP run path remains browser-only and
       GPU-optional; verified by `make run` and the existing MVP quality
       gates. If any later task makes a GPU mandatory for either the
       client or server, README/docs must state the affected side,
