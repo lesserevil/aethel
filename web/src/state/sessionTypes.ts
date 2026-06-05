@@ -45,11 +45,35 @@ export interface AgentState {
 // ── Asset manifest reference types ───────────────────────────────────────────
 
 /**
- * Collision shape hint for a scene object.
- * Used by the USD pipeline and future physics integrations.
- * Must remain a plain string union — no runtime objects.
+ * Physics body type for a scene object.
+ * - static: does not move, has infinite effective mass; used for heavy
+ *   furniture and fixed props.
+ * - kinematic: can be moved programmatically (e.g., user drag) but is not
+ *   driven by physics forces.
+ * - dynamic: fully simulated; affected by gravity, forces, and collisions.
+ *   Use for small clutter and light props.
+ * Must remain a plain string union — no runtime physics objects.
  */
-export type ColliderHint = "box" | "cylinder" | "convexHull" | "none";
+export type BodyType = "static" | "kinematic" | "dynamic";
+
+/**
+ * Collision shape type for a scene object.
+ * Prefer simple shapes; only use trimesh when a simpler approximation is
+ * demonstrably inadequate and a test documents the exception.
+ * - box: axis-aligned box
+ * - cylinder: upright cylinder
+ * - convexHull: convex approximation of the mesh
+ * - trimesh: full triangle mesh (expensive; avoid as default collider)
+ * - none: no collision volume
+ * Must remain a plain string union — no runtime physics objects.
+ */
+export type ColliderType = "box" | "cylinder" | "convexHull" | "trimesh" | "none";
+
+/**
+ * @deprecated Use ColliderType. ColliderHint is kept as an alias so
+ * existing callers (SceneObjectState.collider.hint) compile without change.
+ */
+export type ColliderHint = ColliderType;
 
 /**
  * Semantic affordance tag describing how a scene object can be used.
@@ -61,7 +85,10 @@ export type Affordance =
   | "input-device"
   | "waste-container"
   | "light-source"
-  | "storage";
+  | "storage"
+  | "pickup" // can be picked up or freely repositioned by the agent
+  | "displayable" // renders or surfaces information (monitor, screen, board)
+  | "containable"; // can hold other objects (cup, tray, container)
 
 // ── Environment state ─────────────────────────────────────────────────────────
 

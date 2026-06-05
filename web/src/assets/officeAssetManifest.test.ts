@@ -9,8 +9,16 @@ import {
   type OfficeAssetEntry,
   type AssetCategory,
 } from "./officeAssetManifest";
+import type { BodyType, ColliderType } from "../state/sessionTypes";
 
-const VALID_COLLIDER_HINTS = ["box", "cylinder", "convexHull", "none"] as const;
+const VALID_BODY_TYPES: BodyType[] = ["static", "kinematic", "dynamic"];
+const VALID_COLLIDER_TYPES: ColliderType[] = [
+  "box",
+  "cylinder",
+  "convexHull",
+  "trimesh",
+  "none",
+];
 const VALID_CATEGORIES: AssetCategory[] = ["furniture", "device", "container", "clutter"];
 
 // ── Manifest completeness ─────────────────────────────────────────────────────
@@ -56,9 +64,9 @@ describe("OFFICE_ASSET_MANIFEST completeness", () => {
   });
 
   test.each(OFFICE_ASSET_MANIFEST)(
-    "$id has a valid collider hint",
+    "$id has a valid collider type",
     (entry: OfficeAssetEntry) => {
-      expect(VALID_COLLIDER_HINTS).toContain(entry.colliderHint);
+      expect(VALID_COLLIDER_TYPES).toContain(entry.colliderType);
     },
   );
 
@@ -135,6 +143,112 @@ describe("OFFICE_ASSET_MANIFEST dimension fields", () => {
       expect(entry.dimensions.depth).toBeGreaterThan(0);
     },
   );
+});
+
+// ── Physics metadata completeness ────────────────────────────────────────────
+
+describe("OFFICE_ASSET_MANIFEST physics metadata", () => {
+  test.each(OFFICE_ASSET_MANIFEST)(
+    "$id has a valid body type",
+    (entry: OfficeAssetEntry) => {
+      expect(VALID_BODY_TYPES).toContain(entry.bodyType);
+    },
+  );
+
+  test.each(OFFICE_ASSET_MANIFEST)(
+    "$id has a valid collider type",
+    (entry: OfficeAssetEntry) => {
+      expect(VALID_COLLIDER_TYPES).toContain(entry.colliderType);
+    },
+  );
+
+  test.each(OFFICE_ASSET_MANIFEST)(
+    "$id has a non-empty semantic label",
+    (entry: OfficeAssetEntry) => {
+      expect(typeof entry.semanticLabel).toBe("string");
+      expect(entry.semanticLabel.length).toBeGreaterThan(0);
+    },
+  );
+
+  test.each(OFFICE_ASSET_MANIFEST)(
+    "$id has a boolean agentSafe field",
+    (entry: OfficeAssetEntry) => {
+      expect(typeof entry.agentSafe).toBe("boolean");
+    },
+  );
+
+  test.each(OFFICE_ASSET_MANIFEST)(
+    "$id has an affordances array (non-optional)",
+    (entry: OfficeAssetEntry) => {
+      expect(Array.isArray(entry.affordances)).toBe(true);
+    },
+  );
+
+  test("static heavy furniture is not agent-safe", () => {
+    const heavyFurnitureIds = ["office-desk", "office-chair", "office-desk-lamp"];
+    heavyFurnitureIds.forEach((id) => {
+      const entry = OFFICE_ASSET_MANIFEST.find((e) => e.id === id);
+      expect(entry).toBeDefined();
+      expect(entry!.bodyType).toBe("static");
+      expect(entry!.agentSafe).toBe(false);
+    });
+  });
+
+  test("small clutter and light devices are dynamic and agent-safe", () => {
+    const movableIds = [
+      "office-laptop",
+      "office-keyboard",
+      "office-trash-can",
+      "office-book-stack",
+      "office-coffee-cup",
+      "office-notebook",
+    ];
+    movableIds.forEach((id) => {
+      const entry = OFFICE_ASSET_MANIFEST.find((e) => e.id === id);
+      expect(entry).toBeDefined();
+      expect(entry!.bodyType).toBe("dynamic");
+      expect(entry!.agentSafe).toBe(true);
+    });
+  });
+
+  test("dynamic objects have positive massKg", () => {
+    const dynamicEntries = OFFICE_ASSET_MANIFEST.filter((e) => e.bodyType === "dynamic");
+    dynamicEntries.forEach((entry) => {
+      expect(typeof entry.massKg).toBe("number");
+      expect(entry.massKg!).toBeGreaterThan(0);
+    });
+  });
+
+  test("static objects have no massKg", () => {
+    const staticEntries = OFFICE_ASSET_MANIFEST.filter((e) => e.bodyType === "static");
+    staticEntries.forEach((entry) => {
+      expect(entry.massKg).toBeUndefined();
+    });
+  });
+
+  test("friction when present is between 0 and 1 inclusive", () => {
+    OFFICE_ASSET_MANIFEST.filter((e) => e.friction !== undefined).forEach((entry) => {
+      expect(entry.friction!).toBeGreaterThanOrEqual(0);
+      expect(entry.friction!).toBeLessThanOrEqual(1);
+    });
+  });
+
+  test("restitution when present is between 0 and 1 inclusive", () => {
+    OFFICE_ASSET_MANIFEST.filter((e) => e.restitution !== undefined).forEach((entry) => {
+      expect(entry.restitution!).toBeGreaterThanOrEqual(0);
+      expect(entry.restitution!).toBeLessThanOrEqual(1);
+    });
+  });
+
+  test("interactive assets (devices and clutter) have at least one affordance", () => {
+    const interactiveEntries = OFFICE_ASSET_MANIFEST.filter(
+      (e) =>
+        e.category === "device" || e.category === "clutter" || e.category === "container",
+    );
+    interactiveEntries.forEach((entry) => {
+      expect(entry.affordances.length).toBeGreaterThan(0);
+    });
+  });
 });
 
 // ── Unique IDs ────────────────────────────────────────────────────────────────

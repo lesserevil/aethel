@@ -10,7 +10,7 @@
 //
 // License: CC0 1.0 Universal — https://creativecommons.org/publicdomain/zero/1.0/
 
-import type { ColliderHint, Affordance } from "../state/sessionTypes";
+import type { BodyType, ColliderType, Affordance } from "../state/sessionTypes";
 
 // ── Manifest-specific types ───────────────────────────────────────────────────
 
@@ -38,6 +38,8 @@ export interface OfficeAssetEntry {
   id: string;
   /** Human-readable display label. */
   label: string;
+  /** Human-readable semantic description used by agents and USD pipelines. */
+  semanticLabel: string;
   /** Broad semantic category for grouping and USD pipeline hints. */
   category: AssetCategory;
   /** Runtime URL served from /assets/office/. */
@@ -54,10 +56,42 @@ export interface OfficeAssetEntry {
   defaultTransform: AssetTransform;
   /** Approximate bounding dimensions in meters. */
   dimensions: AssetDimensions;
-  /** Simple collision shape hint for the USD/physics pipeline. */
-  colliderHint: ColliderHint;
-  /** Optional semantic affordances describing how this object can be used. */
-  affordances?: Affordance[];
+  /**
+   * Physics body type for simulation.
+   * Heavy/fixed props are "static"; small movable props are "dynamic".
+   * Set to "kinematic" only when programmatic movement without physics forces
+   * is required.
+   */
+  bodyType: BodyType;
+  /**
+   * Collision shape type for the physics/USD pipeline.
+   * Prefer simple shapes (box, cylinder) over trimesh unless a test documents
+   * why a complex collider is needed.
+   */
+  colliderType: ColliderType;
+  /**
+   * Object mass in kilograms. Present only on dynamic objects.
+   * Omit on static or kinematic objects.
+   */
+  massKg?: number;
+  /**
+   * Coulomb friction coefficient (0 = frictionless, 1 = high friction).
+   * Present only when a non-default value is needed for simulation accuracy.
+   */
+  friction?: number;
+  /**
+   * Coefficient of restitution (0 = perfectly inelastic, 1 = perfectly elastic).
+   * Present only when a non-default value is needed.
+   */
+  restitution?: number;
+  /**
+   * Whether this object is safe for the agent to manipulate (pick up, move,
+   * interact with) without risking environmental damage or session instability.
+   * Large heavy furniture is false; small clutter and devices are true.
+   */
+  agentSafe: boolean;
+  /** Semantic affordances describing how this object can be used. */
+  affordances: Affordance[];
 }
 
 // ── Manifest entries ──────────────────────────────────────────────────────────
@@ -80,6 +114,7 @@ export const OFFICE_ASSET_MANIFEST: OfficeAssetEntry[] = [
   {
     id: "office-desk",
     label: "Office Desk",
+    semanticLabel: "large office desk with a flat work surface",
     category: "furniture",
     url: "/assets/office/office-desk.glb",
     sourceName: KENNEY_SOURCE_NAME,
@@ -92,12 +127,15 @@ export const OFFICE_ASSET_MANIFEST: OfficeAssetEntry[] = [
       scale: defaultScale,
     },
     dimensions: { width: 1.4, height: 0.75, depth: 0.7 },
-    colliderHint: "box",
+    bodyType: "static",
+    colliderType: "box",
+    agentSafe: false,
     affordances: ["work-surface"],
   },
   {
     id: "office-chair",
     label: "Office Chair",
+    semanticLabel: "ergonomic office chair with a padded seat",
     category: "furniture",
     url: "/assets/office/office-chair.glb",
     sourceName: KENNEY_SOURCE_NAME,
@@ -110,12 +148,15 @@ export const OFFICE_ASSET_MANIFEST: OfficeAssetEntry[] = [
       scale: defaultScale,
     },
     dimensions: { width: 0.6, height: 0.9, depth: 0.6 },
-    colliderHint: "box",
+    bodyType: "static",
+    colliderType: "box",
+    agentSafe: false,
     affordances: ["seatable"],
   },
   {
     id: "office-monitor",
     label: "Monitor",
+    semanticLabel: "desktop monitor displaying a screen",
     category: "device",
     url: "/assets/office/office-monitor.glb",
     sourceName: KENNEY_SOURCE_NAME,
@@ -128,11 +169,15 @@ export const OFFICE_ASSET_MANIFEST: OfficeAssetEntry[] = [
       scale: defaultScale,
     },
     dimensions: { width: 0.5, height: 0.4, depth: 0.2 },
-    colliderHint: "box",
+    bodyType: "static",
+    colliderType: "box",
+    agentSafe: false,
+    affordances: ["displayable"],
   },
   {
     id: "office-laptop",
     label: "Laptop",
+    semanticLabel: "portable laptop computer",
     category: "device",
     url: "/assets/office/office-laptop.glb",
     sourceName: KENNEY_SOURCE_NAME,
@@ -145,12 +190,17 @@ export const OFFICE_ASSET_MANIFEST: OfficeAssetEntry[] = [
       scale: defaultScale,
     },
     dimensions: { width: 0.35, height: 0.02, depth: 0.25 },
-    colliderHint: "box",
-    affordances: ["input-device"],
+    bodyType: "dynamic",
+    colliderType: "box",
+    massKg: 2.0,
+    friction: 0.5,
+    agentSafe: true,
+    affordances: ["input-device", "pickup"],
   },
   {
     id: "office-keyboard",
     label: "Keyboard",
+    semanticLabel: "full-size computer keyboard for text input",
     category: "device",
     url: "/assets/office/office-keyboard.glb",
     sourceName: KENNEY_SOURCE_NAME,
@@ -163,12 +213,17 @@ export const OFFICE_ASSET_MANIFEST: OfficeAssetEntry[] = [
       scale: defaultScale,
     },
     dimensions: { width: 0.45, height: 0.03, depth: 0.15 },
-    colliderHint: "box",
-    affordances: ["input-device"],
+    bodyType: "dynamic",
+    colliderType: "box",
+    massKg: 0.5,
+    friction: 0.6,
+    agentSafe: true,
+    affordances: ["input-device", "pickup"],
   },
   {
     id: "office-trash-can",
     label: "Trash Can",
+    semanticLabel: "cylindrical office waste bin",
     category: "container",
     url: "/assets/office/office-trash-can.glb",
     sourceName: KENNEY_SOURCE_NAME,
@@ -181,12 +236,17 @@ export const OFFICE_ASSET_MANIFEST: OfficeAssetEntry[] = [
       scale: defaultScale,
     },
     dimensions: { width: 0.3, height: 0.45, depth: 0.3 },
-    colliderHint: "cylinder",
-    affordances: ["waste-container"],
+    bodyType: "dynamic",
+    colliderType: "cylinder",
+    massKg: 1.5,
+    friction: 0.4,
+    agentSafe: true,
+    affordances: ["waste-container", "pickup"],
   },
   {
     id: "office-desk-lamp",
     label: "Desk Lamp",
+    semanticLabel: "adjustable desk lamp providing directional light",
     category: "furniture",
     url: "/assets/office/office-desk-lamp.glb",
     sourceName: KENNEY_SOURCE_NAME,
@@ -199,12 +259,15 @@ export const OFFICE_ASSET_MANIFEST: OfficeAssetEntry[] = [
       scale: defaultScale,
     },
     dimensions: { width: 0.15, height: 0.5, depth: 0.15 },
-    colliderHint: "convexHull",
+    bodyType: "static",
+    colliderType: "convexHull",
+    agentSafe: false,
     affordances: ["light-source"],
   },
   {
     id: "office-book-stack",
     label: "Book Stack",
+    semanticLabel: "small stack of books on the desk",
     category: "clutter",
     url: "/assets/office/office-book-stack.glb",
     sourceName: ECLAIR_SOURCE_NAME,
@@ -217,11 +280,17 @@ export const OFFICE_ASSET_MANIFEST: OfficeAssetEntry[] = [
       scale: defaultScale,
     },
     dimensions: { width: 0.15, height: 0.2, depth: 0.1 },
-    colliderHint: "box",
+    bodyType: "dynamic",
+    colliderType: "box",
+    massKg: 0.8,
+    friction: 0.5,
+    agentSafe: true,
+    affordances: ["pickup"],
   },
   {
     id: "office-coffee-cup",
     label: "Coffee Cup",
+    semanticLabel: "ceramic coffee cup on the desk",
     category: "clutter",
     url: "/assets/office/office-coffee-cup.glb",
     sourceName: ECLAIR_SOURCE_NAME,
@@ -234,11 +303,18 @@ export const OFFICE_ASSET_MANIFEST: OfficeAssetEntry[] = [
       scale: defaultScale,
     },
     dimensions: { width: 0.08, height: 0.1, depth: 0.08 },
-    colliderHint: "cylinder",
+    bodyType: "dynamic",
+    colliderType: "cylinder",
+    massKg: 0.3,
+    friction: 0.4,
+    restitution: 0.1,
+    agentSafe: true,
+    affordances: ["containable", "pickup"],
   },
   {
     id: "office-notebook",
     label: "Notebook",
+    semanticLabel: "lined paper notebook for notes and sketches",
     category: "clutter",
     url: "/assets/office/office-notebook.glb",
     sourceName: ECLAIR_SOURCE_NAME,
@@ -251,7 +327,12 @@ export const OFFICE_ASSET_MANIFEST: OfficeAssetEntry[] = [
       scale: defaultScale,
     },
     dimensions: { width: 0.2, height: 0.01, depth: 0.15 },
-    colliderHint: "box",
+    bodyType: "dynamic",
+    colliderType: "box",
+    massKg: 0.2,
+    friction: 0.5,
+    agentSafe: true,
+    affordances: ["pickup"],
   },
 ];
 

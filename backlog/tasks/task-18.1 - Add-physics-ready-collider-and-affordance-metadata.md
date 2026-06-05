@@ -1,17 +1,18 @@
 ---
 id: TASK-18.1
 title: Add physics-ready collider and affordance metadata
-status: Backlog
+status: In Progress
 assignee: []
-created_date: '2026-06-05 01:53'
+created_date: 2026-06-05 01:53
+updated_date: 2026-06-05 05:20
 labels: []
 dependencies:
-  - TASK-16.2
+- TASK-16.2
 documentation:
-  - plans/office-physics-simulation-plan.md
+- plans/office-physics-simulation-plan.md
 modified_files:
-  - web/src/assets/officeAssetManifest.ts
-  - web/src/state/sessionTypes.ts
+- web/src/assets/officeAssetManifest.ts
+- web/src/state/sessionTypes.ts
 parent_task_id: TASK-18
 priority: medium
 ordinal: 45000
@@ -40,3 +41,14 @@ Do not store runtime physics engine objects in session state. Do not treat high-
 - [ ] #1 Interactive office assets define body type, collider type, dimensions, semantic labels, and affordances.
 - [ ] #2 Manifest/state tests cover the physics metadata without introducing runtime engine dependencies.
 <!-- AC:END -->
+
+## Comments
+<!-- COMMENTS:BEGIN -->
+<!-- COMMENT:BEGIN -->
+index: 1
+author: oompah
+created: 2026-06-05 05:20
+
+Agent dispatched (profile: default)
+<!-- COMMENT:END -->
+<!-- COMMENTS:END -->
