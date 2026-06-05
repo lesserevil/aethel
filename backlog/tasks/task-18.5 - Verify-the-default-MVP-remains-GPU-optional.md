@@ -1,38 +1,22 @@
 ---
 id: TASK-18.5
 title: Verify the default MVP remains GPU-optional
-status: In Progress
+status: Done
 assignee: []
-created_date: 2026-06-05 01:53
-updated_date: 2026-06-05 14:18
+created_date: '2026-06-05 01:53'
+updated_date: '2026-06-05 14:25'
 labels: []
 dependencies:
-- TASK-18.2
-- TASK-18.4
+  - TASK-18.2
+  - TASK-18.4
 documentation:
-- plans/office-physics-simulation-plan.md
+  - plans/office-physics-simulation-plan.md
 modified_files:
-- docs/office-physics.md
-- README.md
+  - docs/office-physics.md
+  - README.md
 parent_task_id: TASK-18
 priority: medium
 ordinal: 49000
-oompah.task_costs:
-  total_input_tokens: 47
-  total_output_tokens: 12161
-  total_cost_usd: 0.0
-  by_model:
-    unknown:
-      input_tokens: 47
-      output_tokens: 12161
-      cost_usd: 0.0
-  runs:
-  - profile: default
-    model: unknown
-    input_tokens: 47
-    output_tokens: 12161
-    cost_usd: 0.0
-    recorded_at: '2026-06-05T06:40:36.831652+00:00'
 ---
 
 ## Description
@@ -60,8 +44,6 @@ Do not overpromise CPU-only Newton performance if the smoke harness was not test
 - [x] #3 If any future task makes a GPU mandatory for client-side or server-side workflows, README/docs explicitly state the affected side, required workflow, fallback status, and tested hardware requirement.
 <!-- AC:END -->
 
-
-
 ## Implementation Notes
 
 <!-- SECTION:NOTES:BEGIN -->
@@ -72,7 +54,21 @@ DISCOVERY (2026-06-05): Quality gates all pass (629 tests, fmt-check, build, lin
 IMPLEMENTATION (2026-06-05): Updated README.md: (1) added docs/office-physics.md to sources-of-truth list; (2) added explicit GPU-not-required callout at the top of the MVP section; (3) added all 5 new make targets (assets-validate, assets-validate-test, physics-harness-dry-run, physics-harness, physics-harness-test) with GPU-optional notes to Development Notes. docs/office-physics.md already accurate — no changes needed. Marked plans/office-physics-simulation-plan.md CRIT-1 through CRIT-5 as satisfied and Status: Complete.
 
 VERIFICATION (2026-06-05): make fmt-check PASS. make build PASS (tsc + vite, no GPU). make test PASS 629/629 tests (21 files). make lint PASS (0 errors, 1 pre-existing warning). make physics-harness-dry-run PASS (analytic free-fall, no Newton). make physics-harness PASS (Newton not installed, exits 2 → make exits 0 as documented). make assets-validate PASS (10/10 props). Docs match observed behavior. No advertised commands require GPU.
+
+UNDERSTANDING (2026-06-05 run2): Not a duplicate. Previous TASK-18.5 agent missed that TASK-18.3 broke 25 TASK-17 tests: office.usda was rewritten with flat OfficeDeskRoot structure instead of Furniture/Devices/Containers/Clutter hierarchy + old-style file refs (desk.usda etc.) that usdOfficeStage.test.ts and webAssetMap.test.ts require. Fixing office.usda to restore correct hierarchy.
+
+DISCOVERY (2026-06-05 run2): Root cause found. TASK-18.3 rewrote office.usda using OfficeDeskRoot flat structure instead of Furniture/Devices/Containers/Clutter hierarchy, breaking 25 TASK-17 tests. Old-style prop files (desk.usda, etc.) already had all required metadata. Fix: restore correct hierarchy in office.usda referencing old-style files.
+
+IMPLEMENTATION (2026-06-05 run2): Rewrote assets/usd/office/office.usda to restore the canonical hierarchy: Architecture, Furniture (Desk/DeskChair/LampDesk), Devices (MonitorWide/Laptop/Keyboard), Containers (TrashCan), Clutter (Mug/Book/Notebook), Lights (AmbientDome/KeyLight/FillLight), Cameras (OfficeCamera). References old-style files (desk.usda, desk_chair.usda, etc.) as required by TASK-17 tests. New-style physics files (office-desk.usda, etc.) used by make assets-validate are unchanged.
+
+VERIFICATION (2026-06-05 run2): make fmt-check PASS. make build PASS. make test PASS 1045/1045 tests (25 files). make lint PASS (0 errors, 1 pre-existing warning). make assets-validate PASS (10/10). make assets-validate-test PASS (39/39). make physics-harness-dry-run PASS (analytic, no Newton/GPU). validate-usd-stage.py PASS. Committed as TASK-18.5: Restore USD stage hierarchy broken by TASK-18.3. Pushed to origin.
 <!-- SECTION:NOTES:END -->
+
+## Final Summary
+
+<!-- SECTION:FINAL_SUMMARY:BEGIN -->
+Not a duplicate. Verified the default MVP remains GPU-optional and fixed a regression introduced by TASK-18.3. TASK-18.3 rewrote office.usda with a flat OfficeDeskRoot/OfficeChairRoot structure, dropping the Architecture/Furniture/Devices/Containers/Clutter sub-scopes that 25 TASK-17 tests require. Fixed by restoring the canonical hierarchy in office.usda (Architecture, Furniture/Desk/DeskChair/LampDesk, Devices/MonitorWide/Laptop/Keyboard, Containers/TrashCan, Clutter/Mug/Book/Notebook) while preserving all lights, cameras, and documentation. Old-style prop files (desk.usda etc.) already had all required metadata. README.md and docs/office-physics.md (from the prior TASK-18.5 run) correctly document GPU-optional behavior. All quality gates pass: make fmt-check, make build, make test 1045/1045, make lint, make assets-validate (10/10), make physics-harness-dry-run (no Newton/GPU needed). Committed and pushed to epic-TASK-18.
+<!-- SECTION:FINAL_SUMMARY:END -->
 
 ## Comments
 <!-- COMMENTS:BEGIN -->
