@@ -24,16 +24,19 @@ Current project sources of truth:
   how to run the backend alongside the web app.
 - [docs/office-physics.md](docs/office-physics.md) - optional Newton
   evaluation harness: install steps, usage, tested CPU/GPU behavior,
-  and why Newton is not a default MVP dependency.
+  why Newton is not a default MVP dependency, and where GPU-backed
+  simulation is now required for future high-fidelity work.
 - `backlog/` - Backlog.md task files for planned and completed work.
 
 ## MVP
 
-> **GPU not required.** `make run` starts the browser-based MVP on any
-> machine with Bun and Node. No Newton, PhysX, Omniverse Kit, Isaac Sim,
-> or server-side GPU is needed. See
-> [docs/office-physics.md](docs/office-physics.md) for the optional
-> Newton evaluation path.
+> **GPU requirement boundary.** `make run` still starts the current
+> browser-based MVP on any machine with Bun and Node. No Newton, PhysX,
+> Omniverse Kit, Isaac Sim, CUDA, or server-side GPU is needed to view
+> the static MVP. Future high-fidelity runtime simulation work now
+> requires a server/simulation-host NVIDIA GPU; see
+> [docs/office-physics.md](docs/office-physics.md) and
+> [plans/gpu-runtime-simulation-plan.md](plans/gpu-runtime-simulation-plan.md).
 
 The MVP is a browser-based web app with three persistent regions:
 
@@ -202,6 +205,14 @@ workspace Bun scripts:
 - `make physics-harness-test` - Runs unit and integration tests for the Newton harness (no GPU needed)
 
 See [docs/office-physics.md](docs/office-physics.md) for full Newton installation instructions and expected output.
+
+**Future GPU-backed runtime simulation**:
+
+High-fidelity office-world physics and simulation work now assumes a
+server/simulation-host NVIDIA GPU. The current MVP and dry-run validation
+targets remain available on CPU-only machines, but new realistic-world
+simulation implementation should follow
+[plans/gpu-runtime-simulation-plan.md](plans/gpu-runtime-simulation-plan.md).
 
 To install dependencies: `make init`
 

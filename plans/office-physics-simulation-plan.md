@@ -2,6 +2,7 @@
 
 Status: Complete
 Created: June 5, 2026
+Updated: June 5, 2026
 
 ## Purpose
 
@@ -16,11 +17,18 @@ browser renderer. Newton, PhysX, Isaac Sim, and RTX rendering become
 valuable after the project has OpenUSD assets with colliders, semantics,
 and behaviors worth simulating.
 
+Post-completion decision: future high-fidelity runtime simulation work now
+requires a GPU-capable server/simulation host. The completed MVP tiers remain
+GPU-optional, but new realistic-world simulation work should follow
+`plans/gpu-runtime-simulation-plan.md`.
+
 ## GPU Requirement Escalation Rule
 
-GPU support is optional for this plan until a future task explicitly
-changes that requirement. Any task that makes a GPU mandatory must update
-the user-facing docs before the implementation lands and must state:
+GPU support was optional for the completed MVP/static-collider tiers. As of the
+GPU runtime simulation follow-up, high-fidelity simulation work is GPU-required
+on the server/simulation host. Any task that expands that requirement or wires
+the GPU path into a default run command must update the user-facing docs before
+the implementation lands and must state:
 
 - whether the GPU is required on the browser/client side, server side,
   or both;
@@ -29,9 +37,9 @@ the user-facing docs before the implementation lands and must state:
 - whether the default `make run` MVP path still works without that GPU;
 - what CPU-only or browser-only fallback remains, if any.
 
-If no fallback remains, the task must call that out in its final summary
-and the handoff must explicitly mention that Aethel has crossed from
-GPU-optional to GPU-required for the affected side of the system.
+If no fallback remains, the task must call that out in its final summary. For
+the current boundary, `make run` remains a static browser MVP path without a
+server-side GPU requirement.
 
 ## Simulation Tiers
 
@@ -165,6 +173,7 @@ work without a GPU.
 - TASK-18.3: Author USD Physics metadata for standard office props.
 - TASK-18.4: Create an optional Newton office-scene smoke harness.
 - TASK-18.5: Verify the default MVP remains GPU-optional.
+- TASK-18.13: Evaluate GPU-required runtime simulation for the office scene.
 
 ## Sources Reviewed
 

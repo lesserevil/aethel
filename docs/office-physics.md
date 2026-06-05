@@ -1,9 +1,10 @@
-# Office Physics — Newton Evaluation Harness
+# Office Physics — Newton Evaluation Harness and GPU Simulation Boundary
 
 This document covers the optional Newton evaluation harness for the Aethel
 standard office scene. It explains how to install the optional Newton
 dependencies, how to run the smoke harness, what CPU and GPU behaviour has been
-tested, and why Newton is **not** required by the default MVP.
+tested, why Newton is **not** required by the default MVP, and where future
+high-fidelity simulation work now requires a server-side GPU.
 
 ---
 
@@ -21,6 +22,12 @@ The harness is **entirely optional**:
 - `make run`, `make build`, and `make test` do not require it.
 - If Newton or its dependencies are unavailable, the harness exits with a
   clear "SKIP" message (exit code 2) instead of failing.
+
+Future high-fidelity runtime simulation is different from this optional smoke
+harness. Work that turns the office into a realistic agent simulation world
+now assumes an NVIDIA GPU on the simulation host/server. The browser client
+continues to act as a lightweight viewer and interaction surface unless a
+later task explicitly changes that boundary.
 
 ---
 
@@ -71,17 +78,29 @@ Newton is relevant for later work:
 Until one of those use-cases is production-ready, Newton stays as an
 *evaluation harness*, not a runtime dependency.
 
-### GPU escalation rule
+### GPU escalation status
 
-Newton can run on CPU or GPU.  If a future task makes GPU physics mandatory,
-that task **must** update `README.md` and this document to state:
+Newton can run on CPU or GPU. The original MVP and Newton smoke harness remain
+GPU-optional, but the project has now crossed the bridge for realistic runtime
+simulation work: future high-fidelity physics/simulation tasks should assume a
+server/simulation-host NVIDIA GPU.
 
-- Which side is affected (client or server).
-- Which workflow requires the GPU (simulation, training, RTX rendering, etc.).
-- Whether `make run` still works without the GPU.
-- What CPU-only fallback remains, if any.
+Current boundary:
 
-Until that documentation is added and reviewed, all GPU usage is optional.
+- **Affected side:** server/simulation host.
+- **Workflow requiring GPU:** high-fidelity runtime simulation, including
+  future Newton/Warp CUDA, Omniverse Physics / PhysX, Isaac Sim, RTX
+  rendering, sensor simulation, or training-oriented world stepping.
+- **Client requirement:** no CUDA/RTX requirement for the browser client beyond
+  normal WebGL rendering.
+- **Current `make run` status:** still works without a server-side GPU because
+  it launches the static browser MVP, not a production simulation service.
+- **CPU-only fallback:** static MVP viewing, static collider validation, asset
+  validation, and the Newton dry-run harness.
+
+Any implementation task that wires a GPU-backed simulation service into a
+default run path must update this document and `README.md` again with the exact
+hardware, driver, CUDA/runtime, and fallback requirements.
 
 ---
 
@@ -306,6 +325,8 @@ TASK-18.4.  The analytic free-fall formula is: `drop = 0.5 * g * t²` where
 
 - `plans/office-physics-simulation-plan.md` — design rationale, simulation
   tiers, and acceptance criteria for the full physics rollout.
+- `plans/gpu-runtime-simulation-plan.md` — draft direction for GPU-required
+  high-fidelity runtime simulation work.
 - `assets/usd/PHYSICS_METADATA.md` — field reference for the USD custom
   metadata used by the harness.
 - `docs/office-assets.md` — list of standard office prop assets.
