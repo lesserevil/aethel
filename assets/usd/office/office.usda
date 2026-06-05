@@ -25,21 +25,19 @@ Coordinate conventions
   To use in a Z-up DCC (e.g. Blender default scene): apply a -90° X rotation
   at import, or configure Blender's USD import to convert up-axis.
 
-Props:
-  Furniture (static):
-    /World/Office/OfficeDeskRoot     — office-desk
-    /World/Office/OfficeChairRoot    — office-chair
-    /World/Office/OfficeDeskLampRoot — office-desk-lamp
-  Devices:
-    /World/Office/OfficeMonitorRoot  — office-monitor  (static)
-    /World/Office/OfficeLaptopRoot   — office-laptop   (dynamic, 2.0 kg)
-    /World/Office/OfficeKeyboardRoot — office-keyboard (dynamic, 0.5 kg)
-  Containers:
-    /World/Office/OfficeTrashCanRoot — office-trash-can (dynamic, 1.5 kg)
-  Clutter/accessories (dynamic):
-    /World/Office/OfficeBookStackRoot  — office-book-stack  (0.8 kg)
-    /World/Office/OfficeCoffeeCupRoot  — office-coffee-cup  (0.3 kg, restitution=0.1)
-    /World/Office/OfficeNotebookRoot   — office-notebook    (0.2 kg)
+Scene hierarchy
+---------------
+  /World/Office/Architecture    — room shell and floor plane
+  /World/Office/Furniture/      — static and semi-static furniture
+    Desk, DeskChair, LampDesk
+  /World/Office/Devices/        — electronics (monitors, laptop, keyboard)
+    MonitorWide, Laptop, Keyboard
+  /World/Office/Containers/     — bins and storage
+    TrashCan
+  /World/Office/Clutter/        — small dynamic props
+    Mug, Book, Notebook
+  /World/Lights/                — lighting rigs
+  /World/Cameras/               — scene cameras
 
 Source & license
 ----------------
@@ -62,133 +60,118 @@ Adding a new prop
     upAxis = "Y"
 )
 
-# ============================================================
-#  World root
-# ============================================================
 def Xform "World" (
-    doc = "Root world scope for the Aethel office scene."
-    customData = {
-        dictionary aethel = {
-            string sceneId = "office"
-            string version = "0.2.0"
-            string manifestRef = "assets/sources/office/manifest.json"
-        }
-    }
+    doc = "Scene root — Y-up, metres."
 )
 {
     # --------------------------------------------------------
-    #  Office scope — contains all in-scene objects
+    #  Office environment
     # --------------------------------------------------------
     def Xform "Office" (
-        doc = "Top-level container for all office objects."
+        doc = "Office environment scope."
     )
     {
+        # ---- Architecture ----------------------------------
+        # Placeholder for room shell geometry (walls, floor, ceiling).
+        # Not yet populated — add room meshes here when available.
+        def Xform "Architecture" (
+            doc = "Room shell: walls, floor, ceiling. Placeholder — geometry to be added."
+        )
+        {
+        }
+
         # ---- Furniture (static) ----------------------------
-
-        # Desk (static, box collider)
-        def "OfficeDeskRoot" (
-            doc = "Office desk. Source: Kenney Furniture Kit (CC0-1.0)."
-            prepend payload = @./props/office-desk.usda@</OfficeDeskRoot>
+        def Xform "Furniture" (
+            doc = "Static and semi-static office furniture."
         )
         {
-            double3 xformOp:translate = (0.0, 0.0, 0.0)
-            uniform token[] xformOpOrder = ["xformOp:translate"]
-        }
+            def Xform "Desk" (
+                doc = "Office desk. Source: Kenney Furniture Kit (CC0-1.0)."
+                prepend references = @./props/desk.usda@</Desk>
+            )
+            {
+            }
 
-        # Chair (static, box collider)
-        def "OfficeChairRoot" (
-            doc = "Office chair. Source: Kenney Furniture Kit (CC0-1.0)."
-            prepend payload = @./props/office-chair.usda@</OfficeChairRoot>
-        )
-        {
-            double3 xformOp:translate = (0.0, 0.0, 0.9)
-            uniform token[] xformOpOrder = ["xformOp:translate"]
-        }
+            def Xform "DeskChair" (
+                doc = "Office chair. Source: Kenney Furniture Kit (CC0-1.0)."
+                prepend references = @./props/desk_chair.usda@</DeskChair>
+            )
+            {
+            }
 
-        # Desk Lamp (static, convexHull collider)
-        def "OfficeDeskLampRoot" (
-            doc = "Desk lamp. Source: Kenney Furniture Kit (CC0-1.0)."
-            prepend payload = @./props/office-desk-lamp.usda@</OfficeDeskLampRoot>
-        )
-        {
-            double3 xformOp:translate = (0.5, 0.76, -0.2)
-            uniform token[] xformOpOrder = ["xformOp:translate"]
+            def Xform "LampDesk" (
+                doc = "Desk lamp. Source: Kenney Furniture Kit (CC0-1.0)."
+                prepend references = @./props/lamp_desk.usda@</LampDesk>
+            )
+            {
+            }
         }
 
         # ---- Devices ---------------------------------------
-
-        # Monitor (static, box collider)
-        def "OfficeMonitorRoot" (
-            doc = "Wide monitor / screen. Source: Kenney Furniture Kit (CC0-1.0)."
-            prepend payload = @./props/office-monitor.usda@</OfficeMonitorRoot>
+        def Xform "Devices" (
+            doc = "Electronic devices: monitors, laptop, keyboard."
         )
         {
-            double3 xformOp:translate = (0.1, 0.76, -0.25)
-            uniform token[] xformOpOrder = ["xformOp:translate"]
-        }
+            def Xform "MonitorWide" (
+                doc = "Wide monitor / screen. Source: Kenney Furniture Kit (CC0-1.0)."
+                prepend references = @./props/monitor_wide.usda@</MonitorWide>
+            )
+            {
+            }
 
-        # Laptop (dynamic, box collider, 2.0 kg)
-        def "OfficeLaptopRoot" (
-            doc = "Laptop computer. Source: Kenney Furniture Kit (CC0-1.0)."
-            prepend payload = @./props/office-laptop.usda@</OfficeLaptopRoot>
-        )
-        {
-            double3 xformOp:translate = (-0.3, 0.76, 0.05)
-            uniform token[] xformOpOrder = ["xformOp:translate"]
-        }
+            def Xform "Laptop" (
+                doc = "Laptop computer. Source: Kenney Furniture Kit (CC0-1.0)."
+                prepend references = @./props/laptop.usda@</Laptop>
+            )
+            {
+            }
 
-        # Keyboard (dynamic, box collider, 0.5 kg)
-        def "OfficeKeyboardRoot" (
-            doc = "Keyboard. Source: Kenney Furniture Kit (CC0-1.0)."
-            prepend payload = @./props/office-keyboard.usda@</OfficeKeyboardRoot>
-        )
-        {
-            double3 xformOp:translate = (0.0, 0.76, 0.15)
-            uniform token[] xformOpOrder = ["xformOp:translate"]
+            def Xform "Keyboard" (
+                doc = "Keyboard. Source: Kenney Furniture Kit (CC0-1.0)."
+                prepend references = @./props/keyboard.usda@</Keyboard>
+            )
+            {
+            }
         }
 
         # ---- Containers ------------------------------------
-
-        # Trash Can (dynamic, cylinder collider, 1.5 kg)
-        def "OfficeTrashCanRoot" (
-            doc = "Waste bin. Source: Kenney Furniture Kit (CC0-1.0)."
-            prepend payload = @./props/office-trash-can.usda@</OfficeTrashCanRoot>
+        def Xform "Containers" (
+            doc = "Bins, boxes, and storage containers."
         )
         {
-            double3 xformOp:translate = (0.8, 0.0, 0.5)
-            uniform token[] xformOpOrder = ["xformOp:translate"]
+            def Xform "TrashCan" (
+                doc = "Waste bin. Source: Kenney Furniture Kit (CC0-1.0)."
+                prepend references = @./props/trash_can.usda@</TrashCan>
+            )
+            {
+            }
         }
 
         # ---- Clutter / accessories -------------------------
-
-        # Book Stack (dynamic, box collider, 0.8 kg)
-        def "OfficeBookStackRoot" (
-            doc = "Book stack. Source: Eclair Everyday Home & Desk Props (CC0-1.0)."
-            prepend payload = @./props/office-book-stack.usda@</OfficeBookStackRoot>
+        def Xform "Clutter" (
+            doc = "Small dynamic props: mugs, books, notebooks."
         )
         {
-            double3 xformOp:translate = (0.4, 0.76, -0.1)
-            uniform token[] xformOpOrder = ["xformOp:translate"]
-        }
+            def Xform "Mug" (
+                doc = "Coffee mug / cup. Source: Eclair Home Desk Props (CC0-1.0)."
+                prepend references = @./props/mug.usda@</Mug>
+            )
+            {
+            }
 
-        # Coffee Cup (dynamic, cylinder collider, 0.3 kg, restitution=0.1)
-        def "OfficeCoffeeCupRoot" (
-            doc = "Coffee mug. Source: Eclair Everyday Home & Desk Props (CC0-1.0)."
-            prepend payload = @./props/office-coffee-cup.usda@</OfficeCoffeeCupRoot>
-        )
-        {
-            double3 xformOp:translate = (-0.4, 0.76, 0.2)
-            uniform token[] xformOpOrder = ["xformOp:translate"]
-        }
+            def Xform "Book" (
+                doc = "Book / book stack. Source: Eclair Home Desk Props (CC0-1.0)."
+                prepend references = @./props/book.usda@</Book>
+            )
+            {
+            }
 
-        # Notebook (dynamic, box collider, 0.2 kg)
-        def "OfficeNotebookRoot" (
-            doc = "Spiral notebook. Source: Eclair Everyday Home & Desk Props (CC0-1.0)."
-            prepend payload = @./props/office-notebook.usda@</OfficeNotebookRoot>
-        )
-        {
-            double3 xformOp:translate = (0.2, 0.76, 0.25)
-            uniform token[] xformOpOrder = ["xformOp:translate"]
+            def Xform "Notebook" (
+                doc = "Spiral notebook. Source: Eclair Home Desk Props (CC0-1.0)."
+                prepend references = @./props/notebook.usda@</Notebook>
+            )
+            {
+            }
         }
     }
 
@@ -196,22 +179,21 @@ def Xform "World" (
     #  Lights
     # --------------------------------------------------------
     def Xform "Lights" (
-        doc = "Scene lights for the office environment."
+        doc = "Scene lighting rig."
     )
     {
-        # Ambient dome light — soft neutral fill from all directions.
+        # Ambient dome — fills the scene with a neutral daylight tone.
         def DomeLight "AmbientDome" (
-            doc = "Ambient dome light providing soft neutral fill illumination."
+            doc = "Ambient dome light — neutral daylight fill."
         )
         {
-            float inputs:intensity = 0.6
+            float inputs:intensity = 400
             color3f inputs:color = (1, 1, 1)
-            token texture:format = "latlong"
         }
 
-        # Key light — simulates a window or ceiling fixture from upper-right.
+        # Key light — warm directional light from upper-right.
         def DistantLight "KeyLight" (
-            doc = "Directional key light simulating a ceiling fixture from upper-right."
+            doc = "Key light — warm directional from upper-right."
         )
         {
             float inputs:intensity = 2500
