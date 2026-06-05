@@ -40,6 +40,8 @@ Do not erase chat history during baseline reset unless a separate new-session ac
 - [x] #3 Unit tests cover representative full state flows and reset behavior.
 <!-- AC:END -->
 
+
+
 ## Implementation Notes
 
 <!-- SECTION:NOTES:BEGIN -->
