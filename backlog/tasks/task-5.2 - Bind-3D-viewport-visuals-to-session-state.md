@@ -4,7 +4,7 @@ title: Bind 3D viewport visuals to session state
 status: Done
 assignee: []
 created_date: '2026-06-02 22:12'
-updated_date: '2026-06-05 03:23'
+updated_date: '2026-06-05 03:24'
 labels: []
 dependencies:
   - TASK-5.1
@@ -52,7 +52,7 @@ MERGE CONFLICT RESOLVED: Rebased onto origin/dev. Git auto-detected that 65856cd
 ## Final Summary
 
 <!-- SECTION:FINAL_SUMMARY:BEGIN -->
-Bound 3D viewport visuals to live session state. AppShell.tsx reads agent/environment/selectedObjectId from useRendererProps() (session selectors) and routes view events to dispatch via useSessionDispatch(). SceneEnvironment derives lighting parameters from EnvironmentState.timeOfDay/lighting/preset via deriveSceneLighting(). AgentAvatar reflects avatarPreset, idlePose, and accentColor. AethelViewport exposes data-avatar-preset, data-idle-pose, data-accent-color, data-environment-preset, data-time-of-day, data-lighting, and data-enabled-objects HTML attributes for test assertions. ViewEvents are emitted via onViewEvent without any direct state mutation inside the renderer. All 3 acceptance criteria satisfied. 281 tests pass.
+Merge conflict resolved. Rebased TASK-5.2 branch onto origin/dev. Git auto-detected that the code commit (65856cd) was already merged into dev via PR #38 (as 7976f5e) and skipped it cleanly. The 4 remaining backlog task-file commits applied without conflict. All 281 tests pass post-rebase. Force-pushed branch and removed merge-conflict label.
 <!-- SECTION:FINAL_SUMMARY:END -->
 
 ## Comments
