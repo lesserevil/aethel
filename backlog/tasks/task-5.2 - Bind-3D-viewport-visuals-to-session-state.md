@@ -4,7 +4,7 @@ title: Bind 3D viewport visuals to session state
 status: Done
 assignee: []
 created_date: '2026-06-02 22:12'
-updated_date: '2026-06-05 03:15'
+updated_date: '2026-06-05 03:20'
 labels: []
 dependencies:
   - TASK-5.1
@@ -41,23 +41,13 @@ Do not create a parallel renderer-only state model. Avoid expensive full scene r
 - [x] #3 Viewport emits selection/camera events without direct shared-state mutation.
 <!-- AC:END -->
 
+
+
 ## Implementation Notes
 
 <!-- SECTION:NOTES:BEGIN -->
-UNDERSTANDING: AppShell.tsx passes hardcoded baselineSession values to AethelViewport instead of live session state. Fix: (1) AppShell uses useRendererProps()+useSessionDispatch() for live state, (2) SceneEnvironment consumes EnvironmentState for lighting/timeOfDay/preset, (3) AgentAvatar reflects avatarPreset+idlePose, (4) onViewEvent dispatches session/selected_object_change. All with tests.
-
-DISCOVERY: All core bindings implemented. Adding data-preset/data-time-of-day/data-lighting attributes to SceneEnvironment group for verifiable integration tests of environment state flow. Writing AppShell+AethelViewport tests that prove environment preset/lighting changes visible in scene output.
-
-UNDERSTANDING: All core bindings are already in place and all 273 tests pass. Final step: add data-time-of-day and data-lighting attributes to AethelViewport wrapper div plus matching integration tests for environment lighting state flow.
-
-COMPLETION: All 3 acceptance criteria satisfied. (1) Agent appearance: AgentAvatar reads avatarPreset/idlePose/accentColor; viewport exposes data-avatar-preset, data-idle-pose, data-accent-color attributes; name label shows displayName styled with accentColor. (2) Environment: SceneEnvironment.deriveSceneLighting() maps timeOfDay+lighting+preset to light parameters; viewport exposes data-environment-preset, data-time-of-day, data-lighting, data-enabled-objects. (3) No direct state mutation: AppShell.handleViewEvent routes onViewEvent callbacks to dispatch only. All 281 tests pass (make test). Build clean (make build). Lint clean (make lint).
+COMPLETION: All 3 acceptance criteria satisfied and verified. (1) Agent appearance: AgentAvatar reads avatarPreset/idlePose/accentColor from session state; viewport exposes data-avatar-preset, data-idle-pose, data-accent-color attributes; name label shows displayName styled with accentColor. (2) Environment: SceneEnvironment.deriveSceneLighting() maps timeOfDay+lighting+preset to light parameters; viewport exposes data-environment-preset, data-time-of-day, data-lighting, data-enabled-objects. (3) No direct state mutation: AppShell.handleViewEvent routes onViewEvent callbacks to dispatch only. All 281 tests pass (make test). Build clean (make build). Lint clean 0 errors (make lint).
 <!-- SECTION:NOTES:END -->
-
-## Final Summary
-
-<!-- SECTION:FINAL_SUMMARY:BEGIN -->
-Bound 3D viewport visuals to live session state. AppShell.tsx reads agent/environment/selectedObjectId from useRendererProps() (session selectors) and routes view events to dispatch via useSessionDispatch(). SceneEnvironment derives lighting parameters from EnvironmentState.timeOfDay/lighting/preset via deriveSceneLighting(). AgentAvatar reflects avatarPreset, idlePose, and accentColor. AethelViewport exposes data-avatar-preset, data-idle-pose, data-accent-color, data-environment-preset, data-time-of-day, data-lighting, and data-enabled-objects HTML attributes for test assertions. ViewEvents are emitted via onViewEvent without any direct state mutation inside the renderer. All 3 acceptance criteria satisfied. 281 tests pass.
-<!-- SECTION:FINAL_SUMMARY:END -->
 
 ## Comments
 <!-- COMMENTS:BEGIN -->
@@ -100,6 +90,39 @@ Agent dispatched (profile: default)
 index: 6
 author: oompah
 created: 2026-06-05 03:13
+
+Agent dispatched (profile: default)
+<!-- COMMENT:END -->
+<!-- COMMENT:BEGIN -->
+index: 7
+author: oompah
+created: 2026-06-05 03:13
+
+Focus: Integration Tests Session Specialist
+<!-- COMMENT:END -->
+<!-- COMMENT:BEGIN -->
+index: 8
+author: oompah
+created: 2026-06-05 03:16
+
+Agent completed successfully in 187s (6530 tokens)
+<!-- COMMENT:END -->
+<!-- COMMENT:BEGIN -->
+index: 9
+author: oompah
+created: 2026-06-05 03:16
+
+Run #1 [attempt=1, profile=default, role=fast -> Claude/default]
+- Turns: 68, Tool calls: 48
+- Tokens: 36 in / 6.5K out [6.5K total]
+- Cost: $0.0000
+- Exit: normal, Duration: 3m 7s
+- Log: TASK-5.2__20260605T031306Z.jsonl
+<!-- COMMENT:END -->
+<!-- COMMENT:BEGIN -->
+index: 10
+author: oompah
+created: 2026-06-05 03:18
 
 Agent dispatched (profile: default)
 <!-- COMMENT:END -->
