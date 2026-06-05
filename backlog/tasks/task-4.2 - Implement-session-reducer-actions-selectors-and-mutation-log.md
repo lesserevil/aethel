@@ -4,7 +4,7 @@ title: Implement session reducer actions selectors and mutation log
 status: Done
 assignee: []
 created_date: '2026-06-02 22:11'
-updated_date: '2026-06-05 02:45'
+updated_date: '2026-06-05 02:56'
 labels: []
 dependencies:
   - TASK-4.1
@@ -44,12 +44,14 @@ Do not erase chat history during baseline reset unless a separate new-session ac
 
 <!-- SECTION:NOTES:BEGIN -->
 Verification: 270 tests passing across all state module files (sessionReducer, sessionSelectors, mutationLog, baselineSession, SessionProvider). TypeScript clean. fmt-check passing. All acceptance criteria satisfied: reducer handles all action types with immutable transitions; selectors return stable references without mutation; full flow serialization tests pass; reset preserves chat history; provider-level tests confirm context dispatch and hook behavior.
+
+Merge conflict resolution: Rebased onto origin/dev. The TypeScript fix commit (017b835) was already in dev via PR #16 and correctly skipped. Remaining 2 bookkeeping commits landed cleanly. 273 tests pass, build clean, lint 0 errors. Force-pushed with --force-with-lease.
 <!-- SECTION:NOTES:END -->
 
 ## Final Summary
 
 <!-- SECTION:FINAL_SUMMARY:BEGIN -->
-Implemented complete session state layer under web/src/state/ using React useReducer + context. Delivered: sessionTypes.ts (all shared types including BehaviorState, MutationSource/Target/Status), sessionActions.ts (13 typed action creators), sessionReducer.ts (pure immutable reducer for all action types), sessionSelectors.ts (selectChatContext, selectRendererProps, selectChatRequestContext), mutationLog.ts (createMutationRecord with injectable ID/timestamp), baselineSession.ts (baseline + chat-seeded fixtures), SessionProvider.tsx (SessionProvider, useSessionState, useSessionDispatch, useChatContext, useRendererProps hooks). All 270 tests pass. TypeScript clean. Formatting passes. All 3 acceptance criteria satisfied.
+Merge conflict resolved (MR #37): rebased TASK-4.2 branch onto origin/dev (which includes TASK-8.2 commit 2afd632). Resolved single conflict in backlog task updated_date field. All 4 bookkeeping commits preserved. 273 tests pass. Force-pushed to origin/TASK-4.2.
 <!-- SECTION:FINAL_SUMMARY:END -->
 
 ## Comments
