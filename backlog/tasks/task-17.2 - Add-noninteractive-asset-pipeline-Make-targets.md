@@ -1,9 +1,10 @@
 ---
 id: TASK-17.2
 title: Add noninteractive asset pipeline Make targets
-status: Backlog
+status: In Progress
 assignee: []
 created_date: '2026-06-05 01:53'
+updated_date: '2026-06-05 05:31'
 labels: []
 dependencies:
   - TASK-17.1
@@ -41,3 +42,20 @@ Do not add docs for commands before the Make targets exist. Do not open Blender 
 - [ ] #1 make help lists assets-build, assets-validate, and assets-export-web.
 - [ ] #2 Asset scripts run non-interactively and report missing optional tools clearly.
 <!-- AC:END -->
+
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+Discovery: TASK-17.1 done. assets/sources/office/manifest.json exists with 10 assets. assets/usd/office/ and assets/exports/web/office/ are empty (gitkeep). Makefile uses ## comments for help. Will create 3 scripts + common.sh, update Makefile, create docs/asset-pipeline.md, and a vitest test.
+<!-- SECTION:NOTES:END -->
+
+## Comments
+<!-- COMMENTS:BEGIN -->
+<!-- COMMENT:BEGIN -->
+index: 1
+author: oompah
+created: 2026-06-05 05:27
+
+Agent dispatched (profile: default)
+<!-- COMMENT:END -->
+<!-- COMMENTS:END -->

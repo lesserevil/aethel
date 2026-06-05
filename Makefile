@@ -6,7 +6,8 @@
 
 .DEFAULT_GOAL := help
 
-.PHONY: help init run fmt fmt-check build test test-e2e lint clean
+.PHONY: help init run fmt fmt-check build test test-e2e lint clean \
+        assets-build assets-validate assets-export-web
 
 BACKLOG_SOURCE ?= github:lesserevil/Backlog.md
 BACKLOG_CLI ?= bun x --bun $(BACKLOG_SOURCE)
@@ -86,3 +87,22 @@ lint: ## Run static analysis / linters.
 
 clean: ## Remove build artifacts.
 	rm -rf $(WEB_DIR)/dist $(WEB_DIR)/coverage $(WEB_DIR)/playwright-report
+
+# ─── Asset pipeline ────────────────────────────────────────────────
+# Non-interactive USD asset pipeline.  Each target delegates to a
+# backing script under scripts/assets/.  Run from the repo root.
+#
+# Tools such as Blender and usd-core are OPTIONAL — the scripts check
+# for them and print actionable install instructions when missing.
+# GPU hardware, Omniverse, Nucleus, and RTX rendering are NOT required.
+#
+# See docs/asset-pipeline.md for full usage and install instructions.
+
+assets-build: ## Convert source GLB/glTF assets to canonical USD (requires Blender).
+	scripts/assets/assets-build.sh
+
+assets-validate: ## Validate USD assets in assets/usd/office/ (requires usd-core).
+	scripts/assets/assets-validate.sh
+
+assets-export-web: ## Export canonical USD assets to web GLB files (requires Blender).
+	scripts/assets/assets-export-web.sh
