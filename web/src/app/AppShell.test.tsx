@@ -203,6 +203,41 @@ describe("AppShell — session state binding", () => {
     expect(enabledObjects).not.toContain("obj-003");
   });
 
+  // ── Environment lighting state → viewport ────────────────────────────
+
+  it("reflects updated timeOfDay from live session on viewport data attribute", () => {
+    renderWithSession({
+      environment: {
+        ...baselineSession.environment,
+        timeOfDay: "night",
+      },
+    });
+    const viewport = screen.getByTestId("aethel-viewport");
+    expect(viewport).toHaveAttribute("data-time-of-day", "night");
+  });
+
+  it("reflects updated lighting from live session on viewport data attribute", () => {
+    renderWithSession({
+      environment: {
+        ...baselineSession.environment,
+        lighting: "dramatic",
+      },
+    });
+    const viewport = screen.getByTestId("aethel-viewport");
+    expect(viewport).toHaveAttribute("data-lighting", "dramatic");
+  });
+
+  it("reflects updated environment preset from live session on viewport data attribute", () => {
+    renderWithSession({
+      environment: {
+        ...baselineSession.environment,
+        preset: "outdoor",
+      },
+    });
+    const viewport = screen.getByTestId("aethel-viewport");
+    expect(viewport).toHaveAttribute("data-environment-preset", "outdoor");
+  });
+
   // ── View event → dispatch (no direct state mutation) ─────────────────
 
   it("dispatches session/selected_object_change on background click", () => {

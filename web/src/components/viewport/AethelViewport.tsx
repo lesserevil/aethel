@@ -131,6 +131,9 @@ export function AethelViewport({
       data-idle-pose={agent.appearance.idlePose}
       data-accent-color={agent.appearance.accentColor}
       data-environment-preset={environment.preset}
+      // Time-of-day and lighting from environment state — exposed for test assertions
+      data-time-of-day={environment.timeOfDay}
+      data-lighting={environment.lighting}
       // Comma-separated IDs of enabled scene objects for test assertions
       data-enabled-objects={environment.objects
         .filter((o) => o.enabled)
