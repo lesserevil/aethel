@@ -131,7 +131,7 @@ describe("SessionProvider – dispatch through context", () => {
         <EnvTest />
       </SessionProvider>,
     );
-    expect(screen.getByTestId("preset").textContent).toBe("laboratory");
+    expect(screen.getByTestId("preset").textContent).toBe("office");
     act(() => screen.getByTestId("change-btn").click());
     expect(screen.getByTestId("preset").textContent).toBe("outdoor");
   });
@@ -237,7 +237,7 @@ describe("useRendererProps hook", () => {
       </SessionProvider>,
     );
     expect(screen.getByTestId("agent-name").textContent).toBe("Aethel Agent");
-    expect(screen.getByTestId("env-preset").textContent).toBe("laboratory");
+    expect(screen.getByTestId("env-preset").textContent).toBe("office");
     expect(screen.getByTestId("sel-obj").textContent).toBe("none");
   });
 });

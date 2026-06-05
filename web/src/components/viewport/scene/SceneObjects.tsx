@@ -1,12 +1,20 @@
-// SceneObjects — renders enabled scene objects as procedural primitives
-// Maps object types to Three.js primitive geometries.
-// No external assets, GLTF, or art pipeline dependencies.
+// SceneObjects — renders enabled scene objects.
+//
+// When an object has an `assetId` the renderer loads the corresponding GLB
+// from the manifest via `OfficeAsset` (with Suspense + ErrorBoundary fallbacks).
+// When no `assetId` is present the renderer falls back to a procedural
+// primitive so tests and unrecognised object types always have visible geometry.
+//
+// Design constraint: No Three.js or R3F objects escape this module.
+// All external state is read from `SceneObjectState` — plain serializable data.
 
 // Side-effect import: activates the global JSX.IntrinsicElements augmentation
 // from @react-three/fiber so TypeScript recognises <mesh>, <group>, etc.
 import "@react-three/fiber";
 import type { SceneObjectState } from "../../../state/sessionTypes";
 import type { ViewEvent } from "../types";
+import { getAssetById } from "../../../assets/officeAssetManifest";
+import { OfficeAsset } from "./OfficeAsset";
 
 interface SceneObjectsProps {
   objects: SceneObjectState[];
@@ -43,7 +51,8 @@ function getPrimitiveProps(type: string): {
   }
 }
 
-function SceneObject({
+/** Procedural fallback — rendered for objects without an assetId. */
+function ProceduralObject({
   obj,
   isSelected,
   onViewEvent,
@@ -103,6 +112,56 @@ function SceneObject({
       />
     </mesh>
   );
+}
+
+/**
+ * SceneObject — renders a single enabled scene object.
+ *
+ * Delegates to `OfficeAsset` when the object references a manifest entry via
+ * `assetId`; falls back to `ProceduralObject` for objects without an assetId
+ * or when the assetId does not resolve to a known manifest entry.
+ */
+function SceneObject({
+  obj,
+  isSelected,
+  onViewEvent,
+}: {
+  obj: SceneObjectState;
+  isSelected: boolean;
+  onViewEvent?: (event: ViewEvent) => void;
+}) {
+  // Resolve manifest entry — undefined if assetId is missing or unknown.
+  const manifestEntry = obj.assetId ? getAssetById(obj.assetId) : undefined;
+
+  if (manifestEntry) {
+    // Build transform overrides from SceneObjectState when present.
+    const pos = obj.position;
+    const rot = obj.rotation;
+    const scl = obj.scale;
+    const DEG_TO_RAD = Math.PI / 180;
+
+    const position: [number, number, number] | undefined = pos
+      ? [pos.x, pos.y, pos.z]
+      : undefined;
+    const rotation: [number, number, number] | undefined = rot
+      ? [rot.x * DEG_TO_RAD, rot.y * DEG_TO_RAD, rot.z * DEG_TO_RAD]
+      : undefined;
+    const scale: [number, number, number] | undefined = scl
+      ? [scl.x, scl.y, scl.z]
+      : undefined;
+
+    return (
+      <OfficeAsset
+        entry={manifestEntry}
+        position={position}
+        rotation={rotation}
+        scale={scale}
+      />
+    );
+  }
+
+  // No assetId or unknown assetId — render a procedural primitive.
+  return <ProceduralObject obj={obj} isSelected={isSelected} onViewEvent={onViewEvent} />;
 }
 
 export function SceneObjects({
