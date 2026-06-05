@@ -4,7 +4,7 @@ title: Bind 3D viewport visuals to session state
 status: In Progress
 assignee: []
 created_date: '2026-06-02 22:12'
-updated_date: '2026-06-05 03:03'
+updated_date: '2026-06-05 03:15'
 labels: []
 dependencies:
   - TASK-5.1
@@ -36,10 +36,12 @@ Do not create a parallel renderer-only state model. Avoid expensive full scene r
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 Agent appearance changes update visible avatar/name/accent state.
-- [ ] #2 Environment and object state changes update visible scene output.
-- [ ] #3 Viewport emits selection/camera events without direct shared-state mutation.
+- [x] #1 Agent appearance changes update visible avatar/name/accent state.
+- [x] #2 Environment and object state changes update visible scene output.
+- [x] #3 Viewport emits selection/camera events without direct shared-state mutation.
 <!-- AC:END -->
+
+
 
 ## Implementation Notes
 
@@ -49,6 +51,8 @@ UNDERSTANDING: AppShell.tsx passes hardcoded baselineSession values to AethelVie
 DISCOVERY: All core bindings implemented. Adding data-preset/data-time-of-day/data-lighting attributes to SceneEnvironment group for verifiable integration tests of environment state flow. Writing AppShell+AethelViewport tests that prove environment preset/lighting changes visible in scene output.
 
 UNDERSTANDING: All core bindings are already in place and all 273 tests pass. Final step: add data-time-of-day and data-lighting attributes to AethelViewport wrapper div plus matching integration tests for environment lighting state flow.
+
+COMPLETION: All 3 acceptance criteria satisfied. (1) Agent appearance: AgentAvatar reads avatarPreset/idlePose/accentColor; viewport exposes data-avatar-preset, data-idle-pose, data-accent-color attributes; name label shows displayName styled with accentColor. (2) Environment: SceneEnvironment.deriveSceneLighting() maps timeOfDay+lighting+preset to light parameters; viewport exposes data-environment-preset, data-time-of-day, data-lighting, data-enabled-objects. (3) No direct state mutation: AppShell.handleViewEvent routes onViewEvent callbacks to dispatch only. All 281 tests pass (make test). Build clean (make build). Lint clean (make lint).
 <!-- SECTION:NOTES:END -->
 
 ## Comments
@@ -85,6 +89,13 @@ Agent dispatched (profile: default)
 index: 5
 author: oompah
 created: 2026-06-05 03:02
+
+Agent dispatched (profile: default)
+<!-- COMMENT:END -->
+<!-- COMMENT:BEGIN -->
+index: 6
+author: oompah
+created: 2026-06-05 03:13
 
 Agent dispatched (profile: default)
 <!-- COMMENT:END -->
