@@ -4,7 +4,7 @@ title: Add Playwright e2e layout chat and nonblank viewport checks
 status: In Progress
 assignee: []
 created_date: '2026-06-02 22:12'
-updated_date: '2026-06-04 17:47'
+updated_date: '2026-06-05 02:44'
 labels: []
 dependencies:
   - TASK-8.1
@@ -47,6 +47,8 @@ Do not only assert that a canvas element exists. Avoid flaky sleeps; wait for ex
 UNDERSTANDING: Task requires adding Playwright e2e tests. Web app already has playwright.config.ts configured with Chromium. Need to create web/tests/e2e/ directory with tests for: 3-column desktop layout, narrow viewport no-overlap, nonblank canvas pixel check, control mutation flow, chat with context. Will also add e2e script to package.json and Makefile.
 
 UNDERSTANDING: The e2e test infrastructure is already committed (commit a37d68c). Files include: web/tests/e2e/layout.spec.ts, viewport.spec.ts, chat.spec.ts, controls.spec.ts, plus playwright.config.ts, docs/e2e-testing.md, and Makefile test-e2e target. Verifying tests work and closing task.
+
+UNDERSTANDING (2026-06-05): E2e test infrastructure already committed in previous runs (commit 310494b). All 4 spec files exist (layout, viewport, chat, controls) with full coverage of AC #1-3. Unit tests (273) all pass. TypeScript and formatter clean. Chrome at /usr/bin/google-chrome. Now verifying the Playwright tests actually execute correctly.
 <!-- SECTION:NOTES:END -->
 
 ## Comments
@@ -137,6 +139,27 @@ Focus: Integration Tests Session Specialist
 index: 12
 author: oompah
 created: 2026-06-04 17:43
+
+Agent dispatched (profile: default)
+<!-- COMMENT:END -->
+<!-- COMMENT:BEGIN -->
+index: 13
+author: oompah
+created: 2026-06-05 02:36
+
+Agent dispatched (profile: default)
+<!-- COMMENT:END -->
+<!-- COMMENT:BEGIN -->
+index: 14
+author: oompah
+created: 2026-06-05 02:36
+
+Focus: Integration Tests Session Specialist
+<!-- COMMENT:END -->
+<!-- COMMENT:BEGIN -->
+index: 15
+author: oompah
+created: 2026-06-05 02:42
 
 Agent dispatched (profile: default)
 <!-- COMMENT:END -->
