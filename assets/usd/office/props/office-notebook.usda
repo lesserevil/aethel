@@ -19,11 +19,11 @@ def Xform "OfficeNotebookRoot" (
     customData = {
         string physicsBodyType = "dynamic"
         string physicsColliderType = "box"
-        float3 physicsDimensions = (0.2, 0.01, 0.15)
+        float3 physicsDimensions = (0.2, 0.03, 0.15)
         string semanticLabel = "lined paper notebook for notes and sketches"
         string assetId = "office-notebook"
-        string sourceId = "eclair-home-desk-props"
-        string sourceUrl = "https://eclair-assets.itch.io/everyday-home-desk-props-glb-pack-30-free-cc0-3d-models"
+        string sourceId = "aethel-generated-office-props"
+        string sourceUrl = "https://github.com/lesserevil/aethel/tree/dev/scripts/assets"
         string licenseId = "cc0-1.0"
         string licenseUrl = "https://creativecommons.org/publicdomain/zero/1.0/"
         string usdPrimPath = "/World/Office/OfficeNotebookRoot"
@@ -36,14 +36,14 @@ def Xform "OfficeNotebookRoot" (
 )
 {
     # Box collision primitive — separate from the render mesh.
-    # Scale: 0.2m x 0.01m x 0.15m (width x height x depth).
-    # The thin profile (0.01m height) accurately represents a closed notebook.
+    # Scale: 0.2m x 0.03m x 0.15m (width x height x depth).
+    # The thin profile (0.03m height) represents a closed notebook with a raised spiral.
     def Cube "ColliderBox" (
         prepend apiSchemas = ["PhysicsCollisionAPI"]
-        doc = "Box collider for office-notebook: width=0.2m height=0.01m depth=0.15m"
+        doc = "Box collider for office-notebook: width=0.2m height=0.03m depth=0.15m"
     )
     {
-        double3 xformOp:scale = (0.2, 0.01, 0.15)
+        double3 xformOp:scale = (0.2, 0.03, 0.15)
         uniform token[] xformOpOrder = ["xformOp:scale"]
     }
 

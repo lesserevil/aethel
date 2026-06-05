@@ -8,6 +8,7 @@
 
 .PHONY: help init run run-api fmt fmt-check build test test-api test-e2e lint clean \
         assets-build assets-validate assets-validate-test assets-export-web \
+        assets-populate-runtime \
         physics-harness-dry-run physics-harness physics-harness-test \
         smoke-nemotron smoke-nemotron-dry-run smoke-nemotron-test
 
@@ -126,6 +127,9 @@ assets-validate-test: ## Run unit tests for the USD Physics metadata validator.
 
 assets-export-web: ## Export canonical USD assets to web GLB files (requires Blender).
 	scripts/assets/assets-export-web.sh
+
+assets-populate-runtime: ## Populate checked-in MVP office runtime GLBs from Kenney + local generated props.
+	node scripts/assets/populate-office-runtime-glbs.mjs
 
 # ─── Newton physics evaluation harness (optional) ──────────────────────────
 # Newton and NVIDIA Warp are OPTIONAL dependencies.  These targets do not

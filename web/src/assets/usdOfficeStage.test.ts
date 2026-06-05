@@ -122,7 +122,7 @@ const PROP_SPECS: PropSpec[] = [
     file: "office-coffee-cup.usda",
     defaultPrim: "OfficeCoffeeCupRoot",
     usdPrimPath: "/World/Office/OfficeCoffeeCupRoot",
-    sourceId: "eclair-home-desk-props",
+    sourceId: "aethel-generated-office-props",
     licenseId: "cc0-1.0",
   },
   {
@@ -130,7 +130,7 @@ const PROP_SPECS: PropSpec[] = [
     file: "office-book-stack.usda",
     defaultPrim: "OfficeBookStackRoot",
     usdPrimPath: "/World/Office/OfficeBookStackRoot",
-    sourceId: "eclair-home-desk-props",
+    sourceId: "kenney-furniture-kit",
     licenseId: "cc0-1.0",
   },
   {
@@ -138,7 +138,7 @@ const PROP_SPECS: PropSpec[] = [
     file: "office-notebook.usda",
     defaultPrim: "OfficeNotebookRoot",
     usdPrimPath: "/World/Office/OfficeNotebookRoot",
-    sourceId: "eclair-home-desk-props",
+    sourceId: "aethel-generated-office-props",
     licenseId: "cc0-1.0",
   },
 ];

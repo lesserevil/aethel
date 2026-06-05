@@ -19,7 +19,7 @@ def Xform "OfficeLaptopRoot" (
     customData = {
         string physicsBodyType = "dynamic"
         string physicsColliderType = "box"
-        float3 physicsDimensions = (0.35, 0.02, 0.25)
+        float3 physicsDimensions = (0.35, 0.22, 0.32)
         string semanticLabel = "portable laptop computer"
         string assetId = "office-laptop"
         string sourceId = "kenney-furniture-kit"
@@ -36,14 +36,14 @@ def Xform "OfficeLaptopRoot" (
 )
 {
     # Box collision primitive — separate from the render mesh.
-    # Scale: 0.35m x 0.02m x 0.25m (width x height x depth).
-    # The thin profile (0.02m height) matches a closed laptop lid.
+    # Scale: 0.35m x 0.22m x 0.32m (width x height x depth).
+    # The open-lid profile matches the committed Kenney laptop runtime GLB.
     def Cube "ColliderBox" (
         prepend apiSchemas = ["PhysicsCollisionAPI"]
-        doc = "Box collider for office-laptop: width=0.35m height=0.02m depth=0.25m"
+        doc = "Box collider for office-laptop: width=0.35m height=0.22m depth=0.32m"
     )
     {
-        double3 xformOp:scale = (0.35, 0.02, 0.25)
+        double3 xformOp:scale = (0.35, 0.22, 0.32)
         uniform token[] xformOpOrder = ["xformOp:scale"]
     }
 

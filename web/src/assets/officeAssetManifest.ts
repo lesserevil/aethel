@@ -6,7 +6,7 @@
 //
 // Sources:
 //   Kenney Furniture Kit — https://poly.pizza/bundle/Furniture-Kit-NoG1sEUD1z
-//   Eclair Everyday Home & Desk Props — https://eclair-assets.itch.io/everyday-home-desk-props-glb-pack-30-free-cc0-3d-models
+//   Aethel generated office props — https://github.com/lesserevil/aethel/tree/dev/scripts/assets
 //
 // License: CC0 1.0 Universal — https://creativecommons.org/publicdomain/zero/1.0/
 
@@ -101,11 +101,11 @@ const KENNEY_SOURCE_URL = "https://poly.pizza/bundle/Furniture-Kit-NoG1sEUD1z";
 const KENNEY_LICENSE_ID = "CC0-1.0";
 const KENNEY_LICENSE_URL = "https://creativecommons.org/publicdomain/zero/1.0/";
 
-const ECLAIR_SOURCE_NAME = "Eclair Everyday Home & Desk Props";
-const ECLAIR_SOURCE_URL =
-  "https://eclair-assets.itch.io/everyday-home-desk-props-glb-pack-30-free-cc0-3d-models";
-const ECLAIR_LICENSE_ID = "CC0-1.0";
-const ECLAIR_LICENSE_URL = "https://creativecommons.org/publicdomain/zero/1.0/";
+const AETHEL_GENERATED_SOURCE_NAME = "Aethel Generated Office Props";
+const AETHEL_GENERATED_SOURCE_URL =
+  "https://github.com/lesserevil/aethel/tree/dev/scripts/assets";
+const AETHEL_GENERATED_LICENSE_ID = "CC0-1.0";
+const AETHEL_GENERATED_LICENSE_URL = "https://creativecommons.org/publicdomain/zero/1.0/";
 
 const defaultScale = { x: 1, y: 1, z: 1 };
 const noRotation = { x: 0, y: 0, z: 0 };
@@ -189,7 +189,7 @@ export const OFFICE_ASSET_MANIFEST: OfficeAssetEntry[] = [
       rotation: noRotation,
       scale: defaultScale,
     },
-    dimensions: { width: 0.35, height: 0.02, depth: 0.25 },
+    dimensions: { width: 0.35, height: 0.22, depth: 0.32 },
     bodyType: "dynamic",
     colliderType: "box",
     massKg: 2.0,
@@ -270,10 +270,10 @@ export const OFFICE_ASSET_MANIFEST: OfficeAssetEntry[] = [
     semanticLabel: "small stack of books on the desk",
     category: "clutter",
     url: "/assets/office/office-book-stack.glb",
-    sourceName: ECLAIR_SOURCE_NAME,
-    sourceUrl: ECLAIR_SOURCE_URL,
-    licenseId: ECLAIR_LICENSE_ID,
-    licenseUrl: ECLAIR_LICENSE_URL,
+    sourceName: KENNEY_SOURCE_NAME,
+    sourceUrl: KENNEY_SOURCE_URL,
+    licenseId: KENNEY_LICENSE_ID,
+    licenseUrl: KENNEY_LICENSE_URL,
     defaultTransform: {
       position: { x: 0.4, y: 0.76, z: -0.1 },
       rotation: noRotation,
@@ -293,10 +293,10 @@ export const OFFICE_ASSET_MANIFEST: OfficeAssetEntry[] = [
     semanticLabel: "ceramic coffee cup on the desk",
     category: "clutter",
     url: "/assets/office/office-coffee-cup.glb",
-    sourceName: ECLAIR_SOURCE_NAME,
-    sourceUrl: ECLAIR_SOURCE_URL,
-    licenseId: ECLAIR_LICENSE_ID,
-    licenseUrl: ECLAIR_LICENSE_URL,
+    sourceName: AETHEL_GENERATED_SOURCE_NAME,
+    sourceUrl: AETHEL_GENERATED_SOURCE_URL,
+    licenseId: AETHEL_GENERATED_LICENSE_ID,
+    licenseUrl: AETHEL_GENERATED_LICENSE_URL,
     defaultTransform: {
       position: { x: -0.4, y: 0.76, z: 0.2 },
       rotation: noRotation,
@@ -317,16 +317,16 @@ export const OFFICE_ASSET_MANIFEST: OfficeAssetEntry[] = [
     semanticLabel: "lined paper notebook for notes and sketches",
     category: "clutter",
     url: "/assets/office/office-notebook.glb",
-    sourceName: ECLAIR_SOURCE_NAME,
-    sourceUrl: ECLAIR_SOURCE_URL,
-    licenseId: ECLAIR_LICENSE_ID,
-    licenseUrl: ECLAIR_LICENSE_URL,
+    sourceName: AETHEL_GENERATED_SOURCE_NAME,
+    sourceUrl: AETHEL_GENERATED_SOURCE_URL,
+    licenseId: AETHEL_GENERATED_LICENSE_ID,
+    licenseUrl: AETHEL_GENERATED_LICENSE_URL,
     defaultTransform: {
       position: { x: 0.2, y: 0.76, z: 0.25 },
       rotation: noRotation,
       scale: defaultScale,
     },
-    dimensions: { width: 0.2, height: 0.01, depth: 0.15 },
+    dimensions: { width: 0.2, height: 0.03, depth: 0.15 },
     bodyType: "dynamic",
     colliderType: "box",
     massKg: 0.2,

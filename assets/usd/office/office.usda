@@ -163,7 +163,7 @@ def Xform "World" (
 
         # Book Stack (dynamic, box collider, 0.8 kg)
         def "OfficeBookStackRoot" (
-            doc = "Book stack. Source: Eclair Everyday Home & Desk Props (CC0-1.0)."
+            doc = "Book stack. Source: Kenney Furniture Kit (CC0-1.0)."
             prepend payload = @./props/office-book-stack.usda@</OfficeBookStackRoot>
         )
         {
@@ -173,7 +173,7 @@ def Xform "World" (
 
         # Coffee Cup (dynamic, cylinder collider, 0.3 kg, restitution=0.1)
         def "OfficeCoffeeCupRoot" (
-            doc = "Coffee mug. Source: Eclair Everyday Home & Desk Props (CC0-1.0)."
+            doc = "Coffee mug. Source: Aethel Generated Office Props (CC0-1.0)."
             prepend payload = @./props/office-coffee-cup.usda@</OfficeCoffeeCupRoot>
         )
         {
@@ -183,7 +183,7 @@ def Xform "World" (
 
         # Notebook (dynamic, box collider, 0.2 kg)
         def "OfficeNotebookRoot" (
-            doc = "Spiral notebook. Source: Eclair Everyday Home & Desk Props (CC0-1.0)."
+            doc = "Spiral notebook. Source: Aethel Generated Office Props (CC0-1.0)."
             prepend payload = @./props/office-notebook.usda@</OfficeNotebookRoot>
         )
         {

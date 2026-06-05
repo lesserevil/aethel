@@ -39,6 +39,18 @@ or any CDN) during a live session.
 
 All ten files are included in the repository under `web/public/assets/office/`.
 They are small enough to stay in normal Git history without LFS.
+Each committed runtime GLB must contain visible mesh-backed model data: at
+least one node, one mesh primitive with a `POSITION` accessor, and a non-empty
+binary payload. Empty glTF shells are invalid even when they return HTTP 200.
+
+The matching export copies live in:
+
+```
+assets/exports/web/office/
+```
+
+For the MVP, these export copies are byte-for-byte identical to the public
+runtime files.
 
 ---
 
@@ -119,7 +131,19 @@ Follow these steps in order:
    format. If the source ships a different format (FBX, OBJ), convert it
    to GLB before committing. Keep the file small — avoid embedded textures
    larger than 1 MB for the MVP. Copy the optimized GLB to
+   `assets/exports/web/office/<your-filename>.glb` and
    `web/public/assets/office/<your-filename>.glb`.
+
+   Existing MVP assets are populated by:
+
+   ```bash
+   make assets-populate-runtime
+   ```
+
+   That script reads the Kenney Furniture Kit ZIP from
+   `/tmp/aethel-assets/kenney_furniture-kit.zip` by default, normalizes the
+   Kenney GLBs to the manifest dimensions, and generates the local coffee cup
+   and notebook meshes.
 
 4. **Add a manifest entry to `web/src/assets/officeAssetManifest.ts`.**
    Fill every field:
@@ -212,7 +236,12 @@ Neither is required for the default MVP office scene.
 The e2e tests require a Chromium-compatible browser. See
 `docs/e2e-testing.md` for setup instructions. If browsers are not
 installed, `make test` alone covers manifest validation, manifest helper
-functions, and component-level fallback behaviour.
+functions, component-level fallback behaviour, and GLB structure validation.
+
+`web/src/assets/assetPipeline.test.ts` parses every committed
+`web/public/assets/office/*.glb` file and fails if an asset has no meshes, no
+nodes, no binary payload, no `POSITION` accessor, or still resembles an empty
+placeholder.
 
 ### What the e2e tests check
 

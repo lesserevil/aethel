@@ -28,6 +28,7 @@ flowchart LR
     usd -- "make assets-validate" --> usd
     usd -- "make assets-export-web" --> exp
     exp -- "copy to web/public/" --> web
+    src -- "make assets-populate-runtime" --> exp
 ```
 
 ## Make Targets
@@ -118,6 +119,35 @@ what `web/src/assets/officeAssetManifest.ts` expects.
 
 ```bash
 make assets-export-web      # export all USD props to GLB + sync to web
+```
+
+### `make assets-populate-runtime`
+
+Populates the checked-in MVP office runtime GLBs without requiring Blender.
+This is the current seed-asset path for the default web scene while the full
+USD-to-GLB export pipeline matures.
+
+**Script:** `scripts/assets/populate-office-runtime-glbs.mjs`
+
+**Required tools:** Node.js and `unzip`. No GPU, Omniverse, or Blender is
+required.
+
+**Inputs:**
+
+- `/tmp/aethel-assets/kenney_furniture-kit.zip` by default, or
+  `KENNEY_FURNITURE_KIT_ZIP=/path/to/kenney_furniture-kit.zip`.
+
+**Outputs:**
+
+- `assets/exports/web/office/*.glb`
+- `web/public/assets/office/*.glb`
+
+The script normalizes the selected Kenney GLBs to the runtime manifest
+dimensions and generates deterministic local mesh GLBs for the coffee cup and
+notebook.
+
+```bash
+make assets-populate-runtime
 ```
 
 ### `--dry-run` flag
@@ -221,6 +251,7 @@ scripts/
     assets-build.sh        # backing script for make assets-build
     assets-validate.sh     # backing script for make assets-validate
     assets-export-web.sh   # backing script for make assets-export-web
+    populate-office-runtime-glbs.mjs  # seed runtime GLBs for the MVP scene
     blender_export_glb.py  # Blender Python helper: USD → GLB (requires bpy)
     build-export-map.py    # generates prop→webId TSV mapping from JSON inputs
 ```

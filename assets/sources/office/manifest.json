@@ -9,10 +9,11 @@
       "url": "https://poly.pizza/bundle/Furniture-Kit-NoG1sEUD1z",
       "publisherUrl": "https://kenney.nl/assets/furniture-kit"
     },
-    "eclair-home-desk-props": {
-      "name": "Eclair Everyday Home & Desk Props GLB Pack",
-      "publisher": "Eclair",
-      "url": "https://eclair-assets.itch.io/everyday-home-desk-props-glb-pack-30-free-cc0-3d-models"
+    "aethel-generated-office-props": {
+      "name": "Aethel Generated Office Props",
+      "publisher": "lesserevil",
+      "url": "https://github.com/lesserevil/aethel/tree/dev/scripts/assets",
+      "publisherUrl": "https://github.com/lesserevil/aethel"
     }
   },
   "licenses": {
@@ -103,8 +104,8 @@
     {
       "id": "mug",
       "label": "Coffee Mug",
-      "sourceId": "eclair-home-desk-props",
-      "sourceUrl": "https://eclair-assets.itch.io/everyday-home-desk-props-glb-pack-30-free-cc0-3d-models",
+      "sourceId": "aethel-generated-office-props",
+      "sourceUrl": "https://github.com/lesserevil/aethel/tree/dev/scripts/assets",
       "licenseId": "cc0-1.0",
       "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
       "originalFormat": "glb",
@@ -113,9 +114,9 @@
     },
     {
       "id": "book",
-      "label": "Book",
-      "sourceId": "eclair-home-desk-props",
-      "sourceUrl": "https://eclair-assets.itch.io/everyday-home-desk-props-glb-pack-30-free-cc0-3d-models",
+      "label": "Book Stack",
+      "sourceId": "kenney-furniture-kit",
+      "sourceUrl": "https://poly.pizza/bundle/Furniture-Kit-NoG1sEUD1z",
       "licenseId": "cc0-1.0",
       "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
       "originalFormat": "glb",
@@ -125,8 +126,8 @@
     {
       "id": "notebook",
       "label": "Spiral Notebook",
-      "sourceId": "eclair-home-desk-props",
-      "sourceUrl": "https://eclair-assets.itch.io/everyday-home-desk-props-glb-pack-30-free-cc0-3d-models",
+      "sourceId": "aethel-generated-office-props",
+      "sourceUrl": "https://github.com/lesserevil/aethel/tree/dev/scripts/assets",
       "licenseId": "cc0-1.0",
       "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
       "originalFormat": "glb",

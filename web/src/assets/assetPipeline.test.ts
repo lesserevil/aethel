@@ -20,6 +20,66 @@ function repoPath(...parts: string[]): string {
   return resolve(REPO_ROOT, ...parts);
 }
 
+interface GlbPrimitive {
+  attributes?: {
+    POSITION?: number;
+  };
+  indices?: number;
+}
+
+interface GlbAccessor {
+  bufferView?: number;
+  componentType?: number;
+  count?: number;
+  type?: string;
+}
+
+interface GlbJson {
+  asset?: {
+    version?: string;
+  };
+  nodes?: unknown[];
+  meshes?: {
+    primitives?: GlbPrimitive[];
+  }[];
+  buffers?: {
+    byteLength?: number;
+  }[];
+  bufferViews?: unknown[];
+  accessors?: GlbAccessor[];
+}
+
+function parseGlbFile(fullPath: string): { json: GlbJson; binChunkLength: number } {
+  const buffer = readFileSync(fullPath);
+  expect(buffer.toString("utf-8", 0, 4)).toBe("glTF");
+  expect(buffer.readUInt32LE(4)).toBe(2);
+  expect(buffer.readUInt32LE(8)).toBe(buffer.length);
+
+  let offset = 12;
+  let json: GlbJson | undefined;
+  let binChunkLength = 0;
+
+  while (offset + 8 <= buffer.length) {
+    const chunkLength = buffer.readUInt32LE(offset);
+    const chunkType = buffer.readUInt32LE(offset + 4);
+    const chunkStart = offset + 8;
+    const chunkEnd = chunkStart + chunkLength;
+
+    expect(chunkEnd).toBeLessThanOrEqual(buffer.length);
+
+    if (chunkType === 0x4e4f534a) {
+      json = JSON.parse(buffer.subarray(chunkStart, chunkEnd).toString("utf-8").trim());
+    } else if (chunkType === 0x004e4942) {
+      binChunkLength = chunkLength;
+    }
+
+    offset = chunkEnd;
+  }
+
+  expect(json).toBeDefined();
+  return { json: json!, binChunkLength };
+}
+
 // ── Script existence and executability ───────────────────────────────────────
 
 const SCRIPTS = [
@@ -86,6 +146,10 @@ describe("asset pipeline — Makefile targets", () => {
     expect(makefile).toMatch(/^assets-export-web:/m);
   });
 
+  it("Makefile has assets-populate-runtime target", () => {
+    expect(makefile).toMatch(/^assets-populate-runtime:/m);
+  });
+
   it("assets-build target has a ## help comment", () => {
     expect(makefile).toMatch(/^assets-build:.*## /m);
   });
@@ -96,6 +160,10 @@ describe("asset pipeline — Makefile targets", () => {
 
   it("assets-export-web target has a ## help comment", () => {
     expect(makefile).toMatch(/^assets-export-web:.*## /m);
+  });
+
+  it("assets-populate-runtime target has a ## help comment", () => {
+    expect(makefile).toMatch(/^assets-populate-runtime:.*## /m);
   });
 
   it("assets-build target calls the backing script", () => {
@@ -110,7 +178,11 @@ describe("asset pipeline — Makefile targets", () => {
     expect(makefile).toContain("scripts/assets/assets-export-web.sh");
   });
 
-  it("all three targets are declared .PHONY", () => {
+  it("assets-populate-runtime target calls the backing script", () => {
+    expect(makefile).toContain("scripts/assets/populate-office-runtime-glbs.mjs");
+  });
+
+  it("asset pipeline targets are declared .PHONY", () => {
     // The .PHONY line may span multiple physical lines via backslash continuation.
     const phonySections = makefile.replace(/\\\n\s*/g, " ");
     const phonyLine = phonySections
@@ -120,6 +192,7 @@ describe("asset pipeline — Makefile targets", () => {
     expect(phonyLine).toContain("assets-build");
     expect(phonyLine).toContain("assets-validate");
     expect(phonyLine).toContain("assets-export-web");
+    expect(phonyLine).toContain("assets-populate-runtime");
   });
 });
 
@@ -144,6 +217,10 @@ describe("asset pipeline — documentation", () => {
 
   it("documents make assets-export-web", () => {
     expect(doc).toContain("make assets-export-web");
+  });
+
+  it("documents make assets-populate-runtime", () => {
+    expect(doc).toContain("make assets-populate-runtime");
   });
 
   it("explains canonical USD vs web GLB distinction", () => {
@@ -197,6 +274,29 @@ describe("asset pipeline — directory layout", () => {
 describe("asset pipeline — web export helper scripts", () => {
   it("blender_export_glb.py exists", () => {
     expect(existsSync(repoPath("scripts/assets/blender_export_glb.py"))).toBe(true);
+  });
+
+  it("populate-office-runtime-glbs.mjs exists", () => {
+    expect(existsSync(repoPath("scripts/assets/populate-office-runtime-glbs.mjs"))).toBe(
+      true,
+    );
+  });
+
+  it("populate-office-runtime-glbs.mjs is executable", () => {
+    const mode = statSync(
+      repoPath("scripts/assets/populate-office-runtime-glbs.mjs"),
+    ).mode;
+    expect(mode & 0o100).toBeTruthy();
+  });
+
+  it("populate-office-runtime-glbs.mjs documents Kenney and local generated props", () => {
+    const content = readFileSync(
+      repoPath("scripts/assets/populate-office-runtime-glbs.mjs"),
+      "utf-8",
+    );
+    expect(content).toContain("KENNEY_FURNITURE_KIT_ZIP");
+    expect(content).toContain("createCoffeeCupGlb");
+    expect(content).toContain("createNotebookGlb");
   });
 
   it("build-export-map.py exists", () => {
@@ -411,6 +511,56 @@ describe("asset pipeline — web/public/assets/office/ GLB coverage", () => {
   it.each(webIds)("web/public/assets/office/%s.glb exists", (webId) => {
     expect(existsSync(repoPath(`web/public/assets/office/${webId}.glb`))).toBe(true);
   });
+
+  it.each(webIds)(
+    "web/public/assets/office/%s.glb contains mesh-backed GLB data",
+    (webId) => {
+      const glbPath = repoPath(`web/public/assets/office/${webId}.glb`);
+      const stats = statSync(glbPath);
+      expect(stats.size).toBeGreaterThan(512);
+
+      const { json, binChunkLength } = parseGlbFile(glbPath);
+      const meshes = json.meshes ?? [];
+      const nodes = json.nodes ?? [];
+      const buffers = json.buffers ?? [];
+      const accessors = json.accessors ?? [];
+
+      expect(json.asset?.version).toBe("2.0");
+      expect(nodes.length).toBeGreaterThan(0);
+      expect(meshes.length).toBeGreaterThan(0);
+      expect(buffers[0]?.byteLength ?? 0).toBeGreaterThan(0);
+      expect(binChunkLength).toBeGreaterThan(0);
+      expect(binChunkLength).toBeGreaterThanOrEqual(buffers[0]?.byteLength ?? 0);
+
+      const primitives = meshes.flatMap((mesh) => mesh.primitives ?? []);
+      expect(primitives.length).toBeGreaterThan(0);
+
+      const positionAccessorIds = primitives
+        .map((primitive) => primitive.attributes?.POSITION)
+        .filter((id): id is number => typeof id === "number");
+      expect(positionAccessorIds.length).toBeGreaterThan(0);
+
+      for (const accessorId of positionAccessorIds) {
+        const accessor = accessors[accessorId];
+        expect(accessor).toBeDefined();
+        expect(accessor.type).toBe("VEC3");
+        expect(accessor.componentType).toBe(5126);
+        expect(accessor.count ?? 0).toBeGreaterThan(0);
+        expect(typeof accessor.bufferView).toBe("number");
+      }
+    },
+  );
+
+  it.each(webIds)(
+    "assets/exports/web/office/%s.glb matches the runtime public asset",
+    (webId) => {
+      const exportBytes = readFileSync(
+        repoPath(`assets/exports/web/office/${webId}.glb`),
+      );
+      const publicBytes = readFileSync(repoPath(`web/public/assets/office/${webId}.glb`));
+      expect(exportBytes.equals(publicBytes)).toBe(true);
+    },
+  );
 
   it("all 10 web asset GLB files are present", () => {
     expect(webIds).toHaveLength(10);

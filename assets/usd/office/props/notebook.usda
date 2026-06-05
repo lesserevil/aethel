@@ -3,9 +3,9 @@
     defaultPrim = "Notebook"
     doc = """Aethel office prop: Spiral Notebook.
 
-Source   : Eclair Everyday Home & Desk Props GLB Pack (eclair-home-desk-props)
-Publisher: Eclair
-URL      : https://eclair-assets.itch.io/everyday-home-desk-props-glb-pack-30-free-cc0-3d-models
+Source   : Aethel Generated Office Props (aethel-generated-office-props)
+Publisher: lesserevil
+URL      : https://github.com/lesserevil/aethel/tree/dev/scripts/assets
 License  : CC0 1.0 Universal (CC0-1.0)
            https://creativecommons.org/publicdomain/zero/1.0/
 
@@ -18,17 +18,17 @@ the source assets are available.  Do not commit the raw source archive.
 )
 
 def Xform "Notebook" (
-    doc = "Spiral notebook clutter prop. Source: Eclair Everyday Home & Desk Props (CC0-1.0)."
+    doc = "Spiral notebook clutter prop. Source: Aethel Generated Office Props (CC0-1.0)."
     customData = {
         dictionary aethel = {
             string assetId = "notebook"
             string label = "Spiral Notebook"
-            string sourceId = "eclair-home-desk-props"
-            string sourceUrl = "https://eclair-assets.itch.io/everyday-home-desk-props-glb-pack-30-free-cc0-3d-models"
+            string sourceId = "aethel-generated-office-props"
+            string sourceUrl = "https://github.com/lesserevil/aethel/tree/dev/scripts/assets"
             string licenseId = "cc0-1.0"
             string licenseUrl = "https://creativecommons.org/publicdomain/zero/1.0/"
             string originalFormat = "glb"
-            string usdPrimPath = "/World/Office/Clutter/Notebook"
+            string usdPrimPath = "/World/Office/OfficeNotebookRoot"
         }
     }
 )

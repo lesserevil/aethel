@@ -361,7 +361,7 @@ describe("validatePlacement", () => {
   });
 
   it("returns invalid when target overlaps with an existing object", () => {
-    // notebook is at (0.2, 0.76, 0.25) with dims ≈ 0.2 × 0.01 × 0.15
+    // notebook is at (0.2, 0.76, 0.25) with dims ≈ 0.2 × 0.03 × 0.15
     // placing cup at exact same center → guaranteed overlap
     const result = validatePlacement(coffeeCup, { x: 0.2, y: 0.76, z: 0.25 }, [notebook]);
     expect(result.valid).toBe(false);

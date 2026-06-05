@@ -181,10 +181,10 @@ describe("office source manifest — sources integrity", () => {
     expect(src.url).toMatch(/^https?:\/\//);
   });
 
-  it("eclair-home-desk-props source has name, publisher, and url", () => {
+  it("aethel-generated-office-props source has name, publisher, and url", () => {
     const src = (
       manifest.sources as Record<string, { name: string; publisher: string; url: string }>
-    )["eclair-home-desk-props"];
+    )["aethel-generated-office-props"];
     expect(src).toBeDefined();
     expect(src.name).toBeTruthy();
     expect(src.publisher).toBeTruthy();

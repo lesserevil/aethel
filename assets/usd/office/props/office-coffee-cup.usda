@@ -22,8 +22,8 @@ def Xform "OfficeCoffeeCupRoot" (
         float3 physicsDimensions = (0.08, 0.1, 0.08)
         string semanticLabel = "ceramic coffee cup on the desk"
         string assetId = "office-coffee-cup"
-        string sourceId = "eclair-home-desk-props"
-        string sourceUrl = "https://eclair-assets.itch.io/everyday-home-desk-props-glb-pack-30-free-cc0-3d-models"
+        string sourceId = "aethel-generated-office-props"
+        string sourceUrl = "https://github.com/lesserevil/aethel/tree/dev/scripts/assets"
         string licenseId = "cc0-1.0"
         string licenseUrl = "https://creativecommons.org/publicdomain/zero/1.0/"
         string usdPrimPath = "/World/Office/OfficeCoffeeCupRoot"

@@ -22,11 +22,15 @@ Git LFS threshold.
 |---|---|---|---|---|
 | Kenney Furniture Kit | Kenney.nl | <https://poly.pizza/bundle/Furniture-Kit-NoG1sEUD1z> | CC0 1.0 Universal | <https://creativecommons.org/publicdomain/zero/1.0/> |
 | Kenney Furniture Kit (canonical) | Kenney.nl | <https://kenney.nl/assets/furniture-kit> | CC0 1.0 Universal | <https://creativecommons.org/publicdomain/zero/1.0/> |
-| Eclair Everyday Home & Desk Props GLB Pack | Eclair | <https://eclair-assets.itch.io/everyday-home-desk-props-glb-pack-30-free-cc0-3d-models> | CC0 1.0 Universal | <https://creativecommons.org/publicdomain/zero/1.0/> |
+| Aethel Generated Office Props | lesserevil | <https://github.com/lesserevil/aethel/tree/dev/scripts/assets> | CC0 1.0 Universal | <https://creativecommons.org/publicdomain/zero/1.0/> |
 
 The Kenney Furniture Kit is listed twice: the Poly Pizza bundle is the primary
 download entry point; the kenney.nl page is the canonical publisher record that
 confirms the CC0 dedication independently of the marketplace listing.
+
+The Aethel generated props are deterministic low-poly GLBs produced by
+`scripts/assets/populate-office-runtime-glbs.mjs` for small objects that were
+not present in the Kenney pack.
 
 ---
 
@@ -37,16 +41,16 @@ Runtime files go under `web/public/assets/office/`. Every path listed in the
 
 | Asset ID | Object label | Source pack | Source URL | License | License URL | Original format | Intended runtime filename | Notes |
 |---|---|---|---|---|---|---|---|---|
-| `desk` | Desk | Kenney Furniture Kit | <https://poly.pizza/bundle/Furniture-Kit-NoG1sEUD1z> | CC0 1.0 Universal | <https://creativecommons.org/publicdomain/zero/1.0/> | GLB | `office-desk.glb` | Shipped as GLB; no conversion needed. Verify exact filename in pack ZIP before copying (Kenney ships several desk variants; choose the simplest flat-top desk). |
-| `deskChair` | Office Chair | Kenney Furniture Kit | <https://poly.pizza/bundle/Furniture-Kit-NoG1sEUD1z> | CC0 1.0 Universal | <https://creativecommons.org/publicdomain/zero/1.0/> | GLB | `office-chair.glb` | Shipped as GLB; no conversion needed. Kenney includes both high-back and low-back variants; prefer the high-back office chair for the default scene. |
-| `laptop` | Laptop | Kenney Furniture Kit | <https://poly.pizza/bundle/Furniture-Kit-NoG1sEUD1z> | CC0 1.0 Universal | <https://creativecommons.org/publicdomain/zero/1.0/> | GLB | `office-laptop.glb` | Shipped as GLB; no conversion needed. Select the open-lid variant if both are present. |
-| `keyboard` | Keyboard | Kenney Furniture Kit | <https://poly.pizza/bundle/Furniture-Kit-NoG1sEUD1z> | CC0 1.0 Universal | <https://creativecommons.org/publicdomain/zero/1.0/> | GLB | `office-keyboard.glb` | Shipped as GLB; no conversion needed. |
-| `monitorWide` | Monitor / Screen | Kenney Furniture Kit | <https://poly.pizza/bundle/Furniture-Kit-NoG1sEUD1z> | CC0 1.0 Universal | <https://creativecommons.org/publicdomain/zero/1.0/> | GLB | `office-monitor.glb` | Shipped as GLB; no conversion needed. Prefer the widescreen variant (`monitorWide`) over a narrower variant if both are present. |
-| `trashCan` | Trash Can | Kenney Furniture Kit | <https://poly.pizza/bundle/Furniture-Kit-NoG1sEUD1z> | CC0 1.0 Universal | <https://creativecommons.org/publicdomain/zero/1.0/> | GLB | `office-trashcan.glb` | Shipped as GLB; no conversion needed. |
-| `lampDesk` | Desk Lamp | Kenney Furniture Kit | <https://poly.pizza/bundle/Furniture-Kit-NoG1sEUD1z> | CC0 1.0 Universal | <https://creativecommons.org/publicdomain/zero/1.0/> | GLB | `office-lamp.glb` | Shipped as GLB; no conversion needed. Select a desktop/arm lamp over a floor lamp. Satisfies the "small lamp or desk accessory" slot in the MVP asset set. |
-| `mug` | Coffee Mug | Eclair Everyday Home & Desk Props GLB Pack | <https://eclair-assets.itch.io/everyday-home-desk-props-glb-pack-30-free-cc0-3d-models> | CC0 1.0 Universal | <https://creativecommons.org/publicdomain/zero/1.0/> | GLB | `office-mug.glb` | Shipped as individual GLB in the itch.io pack download; no conversion needed. Clutter prop #1. |
-| `book` | Book | Eclair Everyday Home & Desk Props GLB Pack | <https://eclair-assets.itch.io/everyday-home-desk-props-glb-pack-30-free-cc0-3d-models> | CC0 1.0 Universal | <https://creativecommons.org/publicdomain/zero/1.0/> | GLB | `office-book.glb` | Shipped as individual GLB; no conversion needed. If the pack ships multiple book variants, choose the closed-cover variant for the default scene. Clutter prop #2. |
-| `notebook` | Spiral Notebook | Eclair Everyday Home & Desk Props GLB Pack | <https://eclair-assets.itch.io/everyday-home-desk-props-glb-pack-30-free-cc0-3d-models> | CC0 1.0 Universal | <https://creativecommons.org/publicdomain/zero/1.0/> | GLB | `office-notebook.glb` | Shipped as individual GLB; no conversion needed. Select a spiral-bound or ruled notepad variant. Clutter prop #3. |
+| `desk` | Desk | Kenney Furniture Kit | <https://poly.pizza/bundle/Furniture-Kit-NoG1sEUD1z> | CC0 1.0 Universal | <https://creativecommons.org/publicdomain/zero/1.0/> | GLB | `office-desk.glb` | Uses `Models/GLTF format/desk.glb`; normalized to the runtime dimensions by the asset population script. |
+| `deskChair` | Office Chair | Kenney Furniture Kit | <https://poly.pizza/bundle/Furniture-Kit-NoG1sEUD1z> | CC0 1.0 Universal | <https://creativecommons.org/publicdomain/zero/1.0/> | GLB | `office-chair.glb` | Uses `Models/GLTF format/chairDesk.glb`; normalized to the runtime dimensions by the asset population script. |
+| `laptop` | Laptop | Kenney Furniture Kit | <https://poly.pizza/bundle/Furniture-Kit-NoG1sEUD1z> | CC0 1.0 Universal | <https://creativecommons.org/publicdomain/zero/1.0/> | GLB | `office-laptop.glb` | Uses `Models/GLTF format/laptop.glb`; normalized to the runtime dimensions by the asset population script. |
+| `keyboard` | Keyboard | Kenney Furniture Kit | <https://poly.pizza/bundle/Furniture-Kit-NoG1sEUD1z> | CC0 1.0 Universal | <https://creativecommons.org/publicdomain/zero/1.0/> | GLB | `office-keyboard.glb` | Uses `Models/GLTF format/computerKeyboard.glb`; normalized to the runtime dimensions by the asset population script. |
+| `monitorWide` | Monitor / Screen | Kenney Furniture Kit | <https://poly.pizza/bundle/Furniture-Kit-NoG1sEUD1z> | CC0 1.0 Universal | <https://creativecommons.org/publicdomain/zero/1.0/> | GLB | `office-monitor.glb` | Uses `Models/GLTF format/computerScreen.glb`; normalized to the runtime dimensions by the asset population script. |
+| `trashCan` | Trash Can | Kenney Furniture Kit | <https://poly.pizza/bundle/Furniture-Kit-NoG1sEUD1z> | CC0 1.0 Universal | <https://creativecommons.org/publicdomain/zero/1.0/> | GLB | `office-trash-can.glb` | Uses `Models/GLTF format/trashcan.glb`; normalized to the runtime dimensions by the asset population script. |
+| `lampDesk` | Desk Lamp | Kenney Furniture Kit | <https://poly.pizza/bundle/Furniture-Kit-NoG1sEUD1z> | CC0 1.0 Universal | <https://creativecommons.org/publicdomain/zero/1.0/> | GLB | `office-desk-lamp.glb` | Uses `Models/GLTF format/lampSquareTable.glb`; normalized to the runtime dimensions by the asset population script. |
+| `mug` | Coffee Mug | Aethel Generated Office Props | <https://github.com/lesserevil/aethel/tree/dev/scripts/assets> | CC0 1.0 Universal | <https://creativecommons.org/publicdomain/zero/1.0/> | GLB | `office-coffee-cup.glb` | Deterministic low-poly mesh generated by `scripts/assets/populate-office-runtime-glbs.mjs`. Clutter prop #1. |
+| `book` | Book Stack | Kenney Furniture Kit | <https://poly.pizza/bundle/Furniture-Kit-NoG1sEUD1z> | CC0 1.0 Universal | <https://creativecommons.org/publicdomain/zero/1.0/> | GLB | `office-book-stack.glb` | Uses `Models/GLTF format/books.glb`; normalized to the runtime dimensions by the asset population script. Clutter prop #2. |
+| `notebook` | Spiral Notebook | Aethel Generated Office Props | <https://github.com/lesserevil/aethel/tree/dev/scripts/assets> | CC0 1.0 Universal | <https://creativecommons.org/publicdomain/zero/1.0/> | GLB | `office-notebook.glb` | Deterministic low-poly mesh generated by `scripts/assets/populate-office-runtime-glbs.mjs`. Clutter prop #3. |
 
 ---
 
@@ -63,10 +67,10 @@ committing runtime assets.
 | Computing device | Laptop | `office-laptop.glb` | ✅ |
 | Input device | Keyboard | `office-keyboard.glb` | ✅ |
 | Display | Monitor / Screen | `office-monitor.glb` | ✅ |
-| Waste container | Trash Can | `office-trashcan.glb` | ✅ |
-| Desk accessory | Desk Lamp | `office-lamp.glb` | ✅ |
-| Clutter prop #1 | Coffee Mug | `office-mug.glb` | ✅ |
-| Clutter prop #2 | Book | `office-book.glb` | ✅ |
+| Waste container | Trash Can | `office-trash-can.glb` | ✅ |
+| Desk accessory | Desk Lamp | `office-desk-lamp.glb` | ✅ |
+| Clutter prop #1 | Coffee Mug | `office-coffee-cup.glb` | ✅ |
+| Clutter prop #2 | Book Stack | `office-book-stack.glb` | ✅ |
 | Clutter prop #3 | Spiral Notebook | `office-notebook.glb` | ✅ |
 
 ---
@@ -86,13 +90,14 @@ committing runtime assets.
   share-alike requirement. The asset is safe to ship in the default scene
   without any further license tracking.
 
-**Eclair Everyday Home & Desk Props GLB Pack**
+**Aethel Generated Office Props**
 
-- The itch.io page explicitly states CC0 (Creative Commons Zero) and includes
-  the phrase *"30 free CC0 3D models"* in the pack title.
-- CC0 is confirmed at the itch.io listing URL above. No secondary license URL
-  is provided by the publisher beyond the itch.io page itself; the CC0 license
-  text is canonical at <https://creativecommons.org/publicdomain/zero/1.0/>.
+- The coffee cup and notebook runtime GLBs are generated by
+  `scripts/assets/populate-office-runtime-glbs.mjs` from simple mesh
+  primitives, not downloaded from an external pack.
+- These generated mesh assets are catalogued as CC0 1.0 Universal to match the
+  MVP asset policy. The canonical CC0 license text is at
+  <https://creativecommons.org/publicdomain/zero/1.0/>.
 
 ---
 
@@ -102,9 +107,10 @@ The following sources were considered and explicitly deferred:
 
 | Source | Reason deferred |
 |---|---|
+| Eclair Everyday Home & Desk Props GLB Pack | Still useful later for richer desk clutter, but not used by the committed MVP runtime assets because this pass uses Kenney plus deterministic local generated props. |
 | Sketchfab CC-BY models | Attribution-required; Aethel does not yet have a shipped credits surface. Re-evaluate after TASK-16.5. |
 | Poly Haven props | Primarily an HDRI/material library; few office-scale props. Useful later for environment textures. |
-| The Base Mesh (thebasemesh.com) | Gap-fill source only; not needed for the MVP set since Kenney and Eclair cover all required categories. |
+| The Base Mesh (thebasemesh.com) | Gap-fill source only; not needed for the MVP set since Kenney and local generated props cover all required categories. |
 | CG3D (cg3d.org) | Gap-fill source only; same rationale as The Base Mesh. |
 | Any paid marketplace asset | Out of scope per plan. |
 

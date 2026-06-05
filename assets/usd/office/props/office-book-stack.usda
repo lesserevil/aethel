@@ -22,8 +22,8 @@ def Xform "OfficeBookStackRoot" (
         float3 physicsDimensions = (0.15, 0.2, 0.1)
         string semanticLabel = "small stack of books on the desk"
         string assetId = "office-book-stack"
-        string sourceId = "eclair-home-desk-props"
-        string sourceUrl = "https://eclair-assets.itch.io/everyday-home-desk-props-glb-pack-30-free-cc0-3d-models"
+        string sourceId = "kenney-furniture-kit"
+        string sourceUrl = "https://poly.pizza/bundle/Furniture-Kit-NoG1sEUD1z"
         string licenseId = "cc0-1.0"
         string licenseUrl = "https://creativecommons.org/publicdomain/zero/1.0/"
         string usdPrimPath = "/World/Office/OfficeBookStackRoot"
