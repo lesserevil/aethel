@@ -1,9 +1,10 @@
 ---
 id: TASK-19.5
 title: Document Nemotron runtime workflow and dev server wiring
-status: Backlog
+status: In Progress
 assignee: []
 created_date: '2026-06-05 13:41'
+updated_date: '2026-06-05 14:44'
 labels: []
 dependencies:
   - TASK-19.4
@@ -22,19 +23,7 @@ ordinal: 55000
 ## Description
 
 <!-- SECTION:DESCRIPTION:BEGIN -->
-Plan: plans/nvidia-nemotron-chat-plan.md § Local Development and Testing Strategy.
-
-WHAT TO DO
-Update user-facing docs for the real Nemotron chat workflow. Explain mock mode, backend API mode, how credentials are loaded from NVIDIA_API_KEY or ~/.netrc, how to start the backend, how to start the web app, and how to run tests. If the implementation changes make run to start both web and backend, document that behavior in README.md and keep the command non-interactive. If make run remains frontend-only, document the separate run-api workflow clearly. Update docs/language-and-tooling.md if the backend service changes the current backend path decision.
-
-WHY
-Adding a real model changes the way developers and users operate the MVP. The docs must make the secure path easy and must not imply that secrets belong in frontend config.
-
-HOW TO VERIFY
-Run make help and compare the docs against actual targets. Run make fmt-check, make build, make test, and make lint. Read the docs and confirm they do not contain secrets or stale command names.
-
-EDGE CASES AND PITFALLS
-Do not document commands that do not exist. Do not show a real token in examples; use placeholders like sk-... only. If live smoke tests are optional, label them optional so normal quality gates do not fail without credentials.
+Understanding: TASK-19.4 done - delivered docs/nemotron-chat.md, api/ FastAPI backend (make run-api/test-api), frontend apiChatAdapter (VITE_CHAT_PROVIDER). Gaps to fix: README missing run-api/test-api docs and link to nemotron-chat.md; nemotron-chat.md missing VITE_CHAT_PROVIDER frontend env var; language-and-tooling.md still says do-not-add-backend but backend is shipped.
 <!-- SECTION:DESCRIPTION:END -->
 
 ## Acceptance Criteria
@@ -42,3 +31,14 @@ Do not document commands that do not exist. Do not show a real token in examples
 - [ ] #1 README/docs accurately describe mock mode, backend Nemotron mode, credential loading, run commands, and test commands.
 - [ ] #2 Docs include no real secret values and no stale command names.
 <!-- AC:END -->
+
+## Comments
+<!-- COMMENTS:BEGIN -->
+<!-- COMMENT:BEGIN -->
+index: 1
+author: oompah
+created: 2026-06-05 14:43
+
+Agent dispatched (profile: default)
+<!-- COMMENT:END -->
+<!-- COMMENTS:END -->

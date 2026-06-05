@@ -44,9 +44,9 @@ or RTX streaming renderer.
 
 ## Backend Path
 
-The MVP may start with in-browser mock adapters. When real services are
-needed, add a Python backend. Do not add the Python backend during the
-MVP unless a later task explicitly changes this decision.
+The initial MVP used in-browser mock adapters.  A Python/FastAPI backend
+was explicitly added in the Nemotron integration (TASK-19) to keep NVIDIA
+credentials server-side.
 
 - **Python** for agent adapters, service orchestration, and NVIDIA SDK /
   NIM / NeMo integration.
@@ -55,8 +55,11 @@ MVP unless a later task explicitly changes this decision.
 - **WebSockets** for streaming chat tokens, mutation progress, and scene
   events if the MVP needs streaming behavior.
 
-The Python backend should preserve the frontend contracts from the MVP
-plan rather than leaking provider-specific model details into UI code.
+The Python backend preserves the frontend contracts from the MVP plan
+rather than leaking provider-specific model details into UI code.  The
+in-browser mock adapter remains the default so the app works without the
+backend running.  See [docs/nemotron-chat.md](nemotron-chat.md) for the
+full backend setup and run workflow.
 
 ## Future Native Work
 
@@ -82,10 +85,11 @@ Aethel is licensed under the MIT License. See
 - Do not start the MVP as a C++ application.
 - Do not require Omniverse Kit or RTX streaming to run the first web
   prototype.
-- Do not add a Python/FastAPI backend to the MVP unless a later task
-  explicitly changes the backend decision.
 - Do not hard-code a single model provider in the TypeScript UI.
 - Do not store renderer-specific objects in shared session state.
+- Do not embed NVIDIA credentials (API keys, tokens) in Vite environment
+  variables or the browser bundle.  All NVIDIA credentials must remain
+  server-side in the Python backend.
 
 ## References
 

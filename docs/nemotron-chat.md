@@ -48,6 +48,8 @@ still works without any key.
 
 ## Environment Variables
 
+### Backend (server-side only)
+
 | Variable              | Default                                          | Purpose                                     |
 |-----------------------|--------------------------------------------------|---------------------------------------------|
 | `NVIDIA_API_KEY`      | *(none)*                                         | Override `~/.netrc` for the NVIDIA key      |
@@ -55,6 +57,29 @@ still works without any key.
 | `NVIDIA_MODEL`        | `nvidia/nvidia/nemotron-3-nano-omni-30b-a3b-reasoning` | Model ID sent in chat requests        |
 | `AETHEL_CHAT_PROVIDER`| `mock`                                           | `mock` or `nvidia` — selects the adapter   |
 | `AETHEL_CORS_ORIGINS` | `http://localhost:5173,http://127.0.0.1:5173`    | Comma-separated allowed CORS origins        |
+
+None of these variables should appear in the browser bundle or in any
+Vite / frontend config file.
+
+### Frontend (browser-side)
+
+| Variable             | Default  | Purpose                                                       |
+|----------------------|----------|---------------------------------------------------------------|
+| `VITE_CHAT_PROVIDER` | `mock`   | `mock` or `api` — controls whether the browser posts to `/api/chat` or uses the in-browser mock adapter |
+
+`VITE_CHAT_PROVIDER` holds only the provider name — never an API key or
+token.  Set it in `web/.env.local` (not committed) so the Vite dev
+server picks it up without requiring a rebuild:
+
+```
+# web/.env.local — create this file; do NOT commit it
+VITE_CHAT_PROVIDER=api
+```
+
+When `VITE_CHAT_PROVIDER` is unset or `mock`, the browser uses the
+deterministic in-browser mock adapter and the backend is never contacted.
+When set to `api`, every chat message is forwarded to the running backend
+at `/api/chat`.
 
 ## Makefile Targets
 
@@ -163,14 +188,48 @@ The `/api/chat` endpoint routes to the **NVIDIA Nemotron client**
 (`api/nvidia_client.py`) when `AETHEL_CHAT_PROVIDER=nvidia`, or returns a
 deterministic stub when `AETHEL_CHAT_PROVIDER=mock` (the default).
 
-To enable live model responses:
+### Mock-only mode (no credentials required)
 
-1. Configure the NVIDIA API key (see [Credential Configuration](#credential-configuration)).
-2. Set `AETHEL_CHAT_PROVIDER=nvidia` in your environment.
-3. Start the backend: `make run-api`.
+The default workflow requires no NVIDIA key and no backend:
 
-The frontend mock adapter still works when `AETHEL_CHAT_PROVIDER` is not
-set or is set to `mock` — no NVIDIA key is required in that mode.
+```bash
+make run          # starts the Vite dev server on port 5173
+```
+
+The browser uses the in-browser mock adapter.  Chat replies are
+deterministic stubs — useful for UI development and all standard tests.
+
+### Live Nemotron mode (NVIDIA key required)
+
+To enable real model responses, both the backend and the frontend must be
+configured:
+
+**Terminal 1 — start the backend:**
+
+```bash
+export NVIDIA_API_KEY=sk-...         # or use ~/.netrc (see Credential Configuration)
+export AETHEL_CHAT_PROVIDER=nvidia
+make run-api                         # starts FastAPI on port 8000
+```
+
+**`web/.env.local` — tell the browser to use the backend:**
+
+```
+# Create this file (it is git-ignored); do NOT commit it.
+VITE_CHAT_PROVIDER=api
+```
+
+**Terminal 2 — start the web app:**
+
+```bash
+make run          # starts the Vite dev server on port 5173
+```
+
+Open `http://localhost:5173` — chat messages now reach
+`http://localhost:8000/api/chat` and are answered by the Nemotron model.
+
+The frontend mock adapter continues to work whenever `VITE_CHAT_PROVIDER`
+is unset or `mock` — no NVIDIA key is required in that mode.
 
 ## Testing Credential Loading
 

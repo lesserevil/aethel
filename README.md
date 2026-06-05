@@ -19,6 +19,9 @@ Current project sources of truth:
   NVIDIA-oriented Aethel design and technology direction.
 - [docs/language-and-tooling.md](docs/language-and-tooling.md) -
   implementation language and tooling decision.
+- [docs/nemotron-chat.md](docs/nemotron-chat.md) - Nemotron chat
+  backend: credential setup, environment variables, API reference, and
+  how to run the backend alongside the web app.
 - [docs/office-physics.md](docs/office-physics.md) - optional Newton
   evaluation harness: install steps, usage, tested CPU/GPU behavior,
   and why Newton is not a default MVP dependency.
@@ -56,7 +59,8 @@ The confirmed MVP implementation choices are:
 - React Three Fiber for the center 3D viewport.
 - Plain CSS with CSS variables for styling.
 - React `useReducer` plus context for MVP state management.
-- Mock-only in-browser adapters for the MVP backend.
+- In-browser mock adapters as the default chat backend (no credentials
+  required); optional Python/FastAPI backend for live NVIDIA model chat.
 - Procedural primitive assets for the first agent and environment.
 - `dev` as the default branch, with feature branches off `dev`.
 - MIT License.
@@ -89,6 +93,65 @@ technology review and source links.
 - `plans/` - Design docs, architecture notes, and implementation plans.
 - `scripts/githooks/` - Git hook scaffolding.
 
+## Nemotron Chat
+
+The chat panel ships with two operating modes:
+
+| Mode | What runs | Requires |
+|------|-----------|----------|
+| **Mock** (default) | In-browser deterministic stub adapter | Nothing — works offline |
+| **Nemotron** | Python/FastAPI backend → NVIDIA Nemotron model | NVIDIA API key + `make run-api` |
+
+### Mock mode — zero configuration
+
+```bash
+make run          # browser app on port 5173; chat uses the in-browser stub
+```
+
+No API key, no backend, no credentials needed.
+
+### Nemotron mode — live model responses
+
+Credentials are kept server-side. The browser never sees the NVIDIA key.
+
+**Step 1 — configure credentials** (pick one):
+
+```bash
+# Option A: environment variable
+export NVIDIA_API_KEY=sk-...
+
+# Option B: ~/.netrc entry
+# machine inference-api.nvidia.com
+#   login user
+#   password sk-...
+```
+
+**Step 2 — start the backend** (in one terminal):
+
+```bash
+pip install -r api/requirements.txt   # first time only
+export AETHEL_CHAT_PROVIDER=nvidia
+make run-api                           # FastAPI on port 8000
+```
+
+**Step 3 — point the browser at the backend** (create `web/.env.local`):
+
+```
+VITE_CHAT_PROVIDER=api
+```
+
+**Step 4 — start the web app** (in another terminal):
+
+```bash
+make run          # Vite dev server on port 5173
+```
+
+Open `http://localhost:5173` and chat.  Responses come from the
+Nemotron model via the backend.
+
+For full API reference, troubleshooting, and advanced environment
+variables see [docs/nemotron-chat.md](docs/nemotron-chat.md).
+
 ## Task Tracking
 
 This repo uses Backlog.md for task tracking. The local workflow runs the
@@ -115,10 +178,12 @@ workspace Bun scripts:
 
 - `make init` - Installs dependencies and initializes local project tooling
 - `make run` - Starts the MVP web app development server on all interfaces
+- `make run-api` - Starts the backend chat API server on port 8000 (requires `pip install -r api/requirements.txt`)
 - `make fmt` - Runs `bun run fmt` in the web/ directory
 - `make fmt-check` - Runs `bun run fmt-check` in the web/ directory
 - `make build` - Runs `bun run build` in the web/ directory
-- `make test` - Runs `bun run test` in the web/ directory
+- `make test` - Runs `bun run test` in the web/ directory (no NVIDIA key required)
+- `make test-api` - Runs backend chat service unit tests (no NVIDIA key required)
 - `make test-e2e` - Runs `bun run test:e2e` in the web/ directory
 - `make lint` - Runs `bun run typecheck && bun run lint` in the web/ directory
 - `make clean` - Removes build artifacts from the web/ directory
