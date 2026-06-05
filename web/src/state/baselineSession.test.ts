@@ -37,16 +37,29 @@ describe("Baseline Session", () => {
     expect(session.environment.weather).toBe("clear");
   });
 
-  test("has at least three scene objects with stable IDs", () => {
+  test("has at least ten scene objects covering the full MVP office set", () => {
     expect(session.environment.objects).toBeDefined();
     expect(Array.isArray(session.environment.objects)).toBe(true);
-    expect(session.environment.objects.length).toBeGreaterThanOrEqual(3);
+    expect(session.environment.objects.length).toBeGreaterThanOrEqual(10);
+  });
 
+  test("has stable IDs including the original three and full MVP set", () => {
     const ids = session.environment.objects.map((obj) => obj.id);
+    // Original IDs preserved
     expect(ids).toContain("obj-001");
     expect(ids).toContain("obj-002");
     expect(ids).toContain("obj-003");
+    // Full MVP set
+    expect(ids).toContain("obj-004");
+    expect(ids).toContain("obj-005");
+    expect(ids).toContain("obj-006");
+    expect(ids).toContain("obj-007");
+    expect(ids).toContain("obj-008");
+    expect(ids).toContain("obj-009");
+    expect(ids).toContain("obj-010");
+  });
 
+  test("all objects have required base fields", () => {
     // Check that all objects have required fields
     session.environment.objects.forEach((obj) => {
       expect(obj.id).toBeDefined();
@@ -56,6 +69,23 @@ describe("Baseline Session", () => {
       expect(obj.type).toBeDefined();
       expect(typeof obj.type).toBe("string");
       expect(typeof obj.enabled).toBe("boolean");
+    });
+  });
+
+  test("all objects reference a manifest asset via assetId", () => {
+    session.environment.objects.forEach((obj) => {
+      expect(obj.assetId).toBeDefined();
+      expect(typeof obj.assetId).toBe("string");
+      expect((obj.assetId as string).length).toBeGreaterThan(0);
+    });
+  });
+
+  test("all objects with a collider have a valid hint", () => {
+    const validHints = ["box", "cylinder", "convexHull", "none"];
+    session.environment.objects.forEach((obj) => {
+      if (obj.collider !== undefined) {
+        expect(validHints).toContain(obj.collider.hint);
+      }
     });
   });
 

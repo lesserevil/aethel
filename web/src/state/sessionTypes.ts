@@ -42,6 +42,27 @@ export interface AgentState {
   };
 }
 
+// ── Asset manifest reference types ───────────────────────────────────────────
+
+/**
+ * Collision shape hint for a scene object.
+ * Used by the USD pipeline and future physics integrations.
+ * Must remain a plain string union — no runtime objects.
+ */
+export type ColliderHint = "box" | "cylinder" | "convexHull" | "none";
+
+/**
+ * Semantic affordance tag describing how a scene object can be used.
+ * Consumed by chat context generation, USD conversion, and future physics.
+ */
+export type Affordance =
+  | "seatable"
+  | "work-surface"
+  | "input-device"
+  | "waste-container"
+  | "light-source"
+  | "storage";
+
 // ── Environment state ─────────────────────────────────────────────────────────
 
 export interface EnvironmentState {
@@ -58,10 +79,26 @@ export interface SceneObjectState {
   label: string;
   type: string; // e.g., "chair", "table", "plant", "computer"
   enabled: boolean;
+  /**
+   * Reference to an entry in the office asset manifest.
+   * When present the renderer should load the manifest GLB; absent means
+   * procedural fallback geometry.
+   */
+  assetId?: string;
   /** Transform hints for the renderer (optional, plain values only). */
   position?: { x: number; y: number; z: number };
   rotation?: { x: number; y: number; z: number }; // degrees
   scale?: { x: number; y: number; z: number };
+  /**
+   * Collision shape hint for the physics/USD pipeline.
+   * Overrides the manifest colliderHint when present.
+   */
+  collider?: { hint: ColliderHint };
+  /**
+   * Semantic affordances for this scene object.
+   * Overrides the manifest affordances when present.
+   */
+  affordances?: Affordance[];
 }
 
 // ── Chat state ────────────────────────────────────────────────────────────────

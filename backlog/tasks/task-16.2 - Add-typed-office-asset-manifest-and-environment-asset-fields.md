@@ -1,9 +1,10 @@
 ---
 id: TASK-16.2
 title: Add typed office asset manifest and environment asset fields
-status: Backlog
+status: In Progress
 assignee: []
 created_date: '2026-06-05 01:52'
+updated_date: '2026-06-05 04:35'
 labels: []
 dependencies:
   - TASK-16.1
@@ -41,3 +42,22 @@ Do not store Three.js objects, loaded GLTF nodes, DOM handles, or provider clien
 - [ ] #1 A typed office asset manifest exists and every manifest item has source, license, transform, dimensions, and collider metadata.
 - [ ] #2 Environment state can reference manifest assets without storing renderer-specific objects.
 <!-- AC:END -->
+
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+Understanding (2026-06-05): Need to (1) create web/src/assets/officeAssetManifest.ts with typed manifest entries, (2) extend SceneObjectState in sessionTypes.ts with assetId/collider/affordances fields, (3) update baselineSession.ts to reference manifest asset IDs, (4) add manifest tests. All data must be plain serializable objects.
+
+Discovery (2026-06-05): Key files identified: web/src/state/sessionTypes.ts (SceneObjectState to extend), web/src/state/baselineSession.ts (3 objects to expand to full MVP set), web/src/state/baselineSession.test.ts and sessionReducer.test.ts (need updating). Need to create web/src/assets/ directory and officeAssetManifest.ts. The reducer test checks toHaveLength(3) which will need updating when baseline expands to 10 MVP objects.
+<!-- SECTION:NOTES:END -->
+
+## Comments
+<!-- COMMENTS:BEGIN -->
+<!-- COMMENT:BEGIN -->
+index: 1
+author: oompah
+created: 2026-06-05 04:32
+
+Agent dispatched (profile: default)
+<!-- COMMENT:END -->
+<!-- COMMENTS:END -->

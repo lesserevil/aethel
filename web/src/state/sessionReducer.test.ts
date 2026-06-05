@@ -120,7 +120,10 @@ describe("SessionReducer", () => {
     expect(nextState.environment.lighting).toBe("dim");
     // Unaffected env fields preserved
     expect(nextState.environment.timeOfDay).toBe("day");
-    expect(nextState.environment.objects).toHaveLength(3);
+    // Objects unchanged — baseline now includes the full MVP office prop set
+    expect(nextState.environment.objects).toHaveLength(
+      initialState.environment.objects.length,
+    );
   });
 
   // ── Object toggle ─────────────────────────────────────────────────────────
