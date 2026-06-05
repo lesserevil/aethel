@@ -59,7 +59,7 @@ init: ## Initialize repo: git init and Backlog.md from lesserevil.
 
 # ─── Local development ─────────────────────────────────────────────
 
-run: ## Start the MVP web app development server.
+run: ## Start the MVP web app development server on all interfaces.
 	cd $(WEB_DIR) && bun run dev
 
 # ─── Quality gates ────────────────────────────────────────────────

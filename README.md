@@ -105,7 +105,7 @@ script runner. The Makefile quality-gate targets delegate to the web/
 workspace Bun scripts:
 
 - `make init` - Installs dependencies and initializes local project tooling
-- `make run` - Starts the MVP web app development server
+- `make run` - Starts the MVP web app development server on all interfaces
 - `make fmt` - Runs `bun run fmt` in the web/ directory
 - `make fmt-check` - Runs `bun run fmt-check` in the web/ directory
 - `make build` - Runs `bun run build` in the web/ directory
