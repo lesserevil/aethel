@@ -1,9 +1,10 @@
 ---
 id: TASK-19.6
 title: Add opt-in live Nemotron smoke check and close integration plan
-status: Backlog
+status: In Progress
 assignee: []
 created_date: '2026-06-05 13:41'
+updated_date: '2026-06-05 14:54'
 labels: []
 dependencies:
   - TASK-19.1
@@ -42,3 +43,34 @@ Do not make the live smoke command part of default CI until credential handling 
 - [ ] #1 An opt-in live smoke command verifies the configured Nemotron endpoint and masks secrets.
 - [ ] #2 The plan is marked complete only after all acceptance criteria and child tasks are satisfied.
 <!-- AC:END -->
+
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+Understanding (2026-06-05): Task adds opt-in live smoke command. TASK-19.1-19.5 all Done. Plan: create scripts/nemotron/nemotron_smoke_check.py (exit 0/1/2 pattern like Newton harness), unit tests, make smoke-nemotron target, update docs and plan.
+<!-- SECTION:NOTES:END -->
+
+## Comments
+<!-- COMMENTS:BEGIN -->
+<!-- COMMENT:BEGIN -->
+index: 1
+author: oompah
+created: 2026-06-05 14:49
+
+Agent dispatched (profile: default)
+<!-- COMMENT:END -->
+<!-- COMMENT:BEGIN -->
+index: 2
+author: oompah
+created: 2026-06-05 14:49
+
+Focus: Integration Tests Session Specialist
+<!-- COMMENT:END -->
+<!-- COMMENT:BEGIN -->
+index: 3
+author: oompah
+created: 2026-06-05 14:52
+
+Agent dispatched (profile: default)
+<!-- COMMENT:END -->
+<!-- COMMENTS:END -->

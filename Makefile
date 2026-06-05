@@ -8,7 +8,8 @@
 
 .PHONY: help init run run-api fmt fmt-check build test test-api test-e2e lint clean \
         assets-build assets-validate assets-validate-test assets-export-web \
-        physics-harness-dry-run physics-harness physics-harness-test
+        physics-harness-dry-run physics-harness physics-harness-test \
+        smoke-nemotron smoke-nemotron-dry-run smoke-nemotron-test
 
 BACKLOG_SOURCE ?= github:lesserevil/Backlog.md
 BACKLOG_CLI ?= bun x --bun $(BACKLOG_SOURCE)
@@ -146,3 +147,28 @@ physics-harness: ## Run Newton smoke harness with Newton (skips if Newton not in
 
 physics-harness-test: ## Run unit and integration tests for the Newton smoke harness (no GPU needed).
 	python3 -m pytest scripts/physics/test_newton_smoke_harness.py -v
+
+# ─── Nemotron live smoke check (opt-in) ────────────────────────────────────
+# Sends a low-token request to the NVIDIA Nemotron model using the same
+# backend client as /api/chat.  Requires a valid NVIDIA API key — skips
+# gracefully (exit 2 → treated as success) when credentials are absent.
+#
+# NOT wired into make test or any default CI gate.  Run manually after
+# confirming a valid key is configured (NVIDIA_API_KEY or ~/.netrc).
+#
+# See docs/nemotron-chat.md § Opt-in Live Smoke Check for full usage.
+
+smoke-nemotron-dry-run: ## Validate Nemotron smoke-check prompt without calling the NVIDIA API.
+	python3 scripts/nemotron/nemotron_smoke_check.py --dry-run
+
+smoke-nemotron: ## Run the live Nemotron smoke check (requires NVIDIA key; skips if absent).
+	python3 scripts/nemotron/nemotron_smoke_check.py; \
+	exit_code=$$?; \
+	if [ $$exit_code -eq 2 ]; then \
+		echo "[make] NVIDIA key not configured — smoke check skipped (exit 2 is not a failure)."; \
+		exit 0; \
+	fi; \
+	exit $$exit_code
+
+smoke-nemotron-test: ## Run unit tests for the Nemotron smoke check (no NVIDIA key required).
+	python3 -m pytest scripts/nemotron/test_nemotron_smoke_check.py -v

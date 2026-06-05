@@ -231,6 +231,81 @@ Open `http://localhost:5173` — chat messages now reach
 The frontend mock adapter continues to work whenever `VITE_CHAT_PROVIDER`
 is unset or `mock` — no NVIDIA key is required in that mode.
 
+## Opt-in Live Smoke Check
+
+A live smoke check is provided to verify that the configured credential,
+endpoint, model id, prompt mapping, and response parsing work together with a
+real network call.  This is separate from the default test suite — it requires
+a valid NVIDIA API key and network access to `inference-api.nvidia.com`.
+
+### Run the dry-run (no key needed)
+
+Validate the prompt structure without making a network call:
+
+```bash
+make smoke-nemotron-dry-run
+```
+
+Sample output:
+
+```
+[smoke] DRY-RUN mode — no NVIDIA API call will be made.
+[smoke] Credential status : configured
+[smoke] Key hint          : sk-X********
+[smoke] Endpoint          : https://inference-api.nvidia.com/v1/chat/completions
+[smoke] Model             : nvidia/nvidia/nemotron-3-nano-omni-30b-a3b-reasoning
+[smoke] Messages (2):
+  1. [system] You are Aethel, an AI assistant in a virtual 3D office environment…
+  2. [user] Smoke check: reply with the single word 'OK'.
+[smoke] Dry-run passed.
+```
+
+### Run the live check (NVIDIA key required)
+
+With a valid `NVIDIA_API_KEY` or `~/.netrc` entry configured:
+
+```bash
+make smoke-nemotron
+```
+
+Exit codes:
+
+| Code | Meaning |
+|------|---------|
+| 0    | Model returned a text response — endpoint, credential, and parsing all work |
+| 1    | Unexpected failure (timeout, malformed response) — check error output |
+| 2    | SKIP — credential absent or invalid; treated as non-failure by `make` |
+
+`make smoke-nemotron` treats exit code 2 as a non-failure and prints a
+guidance message.  Exit code 1 propagates as a real failure.
+
+### Run the smoke-check unit tests (no key required)
+
+```bash
+make smoke-nemotron-test
+```
+
+These tests cover all exit paths (skip, fail, success) using mocked NVIDIA
+calls.  No NVIDIA key or network access is needed.
+
+### Security guarantees
+
+- The NVIDIA API key is **never** printed, logged, or included in any output.
+- Diagnostic messages show only a redacted hint such as `sk-X********`.
+- The script never calls NVIDIA from the browser — all credential handling
+  is server-side in `api/config.py` and `api/nvidia_client.py`.
+
+### When to run the live check
+
+Run the live smoke check:
+
+- After rotating or replacing the NVIDIA API key.
+- After changing `NVIDIA_MODEL` or `NVIDIA_API_BASE_URL`.
+- Before deploying the backend to a new environment.
+
+Do **not** wire `make smoke-nemotron` into default CI until credential
+management for CI is explicitly designed.
+
 ## Testing Credential Loading
 
 The config loading tests in `api/tests/test_config.py` cover:

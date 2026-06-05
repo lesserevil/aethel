@@ -1,9 +1,10 @@
 ---
 id: TASK-19.4
 title: Add frontend API chat adapter and provider selection
-status: Backlog
+status: Done
 assignee: []
 created_date: '2026-06-05 13:41'
+updated_date: '2026-06-05 14:42'
 labels: []
 dependencies:
   - TASK-19.3
@@ -37,6 +38,29 @@ Do not put NVIDIA_API_KEY or any token into import.meta.env variables. Do not re
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 Frontend can use /api/chat through a ChatAdapter while preserving mock mode as default fallback.
-- [ ] #2 Tests prove API success, failure, abort, and mock fallback behavior without real network calls.
+- [x] #1 Frontend can use /api/chat through a ChatAdapter while preserving mock mode as default fallback.
+- [x] #2 Tests prove API success, failure, abort, and mock fallback behavior without real network calls.
 <!-- AC:END -->
+
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+UNDERSTANDING: Adding API-backed ChatAdapter (apiChatAdapter.ts) that POSTs ChatRequest to /api/chat. Adding chatAdapterFactory.ts using VITE_CHAT_PROVIDER=mock|api env var (no credentials in Vite config). AppShell.tsx updated to inject selected adapter into ChatPanel. Tests cover success, error, abort, and mock fallback via mocked fetch.
+<!-- SECTION:NOTES:END -->
+
+## Final Summary
+
+<!-- SECTION:FINAL_SUMMARY:BEGIN -->
+Added apiChatAdapter.ts (API-backed ChatAdapter posting to /api/chat with full error handling), chatAdapterFactory.ts (getChatAdapter() using VITE_CHAT_PROVIDER=mock|api, defaults to mock), and updated AppShell.tsx to inject the selected adapter via the existing adapter prop. 34 new tests cover API success, backend errors, network failures, abort (pre-flight and in-flight), malformed JSON, unexpected shapes, and factory fallback behavior. All pre-existing tests unchanged. make build and make typecheck/lint/fmt-check pass.
+<!-- SECTION:FINAL_SUMMARY:END -->
+
+## Comments
+<!-- COMMENTS:BEGIN -->
+<!-- COMMENT:BEGIN -->
+index: 1
+author: oompah
+created: 2026-06-05 14:35
+
+Agent dispatched (profile: default)
+<!-- COMMENT:END -->
+<!-- COMMENTS:END -->
