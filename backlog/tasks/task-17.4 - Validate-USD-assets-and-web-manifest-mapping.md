@@ -1,10 +1,10 @@
 ---
 id: TASK-17.4
 title: Validate USD assets and web manifest mapping
-status: In Progress
+status: Done
 assignee: []
 created_date: '2026-06-05 01:53'
-updated_date: '2026-06-05 05:53'
+updated_date: '2026-06-05 05:54'
 labels: []
 dependencies:
   - TASK-17.3
@@ -38,8 +38,8 @@ Optional NVIDIA validation must skip or report unavailable dependencies cleanly.
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 make assets-validate verifies the canonical USD stage and web manifest mapping.
-- [ ] #2 Optional Omniverse/SimReady validation is clearly optional and skipped cleanly when unavailable.
+- [x] #1 make assets-validate verifies the canonical USD stage and web manifest mapping.
+- [x] #2 Optional Omniverse/SimReady validation is clearly optional and skipped cleanly when unavailable.
 <!-- AC:END -->
 
 ## Implementation Notes
@@ -51,6 +51,12 @@ DISCOVERY: Key files: assets/sources/office/manifest.json (10 source records wit
 
 IMPLEMENTATION: Created (1) assets/usd/office/web-asset-map.json — maps 10 web IDs to source manifest IDs and USD prim paths. (2) assets/sources/office/web-asset-map.schema.json — JSON schema for the map. (3) scripts/assets/validate-web-manifest.py — mandatory cross-validation: checks every web manifest ID has a map entry, every map entry has a source manifest record, usdPrimPath values are consistent, and stage contains every mapped prim. Optional usdchecker (--usdchecker flag) and Omniverse Asset Validator (--omniverse flag) skip cleanly when unavailable. (4) Updated scripts/assets/assets-validate.sh — added step 2 (web manifest mapping validation) and made USD schema check (step 3) skip gracefully when usd-core not installed. (5) web/src/assets/webAssetMap.test.ts — 70 vitest tests covering map structure, uniqueness, web manifest coverage, source manifest coverage, usdPrimPath consistency, and USD stage coverage. (6) Updated Makefile help text and plans/usd-scene-pipeline-plan.md.
 <!-- SECTION:NOTES:END -->
+
+## Final Summary
+
+<!-- SECTION:FINAL_SUMMARY:BEGIN -->
+Delivered web manifest ↔ USD validation. Added assets/usd/office/web-asset-map.json (maps 10 web IDs to USD prim paths + source records), assets/sources/office/web-asset-map.schema.json (JSON Schema), scripts/assets/validate-web-manifest.py (mandatory cross-validator; optional usdchecker and Omniverse flags skip cleanly), extended scripts/assets/assets-validate.sh (added mapping check as step 2; USD schema check now skips gracefully without usd-core), added web/src/assets/webAssetMap.test.ts (70 vitest tests). make assets-validate passes; make test 895/895 pass; fmt-check and lint clean.
+<!-- SECTION:FINAL_SUMMARY:END -->
 
 ## Comments
 <!-- COMMENTS:BEGIN -->

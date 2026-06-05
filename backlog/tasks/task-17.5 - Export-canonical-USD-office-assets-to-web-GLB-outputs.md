@@ -1,9 +1,10 @@
 ---
 id: TASK-17.5
 title: Export canonical USD office assets to web GLB outputs
-status: Backlog
+status: In Progress
 assignee: []
 created_date: '2026-06-05 01:53'
+updated_date: '2026-06-05 06:01'
 labels: []
 dependencies:
   - TASK-17.4
@@ -41,3 +42,20 @@ Do not overwrite user-modified runtime assets without a deterministic source pat
 - [ ] #1 make assets-export-web produces or synchronizes web GLB files from the canonical USD asset pipeline.
 - [ ] #2 After export, make assets-validate confirms web assets still map to USD prim paths and source records.
 <!-- AC:END -->
+
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+DISCOVERY: No duplicate found. assets-export-web.sh exists but incomplete - references missing blender_export_glb.py, exports all USD files (not per-prop), missing sync step to web/public/assets/office/. Will create: blender_export_glb.py + build-export-map.py, revise assets-export-web.sh, add tests, update docs.
+<!-- SECTION:NOTES:END -->
+
+## Comments
+<!-- COMMENTS:BEGIN -->
+<!-- COMMENT:BEGIN -->
+index: 1
+author: oompah
+created: 2026-06-05 05:54
+
+Agent dispatched (profile: default)
+<!-- COMMENT:END -->
+<!-- COMMENTS:END -->

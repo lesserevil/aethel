@@ -10,6 +10,7 @@
 ASSETS_SOURCES_DIR="${ASSETS_SOURCES_DIR:-assets/sources/office}"
 ASSETS_USD_DIR="${ASSETS_USD_DIR:-assets/usd/office}"
 ASSETS_EXPORTS_DIR="${ASSETS_EXPORTS_DIR:-assets/exports/web/office}"
+WEB_PUBLIC_OFFICE_DIR="${WEB_PUBLIC_OFFICE_DIR:-web/public/assets/office}"
 
 info() { echo "[asset-pipeline] $*"; }
 warn() { echo "[asset-pipeline] WARNING: $*" >&2; }

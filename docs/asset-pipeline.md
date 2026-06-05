@@ -76,28 +76,56 @@ make assets-validate        # validate all USD files
 
 ### `make assets-export-web`
 
-Exports the canonical USD files to web-ready GLB files under
-`assets/exports/web/office/`.
+Exports each canonical USD office prop to a web-ready GLB file and then
+synchronises those files into `web/public/assets/office/`.
 
 **Script:** `scripts/assets/assets-export-web.sh`
 
-**Required tools:** Blender (see [Installing Blender](#installing-blender))
+**Helper scripts:**
+- `scripts/assets/build-export-map.py` — reads `web-asset-map.json` and the
+  source manifest to produce the deterministic prop→webId mapping.
+- `scripts/assets/blender_export_glb.py` — Blender Python helper that imports
+  a USD file and exports it as a binary GLB.
+
+**Required tools:** Blender 3.0+ (see [Installing Blender](#installing-blender))
+
+**Two-step pipeline:**
+
+```
+Step 1 — EXPORT
+  For each prop USD in assets/usd/office/props/,
+  Blender imports the USD and exports an optimised GLB to
+  assets/exports/web/office/<webId>.glb.
+
+Step 2 — SYNC
+  Content-based copy (cmp -s) from
+  assets/exports/web/office/ → web/public/assets/office/.
+  Files with identical byte content are never touched,
+  keeping git diff clean.
+```
+
+The mapping from USD prop file to web asset name is derived from
+`assets/usd/office/web-asset-map.json` so the output filenames always match
+what `web/src/assets/officeAssetManifest.ts` expects.
 
 **Behavior when tools or USD files are missing:**
 
-- If no USD files exist yet the script exits successfully with an
+- If no prop USD files exist the script exits successfully with an
   informational message — run `make assets-build` first.
-- If USD files exist but Blender is not installed the script prints an install
-  hint and exits non-zero.
+- If prop USD files exist but Blender is not installed the script prints a
+  clear install hint and exits non-zero.  The web public files are **not**
+  modified when the export step fails.
 
 ```bash
-make assets-export-web      # export all USD assets to GLB
+make assets-export-web      # export all USD props to GLB + sync to web
 ```
 
 ### `--dry-run` flag
 
 `assets-build` and `assets-export-web` accept a `--dry-run` flag that prints
-what would run without executing Blender:
+what would run without executing Blender or copying any files.  `--dry-run`
+skips the Blender availability check so it works even when Blender is not
+installed.
 
 ```bash
 scripts/assets/assets-build.sh --dry-run
@@ -174,9 +202,18 @@ assets/
       licenses/            # optional license text snapshots
   usd/
     office/                # canonical USD files (built by make assets-build)
+      office.usda          # root stage with all prop references
+      props/               # per-prop USD stubs (one file per asset)
+      web-asset-map.json   # webId ↔ sourceManifestId ↔ usdPrimPath
   exports/
     web/
       office/              # web GLB files (built by make assets-export-web)
+
+web/
+  public/
+    assets/
+      office/              # web runtime GLBs served by Vite / the browser
+                           # synced from exports/ by make assets-export-web
 
 scripts/
   assets/
@@ -184,6 +221,8 @@ scripts/
     assets-build.sh        # backing script for make assets-build
     assets-validate.sh     # backing script for make assets-validate
     assets-export-web.sh   # backing script for make assets-export-web
+    blender_export_glb.py  # Blender Python helper: USD → GLB (requires bpy)
+    build-export-map.py    # generates prop→webId TSV mapping from JSON inputs
 ```
 
 Do not commit large raw asset downloads. Source manifests and license files
@@ -203,8 +242,8 @@ is acceptable for normal git history.
 6. Run `make assets-build` to convert it to USD.
 7. Run `make assets-validate` to check the new USD file.
 8. Run `make assets-export-web` to generate the GLB for web use.
-9. Copy the exported GLB to `web/public/assets/office/` if it replaces a
-   placeholder.
+9. Run `make assets-export-web` — this copies the exported GLB to
+   `web/public/assets/office/` automatically via the sync step.
 10. Do **not** commit the raw downloaded archive.
 
 ---
@@ -215,6 +254,20 @@ is acceptable for normal git history.
 
 Blender is not on your `PATH`. Install it using the instructions under
 [Installing Blender](#installing-blender), then re-run the Make target.
+
+If you only want to see what the export **would** do (without actually running
+Blender), use the dry-run flag:
+
+```bash
+scripts/assets/assets-export-web.sh --dry-run
+```
+
+### `Blender is required for USD → GLB export`
+
+`make assets-export-web` found USD prop files that need to be exported, but
+Blender is not installed.  The web runtime GLB files in
+`web/public/assets/office/` are **not** modified until Blender is available
+and a successful export completes.  Install Blender and re-run the target.
 
 ### `MISSING: Python module 'pxr'` or `No USD validation tool found`
 
