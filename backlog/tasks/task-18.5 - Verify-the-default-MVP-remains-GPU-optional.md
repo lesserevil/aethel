@@ -3,20 +3,36 @@ id: TASK-18.5
 title: Verify the default MVP remains GPU-optional
 status: In Progress
 assignee: []
-created_date: '2026-06-05 01:53'
-updated_date: '2026-06-05 06:40'
+created_date: 2026-06-05 01:53
+updated_date: 2026-06-05 14:18
 labels: []
 dependencies:
-  - TASK-18.2
-  - TASK-18.4
+- TASK-18.2
+- TASK-18.4
 documentation:
-  - plans/office-physics-simulation-plan.md
+- plans/office-physics-simulation-plan.md
 modified_files:
-  - docs/office-physics.md
-  - README.md
+- docs/office-physics.md
+- README.md
 parent_task_id: TASK-18
 priority: medium
 ordinal: 49000
+oompah.task_costs:
+  total_input_tokens: 47
+  total_output_tokens: 12161
+  total_cost_usd: 0.0
+  by_model:
+    unknown:
+      input_tokens: 47
+      output_tokens: 12161
+      cost_usd: 0.0
+  runs:
+  - profile: default
+    model: unknown
+    input_tokens: 47
+    output_tokens: 12161
+    cost_usd: 0.0
+    recorded_at: '2026-06-05T06:40:36.831652+00:00'
 ---
 
 ## Description
@@ -64,6 +80,39 @@ VERIFICATION (2026-06-05): make fmt-check PASS. make build PASS (tsc + vite, no 
 index: 1
 author: oompah
 created: 2026-06-05 06:35
+
+Agent dispatched (profile: default)
+<!-- COMMENT:END -->
+<!-- COMMENT:BEGIN -->
+index: 2
+author: oompah
+created: 2026-06-05 06:35
+
+Focus: Duplicate Investigator
+<!-- COMMENT:END -->
+<!-- COMMENT:BEGIN -->
+index: 3
+author: oompah
+created: 2026-06-05 06:40
+
+Agent completed successfully in 335s (12208 tokens)
+<!-- COMMENT:END -->
+<!-- COMMENT:BEGIN -->
+index: 4
+author: oompah
+created: 2026-06-05 06:40
+
+Run #1 [attempt=1, profile=default, role=fast -> Claude/default]
+- Turns: 88, Tool calls: 55
+- Tokens: 47 in / 12.2K out [12.2K total]
+- Cost: $0.0000
+- Exit: normal, Duration: 5m 35s
+- Log: TASK-18.5__20260605T063505Z.jsonl
+<!-- COMMENT:END -->
+<!-- COMMENT:BEGIN -->
+index: 5
+author: oompah
+created: 2026-06-05 14:18
 
 Agent dispatched (profile: default)
 <!-- COMMENT:END -->
