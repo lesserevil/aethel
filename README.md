@@ -104,14 +104,17 @@ The project toolchain is configured with Bun as the package manager and
 script runner. The Makefile quality-gate targets delegate to the web/
 workspace Bun scripts:
 
+- `make init` - Installs dependencies and initializes local project tooling
+- `make run` - Starts the MVP web app development server
 - `make fmt` - Runs `bun run fmt` in the web/ directory
 - `make fmt-check` - Runs `bun run fmt-check` in the web/ directory
 - `make build` - Runs `bun run build` in the web/ directory
 - `make test` - Runs `bun run test` in the web/ directory
+- `make test-e2e` - Runs `bun run test:e2e` in the web/ directory
 - `make lint` - Runs `bun run typecheck && bun run lint` in the web/ directory
 - `make clean` - Removes build artifacts from the web/ directory
 
-To install dependencies: `bun install` (run from the web/ directory)
+To install dependencies: `make init`
 
 ## License
 

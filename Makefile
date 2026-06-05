@@ -6,7 +6,7 @@
 
 .DEFAULT_GOAL := help
 
-.PHONY: help init fmt fmt-check build test test-e2e lint clean
+.PHONY: help init run fmt fmt-check build test test-e2e lint clean
 
 BACKLOG_SOURCE ?= github:lesserevil/Backlog.md
 BACKLOG_CLI ?= bun x --bun $(BACKLOG_SOURCE)
@@ -18,7 +18,7 @@ WEB_DIR := web
 
 help: ## Show this help.
 	@awk 'BEGIN {FS = ":.*?## "; printf "Usage: make <target>\n\nTargets:\n"} \
-		/^[a-zA-Z_-]+:.*?## / {printf "  \033[36m%-15s\033[0m %s\n", $$1, $$2}' \
+		/^[a-zA-Z0-9_-]+:.*?## / {printf "  \033[36m%-15s\033[0m %s\n", $$1, $$2}' \
 		$(MAKEFILE_LIST)
 
 # ─── Bootstrap ────────────────────────────────────────────────────
@@ -56,6 +56,11 @@ init: ## Initialize repo: git init and Backlog.md from lesserevil.
 		echo "[init] installing web dependencies (bun install)"; \
 		cd $(WEB_DIR) && bun install; \
 	fi
+
+# ─── Local development ─────────────────────────────────────────────
+
+run: ## Start the MVP web app development server.
+	cd $(WEB_DIR) && bun run dev
 
 # ─── Quality gates ────────────────────────────────────────────────
 # These targets delegate to the web/ workspace via bun scripts.
