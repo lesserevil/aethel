@@ -1,10 +1,10 @@
 ---
 id: TASK-8.2
 title: Add Playwright e2e layout chat and nonblank viewport checks
-status: In Progress
+status: Done
 assignee: []
 created_date: '2026-06-02 22:12'
-updated_date: '2026-06-04 17:47'
+updated_date: '2026-06-05 02:52'
 labels: []
 dependencies:
   - TASK-8.1
@@ -12,7 +12,6 @@ dependencies:
 documentation:
   - plans/aethel_mvp_plan.md
 parent_task_id: TASK-8
-priority: medium
 ordinal: 25000
 ---
 
@@ -48,6 +47,12 @@ UNDERSTANDING: Task requires adding Playwright e2e tests. Web app already has pl
 
 UNDERSTANDING: The e2e test infrastructure is already committed (commit a37d68c). Files include: web/tests/e2e/layout.spec.ts, viewport.spec.ts, chat.spec.ts, controls.spec.ts, plus playwright.config.ts, docs/e2e-testing.md, and Makefile test-e2e target. Verifying tests work and closing task.
 <!-- SECTION:NOTES:END -->
+
+## Final Summary
+
+<!-- SECTION:FINAL_SUMMARY:BEGIN -->
+Merge conflict resolved successfully. Rebased TASK-8.2 onto origin/dev. The branch had 2 commits above the common ancestor (964e63c): 310494b (TS fix) was already merged into dev as e46b9a7 and was automatically skipped by git rebase. The remaining commit 9ba2f00 (Prettier test-results exclusion) was cleanly rebased - the .prettierignore change was a no-op since origin/dev already had it. All quality gates pass: fmt-check, build, 273 unit tests, typecheck, lint. Force-pushed to origin/TASK-8.2 with --force-with-lease.
+<!-- SECTION:FINAL_SUMMARY:END -->
 
 ## Comments
 <!-- COMMENTS:BEGIN -->
@@ -139,5 +144,73 @@ author: oompah
 created: 2026-06-04 17:43
 
 Agent dispatched (profile: default)
+<!-- COMMENT:END -->
+<!-- COMMENT:BEGIN -->
+index: 13
+author: oompah
+created: 2026-06-05 02:36
+
+Agent dispatched (profile: default)
+<!-- COMMENT:END -->
+<!-- COMMENT:BEGIN -->
+index: 14
+author: oompah
+created: 2026-06-05 02:36
+
+Focus: Integration Tests Session Specialist
+<!-- COMMENT:END -->
+<!-- COMMENT:BEGIN -->
+index: 15
+author: oompah
+created: 2026-06-05 02:42
+
+Agent dispatched (profile: default)
+<!-- COMMENT:END -->
+<!-- COMMENT:BEGIN -->
+index: 16
+author: oompah
+created: 2026-06-05 02:43
+
+Focus: Integration Tests Session Specialist
+<!-- COMMENT:END -->
+<!-- COMMENT:BEGIN -->
+index: 17
+author: oompah
+created: 2026-06-05 02:47
+
+Agent completed successfully in 254s (6070 tokens)
+<!-- COMMENT:END -->
+<!-- COMMENT:BEGIN -->
+index: 18
+author: oompah
+created: 2026-06-05 02:47
+
+Run #1 [attempt=1, profile=default, role=fast -> Claude/default]
+- Turns: 76, Tool calls: 55
+- Tokens: 46 in / 6.0K out [6.1K total]
+- Cost: $0.0000
+- Exit: normal, Duration: 4m 14s
+- Log: TASK-8.2__20260605T024303Z.jsonl
+<!-- COMMENT:END -->
+<!-- COMMENT:BEGIN -->
+index: 19
+author: oompah
+created: 2026-06-05 02:47
+
+YOLO: Merge conflict detected on MR #36. Rebase onto dev and resolve conflicts.
+<!-- COMMENT:END -->
+<!-- COMMENT:BEGIN -->
+index: 20
+author: oompah
+created: 2026-06-05 02:48
+
+YOLO: Merge conflict detected on MR #36. Rebase onto dev and resolve conflicts.
+<!-- COMMENT:END -->
+<!-- COMMENT:BEGIN -->
+index: 21
+author: oompah
+created: 2026-06-05 02:48
+
+Agent dispatched (profile: standard)
 <!-- COMMENT:END -->
 <!-- COMMENTS:END -->
