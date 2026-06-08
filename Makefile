@@ -12,7 +12,7 @@
         physics-harness-dry-run physics-harness physics-harness-test \
         smoke-nemotron smoke-nemotron-dry-run smoke-nemotron-test
 
-BACKLOG_SOURCE ?= github:lesserevil/Backlog.md
+BACKLOG_SOURCE ?= github:MrLesk/Backlog.md
 BACKLOG_CLI ?= bun x --bun $(BACKLOG_SOURCE)
 BACKLOG_DIR ?= backlog
 BACKLOG_PROJECT_NAME ?= $(notdir $(CURDIR))
@@ -33,7 +33,7 @@ help: ## Show this help.
 # repo and Backlog.md task tracker. Each step is idempotent — running
 # `make init` again is safe.
 
-init: ## Initialize repo: git init and Backlog.md from lesserevil.
+init: ## Initialize repo: git init and Backlog.md from upstream.
 	@set -e; \
 	if [ ! -d .git ]; then \
 		echo "[init] git init"; \

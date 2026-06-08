@@ -12,7 +12,7 @@ current Backlog.md workflow.
 The template uses the Backlog.md source at:
 
 ```text
-https://github.com/lesserevil/Backlog.md
+https://github.com/MrLesk/Backlog.md
 ```
 
 ## Scope
@@ -30,7 +30,7 @@ https://github.com/lesserevil/Backlog.md
 
 - [x] CRIT-1: `make init` checks for `bun`, prints install guidance
       when it is missing, and runs Backlog.md from
-      `github:lesserevil/Backlog.md` when `backlog/` and
+      `github:MrLesk/Backlog.md` when `backlog/` and
       `backlog.config.yml` are absent.
 - [x] CRIT-2: `AGENTS.md` documents the Backlog.md task workflow with
       MCP-first guidance, CLI fallbacks, task creation/editing,

@@ -163,7 +163,7 @@ This repo uses Backlog.md for task tracking. The local workflow runs the
 Backlog.md CLI through Bun:
 
 ```bash
-bun x --bun github:lesserevil/Backlog.md task list --plain
+bun x --bun github:MrLesk/Backlog.md task list --plain
 ```
 
 Current MVP implementation tasks are tracked in Backlog.md:

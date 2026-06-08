@@ -18,7 +18,7 @@ managed through its MCP tools or CLI, not by hand-editing task files.
 Use the Backlog.md version from:
 
 ```text
-https://github.com/lesserevil/Backlog.md
+https://github.com/MrLesk/Backlog.md
 ```
 
 ### Quick reference
@@ -45,8 +45,8 @@ backlog task edit <id> --status "Done"           # Mark work done
 ```
 
 When using this bootstrap template itself, `make init` runs Backlog.md
-through Bun from `github:lesserevil/Backlog.md` so the requested fork
-is used even before a global `backlog` command exists.
+through Bun from `github:MrLesk/Backlog.md` so the upstream version is
+used even before a global `backlog` command exists.
 
 ### Rules
 
